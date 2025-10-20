@@ -1,0 +1,89 @@
+
+package Modelo;
+
+public class Masajista {
+    private int codMasajista;
+    private int matricula;
+    private String nombreCompleto;
+    private String telefono;
+    private Especialidad especialidad;
+    private boolean estado;
+
+    public Masajista(int codMasajista,int matricula, String nombreCompleto, String telefono, Especialidad especialidad, boolean estado) {
+        this.codMasajista = codMasajista;
+        this.matricula = matricula;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.especialidad = especialidad;
+        this.estado = estado;
+    }
+
+    public Masajista(int matricula,String nombreCompleto, String telefono, Especialidad especialidad, boolean estado) {
+        this.codMasajista = -1;
+        this.matricula = matricula;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.especialidad = especialidad;
+        this.estado = estado;
+    }
+
+    public Masajista() {
+        this.codMasajista = -1;
+    }
+
+    public int getCodMasajista() {
+        return codMasajista;
+    }
+
+    public void setCodMasajista(int codMasajista) {
+        this.codMasajista = codMasajista;
+    }
+
+    public int getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+    }
+
+    
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Masajista{" + "codMasajista=" + codMasajista + ", matricula=" + matricula +", nombreCompleto=" + nombreCompleto + ", telefono=" + telefono + ", especialidad=" + especialidad + ", estado=" + estado + '}';
+    }
+    
+    
+}
