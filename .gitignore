@@ -1,6 +1,17 @@
 # Compiled class file
 *.class
 
+# === NetBeans (permitir abrir proyecto, evitar conflictos) ===
+nbproject/private/
+nbproject/project.properties
+nbproject/build-impl.xml
+
+# === Carpetas de salida ===
+build/
+dist/
+out/
+target/
+
 # Log file
 *.log
 
@@ -22,3 +33,4 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/SpaGrupo14/nbproject/private/
