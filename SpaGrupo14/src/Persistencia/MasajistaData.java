@@ -31,7 +31,7 @@ public class MasajistaData {
         con = Conexion.getConectar();
     }
     
-    public void agregarCliente(Masajista m){
+    public void agregarMasajista(Masajista m){
         
         String sql = "INSERT INTO masajista(matricula, nombre_completo, telefono, cod_especialidad, estado) VALUES (?, ?, ?, ?, ?)";
         
