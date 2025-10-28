@@ -1,19 +1,19 @@
 package Modelo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Dia_de_Spa {
 
     private int codPack;
-    private LocalDateTime fechaYHora;
+    private LocalDate fechaYHora;
     private String preferencias;
     private Cliente cliente;
     private List<Sesion> sesiones;
     private double monto;
     private boolean estado;
 
-    public Dia_de_Spa(int codPack, LocalDateTime fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
+    public Dia_de_Spa(int codPack, LocalDate fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
         this.codPack = codPack;
         this.fechaYHora = fechaYHora;
         this.preferencias = preferencias;
@@ -23,7 +23,7 @@ public class Dia_de_Spa {
         this.estado = estado;
     }
 
-    public Dia_de_Spa(LocalDateTime fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
+    public Dia_de_Spa(LocalDate fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
         this.codPack = -1;
         this.fechaYHora = fechaYHora;
         this.preferencias = preferencias;
@@ -45,11 +45,11 @@ public class Dia_de_Spa {
         this.codPack = codPack;
     }
 
-    public LocalDateTime getFechaYHora() {
+    public LocalDate getFechaYHora() {
         return fechaYHora;
     }
 
-    public void setFechaYHora(LocalDateTime fechaYHora) {
+    public void setFechaYHora(LocalDate fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
 
@@ -85,7 +85,7 @@ public class Dia_de_Spa {
         this.monto = monto;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
