@@ -5,7 +5,9 @@
 package spagrupo14;
 
 import Modelo.Cliente;
+import Modelo.Tratamiento;
 import Persistencia.ClienteData;
+import Persistencia.TratamientoData;
 import Vista.MenuPrincipal;
 
 /**
@@ -32,9 +34,9 @@ public class SpaGrupo14 {
     clientedata.agregarCliente(facundo);
     clientedata.agregarCliente(fernando);*/
     
-    for (Cliente c: clientedata.listarCliente()){
-        System.out.println(c);
-    }
+    TratamientoData datat = new TratamientoData();
+    
+    
     
     
     
