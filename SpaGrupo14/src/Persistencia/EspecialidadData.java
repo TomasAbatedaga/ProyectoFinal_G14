@@ -26,7 +26,7 @@ public class EspecialidadData {
         con = Conexion.getConectar();
     }
     
-    public void agregarCliente(Especialidad e){
+    public void agregarEspecialidad(Especialidad e){
         
         String sql = "INSERT INTO especialidad(nombre) VALUES (?)";
         
