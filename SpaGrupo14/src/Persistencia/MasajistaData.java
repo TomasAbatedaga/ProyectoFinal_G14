@@ -5,7 +5,6 @@
 package Persistencia;
 
 import Modelo.Cliente;
-import Modelo.Especialidad;
 import Modelo.Masajista;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +22,6 @@ import javax.swing.JOptionPane;
  */
 public class MasajistaData {
     
-    private EspecialidadData abmEspecialidadData = new EspecialidadData();
-    private Especialidad espe = null;
     private Connection con = null;
     
     public MasajistaData(){
@@ -69,7 +66,7 @@ public class MasajistaData {
                 m.setMatricula(rs.getInt("matricula"));
                 m.setNombreCompleto(rs.getString("nombre_completo"));
                 m.setTelefono(rs.getString("telefono"));
-                espe = abmEspecialidadData.buscarEspecialidad(rs.getInt("cod_especialidad"));
+                //fijarse la especialidad con enum
                 m.setEstado(rs.getBoolean("estado"));
                 
                 listaMasajistas.add(m);

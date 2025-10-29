@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import java.io.Closeable;
+
 /**
  *
  * @author facue
@@ -15,6 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -26,21 +29,342 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        escritorio = new javax.swing.JDesktopPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMgestion = new javax.swing.JMenu();
+        jMIgestionClientes = new javax.swing.JMenuItem();
+        jMIgestionMasajistas = new javax.swing.JMenuItem();
+        jMIgestionConsultorios = new javax.swing.JMenuItem();
+        jMIgestionTratamientos = new javax.swing.JMenuItem();
+        jMreservas = new javax.swing.JMenu();
+        jMIcrearDiaSpa = new javax.swing.JMenuItem();
+        jMIgestionSesiones = new javax.swing.JMenuItem();
+        jMconsultas = new javax.swing.JMenu();
+        jMIbuscarDiaSpa = new javax.swing.JMenuItem();
+        jMIbuscarMasajistaXEspecialidad = new javax.swing.JMenuItem();
+        jMIbuscarTratamientoXTipo = new javax.swing.JMenuItem();
+        jMdisponibilidad = new javax.swing.JMenu();
+        jMImasajistaDisponible = new javax.swing.JMenuItem();
+        jMIinstalacionDisponible = new javax.swing.JMenuItem();
+        jMreportes = new javax.swing.JMenu();
+        jMIdiaSpaXFecha = new javax.swing.JMenuItem();
+        jMIinstalacionMasSolicitada = new javax.swing.JMenuItem();
+        jMItratamientoMasSolicitado = new javax.swing.JMenuItem();
+        jMsalir = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
+        escritorio.setLayout(escritorioLayout);
+        escritorioLayout.setHorizontalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 969, Short.MAX_VALUE)
+        );
+        escritorioLayout.setVerticalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 680, Short.MAX_VALUE)
+        );
+
+        jMgestion.setText("Gestion de Datos");
+
+        jMIgestionClientes.setText("Gestion Clientes");
+        jMIgestionClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionClientesActionPerformed(evt);
+            }
+        });
+        jMgestion.add(jMIgestionClientes);
+
+        jMIgestionMasajistas.setText("Gestion Masajistas");
+        jMIgestionMasajistas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionMasajistasActionPerformed(evt);
+            }
+        });
+        jMgestion.add(jMIgestionMasajistas);
+
+        jMIgestionConsultorios.setText("Gestion Consultorios");
+        jMIgestionConsultorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionConsultoriosActionPerformed(evt);
+            }
+        });
+        jMgestion.add(jMIgestionConsultorios);
+
+        jMIgestionTratamientos.setText("Gestion Tratamientos");
+        jMIgestionTratamientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionTratamientosActionPerformed(evt);
+            }
+        });
+        jMgestion.add(jMIgestionTratamientos);
+
+        jMenuBar1.add(jMgestion);
+
+        jMreservas.setText("Reservas");
+
+        jMIcrearDiaSpa.setText("Crear Dia de Spa");
+        jMIcrearDiaSpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIcrearDiaSpaActionPerformed(evt);
+            }
+        });
+        jMreservas.add(jMIcrearDiaSpa);
+
+        jMIgestionSesiones.setText("Gestion de Sesiones");
+        jMIgestionSesiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionSesionesActionPerformed(evt);
+            }
+        });
+        jMreservas.add(jMIgestionSesiones);
+
+        jMenuBar1.add(jMreservas);
+
+        jMconsultas.setText("Consultas");
+
+        jMIbuscarDiaSpa.setText("Buscar Dia de Spa");
+        jMIbuscarDiaSpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIbuscarDiaSpaActionPerformed(evt);
+            }
+        });
+        jMconsultas.add(jMIbuscarDiaSpa);
+
+        jMIbuscarMasajistaXEspecialidad.setText("Buscar Masajista por Especialidad");
+        jMIbuscarMasajistaXEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIbuscarMasajistaXEspecialidadActionPerformed(evt);
+            }
+        });
+        jMconsultas.add(jMIbuscarMasajistaXEspecialidad);
+
+        jMIbuscarTratamientoXTipo.setText("Buscar Tratamiento por Tipo");
+        jMIbuscarTratamientoXTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIbuscarTratamientoXTipoActionPerformed(evt);
+            }
+        });
+        jMconsultas.add(jMIbuscarTratamientoXTipo);
+
+        jMenuBar1.add(jMconsultas);
+
+        jMdisponibilidad.setText("Disponibilidad");
+
+        jMImasajistaDisponible.setText("Masajista disponible");
+        jMImasajistaDisponible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMImasajistaDisponibleActionPerformed(evt);
+            }
+        });
+        jMdisponibilidad.add(jMImasajistaDisponible);
+
+        jMIinstalacionDisponible.setText("Instalacion disponible");
+        jMIinstalacionDisponible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIinstalacionDisponibleActionPerformed(evt);
+            }
+        });
+        jMdisponibilidad.add(jMIinstalacionDisponible);
+
+        jMenuBar1.add(jMdisponibilidad);
+
+        jMreportes.setText("Reportes");
+
+        jMIdiaSpaXFecha.setText("Dia de Spa por Fecha");
+        jMIdiaSpaXFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIdiaSpaXFechaActionPerformed(evt);
+            }
+        });
+        jMreportes.add(jMIdiaSpaXFecha);
+
+        jMIinstalacionMasSolicitada.setText("Instalacion mas solicitada");
+        jMIinstalacionMasSolicitada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIinstalacionMasSolicitadaActionPerformed(evt);
+            }
+        });
+        jMreportes.add(jMIinstalacionMasSolicitada);
+
+        jMItratamientoMasSolicitado.setText("Tratamiento mas solicitado");
+        jMItratamientoMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMItratamientoMasSolicitadoActionPerformed(evt);
+            }
+        });
+        jMreportes.add(jMItratamientoMasSolicitado);
+
+        jMenuBar1.add(jMreportes);
+
+        jMsalir.setText("Salir");
+        jMsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMsalirActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMsalir);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMIbuscarMasajistaXEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarMasajistaXEspecialidadActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        BuscarMasajistaPorEspecialidad vBuscarMasajistaPorEspecialidad = new BuscarMasajistaPorEspecialidad();
+        vBuscarMasajistaPorEspecialidad.setVisible(true);
+        escritorio.add(vBuscarMasajistaPorEspecialidad);
+        escritorio.moveToFront(vBuscarMasajistaPorEspecialidad);
+    }//GEN-LAST:event_jMIbuscarMasajistaXEspecialidadActionPerformed
+
+    private void jMsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMsalirActionPerformed
+        // TODO add your handling code here:
+        //System.exit(0);
+    }//GEN-LAST:event_jMsalirActionPerformed
+
+    private void jMIgestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionClientesActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionClientes vistaClientes = new GestionClientes();
+        vistaClientes.setVisible(true);
+        escritorio.add(vistaClientes);
+        escritorio.moveToFront(vistaClientes);
+    }//GEN-LAST:event_jMIgestionClientesActionPerformed
+
+    private void jMIgestionMasajistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionMasajistasActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionMasajistas vistaMasajistas = new GestionMasajistas();
+        vistaMasajistas.setVisible(true);
+        escritorio.add(vistaMasajistas);
+        escritorio.moveToFront(vistaMasajistas);
+    }//GEN-LAST:event_jMIgestionMasajistasActionPerformed
+
+    private void jMIgestionConsultoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionConsultoriosActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionConsultorios vistasConsultorios = new GestionConsultorios();
+        vistasConsultorios.setVisible(true);
+        escritorio.add(vistasConsultorios);
+        escritorio.moveToFront(vistasConsultorios);
+    }//GEN-LAST:event_jMIgestionConsultoriosActionPerformed
+
+    private void jMIgestionTratamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionTratamientosActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionTratamientos vistaTratamientos = new GestionTratamientos();
+        vistaTratamientos.setVisible(true);
+        escritorio.add(vistaTratamientos);
+        escritorio.moveToFront(vistaTratamientos);
+    }//GEN-LAST:event_jMIgestionTratamientosActionPerformed
+
+    private void jMIcrearDiaSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIcrearDiaSpaActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        CrearDiaDeSpa vCrearDiaDeSpa = new CrearDiaDeSpa();
+        vCrearDiaDeSpa.setVisible(true);
+        escritorio.add(vCrearDiaDeSpa);
+        escritorio.moveToFront(vCrearDiaDeSpa);
+    }//GEN-LAST:event_jMIcrearDiaSpaActionPerformed
+
+    private void jMIgestionSesionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionSesionesActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionDeSesiones vGestionDeSesiones = new GestionDeSesiones();
+        vGestionDeSesiones.setVisible(true);
+        escritorio.add(vGestionDeSesiones);
+        escritorio.moveToFront(vGestionDeSesiones);
+    }//GEN-LAST:event_jMIgestionSesionesActionPerformed
+
+    private void jMIbuscarDiaSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarDiaSpaActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        BuscarDiaDeSpa vBuscarDiaDeSpa = new BuscarDiaDeSpa();
+        vBuscarDiaDeSpa.setVisible(true);
+        escritorio.add(vBuscarDiaDeSpa);
+        escritorio.moveToFront(vBuscarDiaDeSpa);
+    }//GEN-LAST:event_jMIbuscarDiaSpaActionPerformed
+
+    private void jMIbuscarTratamientoXTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarTratamientoXTipoActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        BuscarTratamientoPorTipo vBuscarTratamientoPorTipo = new BuscarTratamientoPorTipo();
+        vBuscarTratamientoPorTipo.setVisible(true);
+        escritorio.add(vBuscarTratamientoPorTipo);
+        escritorio.moveToFront(vBuscarTratamientoPorTipo);
+    }//GEN-LAST:event_jMIbuscarTratamientoXTipoActionPerformed
+
+    private void jMImasajistaDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMImasajistaDisponibleActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        MasajistaDisponible vMasajistaDisponible = new MasajistaDisponible();
+        vMasajistaDisponible.setVisible(true);
+        escritorio.add(vMasajistaDisponible);
+        escritorio.moveToFront(vMasajistaDisponible);
+    }//GEN-LAST:event_jMImasajistaDisponibleActionPerformed
+
+    private void jMIinstalacionDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIinstalacionDisponibleActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        InstalacionDisponible vInstalacionDisponible = new InstalacionDisponible();
+        vInstalacionDisponible.setVisible(true);
+        escritorio.add(vInstalacionDisponible);
+        escritorio.moveToFront(vInstalacionDisponible);
+    }//GEN-LAST:event_jMIinstalacionDisponibleActionPerformed
+
+    private void jMIdiaSpaXFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIdiaSpaXFechaActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        DiaDeSpaPorFecha vDiaDeSpaPorFecha = new DiaDeSpaPorFecha();
+        vDiaDeSpaPorFecha.setVisible(true);
+        escritorio.add(vDiaDeSpaPorFecha);
+        escritorio.moveToFront(vDiaDeSpaPorFecha);
+    }//GEN-LAST:event_jMIdiaSpaXFechaActionPerformed
+
+    private void jMIinstalacionMasSolicitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIinstalacionMasSolicitadaActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        InstalacionMasSolicitada vInstalacionMasSolicitada = new InstalacionMasSolicitada();
+        vInstalacionMasSolicitada.setVisible(true);
+        escritorio.add(vInstalacionMasSolicitada);
+        escritorio.moveToFront(vInstalacionMasSolicitada);
+    }//GEN-LAST:event_jMIinstalacionMasSolicitadaActionPerformed
+
+    private void jMItratamientoMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMItratamientoMasSolicitadoActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        TratamientoMasSolicitado vTratamientoMasSolicitado = new TratamientoMasSolicitado();
+        vTratamientoMasSolicitado.setVisible(true);
+        escritorio.add(vTratamientoMasSolicitado);
+        escritorio.moveToFront(vTratamientoMasSolicitado);
+    }//GEN-LAST:event_jMItratamientoMasSolicitadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +402,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenuItem jMIbuscarDiaSpa;
+    private javax.swing.JMenuItem jMIbuscarMasajistaXEspecialidad;
+    private javax.swing.JMenuItem jMIbuscarTratamientoXTipo;
+    private javax.swing.JMenuItem jMIcrearDiaSpa;
+    private javax.swing.JMenuItem jMIdiaSpaXFecha;
+    private javax.swing.JMenuItem jMIgestionClientes;
+    private javax.swing.JMenuItem jMIgestionConsultorios;
+    private javax.swing.JMenuItem jMIgestionMasajistas;
+    private javax.swing.JMenuItem jMIgestionSesiones;
+    private javax.swing.JMenuItem jMIgestionTratamientos;
+    private javax.swing.JMenuItem jMIinstalacionDisponible;
+    private javax.swing.JMenuItem jMIinstalacionMasSolicitada;
+    private javax.swing.JMenuItem jMImasajistaDisponible;
+    private javax.swing.JMenuItem jMItratamientoMasSolicitado;
+    private javax.swing.JMenu jMconsultas;
+    private javax.swing.JMenu jMdisponibilidad;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMgestion;
+    private javax.swing.JMenu jMreportes;
+    private javax.swing.JMenu jMreservas;
+    private javax.swing.JMenu jMsalir;
     // End of variables declaration//GEN-END:variables
 }

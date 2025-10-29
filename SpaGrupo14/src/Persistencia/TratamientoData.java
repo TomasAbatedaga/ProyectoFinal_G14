@@ -5,7 +5,6 @@
 package Persistencia;
 
 import Modelo.Cliente;
-import Modelo.Especialidad;
 import Modelo.Tratamiento;
 import Persistencia.Conexion;
 import java.sql.Connection;
