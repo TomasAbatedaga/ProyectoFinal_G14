@@ -5,8 +5,10 @@
 package spagrupo14;
 
 import Modelo.Cliente;
+
 import Modelo.Tratamiento;
 import Persistencia.ClienteData;
+import Persistencia.ConsultorioData;
 import Persistencia.TratamientoData;
 import Vista.MenuPrincipal;
 
@@ -37,6 +39,7 @@ public class SpaGrupo14 {
     TratamientoData datat = new TratamientoData();
     
     
+
     
     
     
