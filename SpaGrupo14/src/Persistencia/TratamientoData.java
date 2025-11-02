@@ -5,6 +5,7 @@
 package Persistencia;
 
 import Modelo.Cliente;
+import Modelo.EspecialidadEnum;
 import Modelo.Tratamiento;
 import Persistencia.Conexion;
 import java.sql.Connection;
@@ -30,11 +31,11 @@ public class TratamientoData {
     }
 
     public void agregarTratamiento(Tratamiento t) {
-        String sql = "INSERT INTO tratamiento(nombre, cod_especialidad, detalle, duracion, costo, estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tratamiento(nombre, tipo, detalle, duracion, costo, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, t.getNombre());
-            ps.setInt(2, t.getTipo().getCod_especialidad());
+            ps.setString(2, t.getTipo().name());
             ps.setString(3, t.getDetalle());
             ps.setInt(4, t.getDuracion());
             ps.setDouble(5, t.getCosto());
@@ -48,20 +49,17 @@ public class TratamientoData {
             ps.close();
         } catch (SQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "no se pudo agregar el tratamiento");
-
         } catch (SQLException ex) {
             System.out.println("Error de conexion: " + ex);
         }
-
     }
 
     public void actualizarTratamiento(Tratamiento t) {
-        String sql = "UPDATE tratamiento SET nombre=?, cod_especialidad=?, detalle=?, duracion=?, costo=?, estado=? WHERE cod_tratamiento=?";
-
+        String sql = "UPDATE tratamiento SET nombre=?, tipo=?, detalle=?, duracion=?, costo=?, estado=? WHERE cod_tratamiento=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, t.getNombre());
-            ps.setInt(2, t.getTipo().getCod_especialidad());
+            ps.setString(2, t.getTipo().name());
             ps.setString(3, t.getDetalle());
             ps.setInt(4, t.getDuracion());
             ps.setDouble(5, t.getCosto());
@@ -73,28 +71,24 @@ public class TratamientoData {
         } catch (SQLException ex) {
             System.out.println("Error de actualización: " + ex);
         }
-
     }
 
     public List<Tratamiento> listarTratamientos() {
         Tratamiento t = null;
         List<Tratamiento> tratamientos = new ArrayList<>();
-        String sql = "SELECT cod_tratamiento, nombre, cod_especialidad, detalle, duracion, costo, estado from tratamiento WHERE estado = 1";
+        String sql = "SELECT cod_tratamiento, nombre, tipo, detalle, duracion, costo, estado FROM tratamiento WHERE estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 t = new Tratamiento();
-                Especialidad e = new Especialidad();
                 t.setCodTratam(rs.getInt("cod_tratamiento"));
                 t.setNombre(rs.getString("nombre"));
-                e.setCod_especialidad(rs.getInt("cod_especialidad"));
-                t.setTipo(e);
+                t.setTipo(EspecialidadEnum.valueOf(rs.getString("tipo")));
                 t.setDetalle(rs.getString("detalle"));
                 t.setDuracion(rs.getInt("duracion"));
                 t.setCosto(rs.getDouble("costo"));
                 t.setEstado(rs.getBoolean("estado"));
-
                 tratamientos.add(t);
             }
             ps.close();
@@ -108,19 +102,15 @@ public class TratamientoData {
         Tratamiento t = null;
         String sql = "SELECT * FROM tratamiento WHERE cod_tratamiento = ?";
         PreparedStatement ps;
-
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, codTratamiento);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 t = new Tratamiento();
                 t.setCodTratam(rs.getInt("cod_tratamiento"));
                 t.setNombre(rs.getString("nombre"));
-                Especialidad esp = new Especialidad();
-                esp.setCod_especialidad(rs.getInt("cod_especialidad"));
-                t.setTipo(esp);
+                t.setTipo(EspecialidadEnum.valueOf(rs.getString("tipo")));
                 t.setDetalle(rs.getString("detalle"));
                 t.setDuracion(rs.getInt("duracion"));
                 t.setCosto(rs.getDouble("costo"));
@@ -133,9 +123,7 @@ public class TratamientoData {
     }
 
     public void eliminarTratamiento(int codigo) {
-
         String sql = "DELETE FROM tratamiento WHERE cod_tratamiento=?";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, codigo);
@@ -149,7 +137,6 @@ public class TratamientoData {
 
     public void altaLogica(Tratamiento t) {
         String sql = "UPDATE tratamiento SET estado=1 WHERE cod_tratamiento=?";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, t.getCodTratam());
@@ -163,7 +150,6 @@ public class TratamientoData {
 
     public void bajaLogica(Tratamiento t) {
         String sql = "UPDATE tratamiento SET estado=0 WHERE cod_tratamiento=?";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, t.getCodTratam());
@@ -174,5 +160,4 @@ public class TratamientoData {
             System.out.println("Error de actualizacion " + ex);
         }
     }
-
 }
