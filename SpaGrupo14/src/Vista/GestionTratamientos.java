@@ -35,7 +35,7 @@ public class GestionTratamientos extends javax.swing.JFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
         JTFcostoTratamiento = new javax.swing.JTextField();
         JTFnombreTratamiento = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -47,13 +47,13 @@ public class GestionTratamientos extends javax.swing.JFrame {
         txtDuracion1 = new javax.swing.JLabel();
         CbEstado = new javax.swing.JCheckBox();
         txtEstado = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        BtnLimpiar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        BtnAgregar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         CmbTipoTratamiento = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        BtnModificar = new javax.swing.JButton();
+        JTFcodigoTratamiento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,7 +61,7 @@ public class GestionTratamientos extends javax.swing.JFrame {
 
         jLabel2.setText("Costo del tratamiento:");
 
-        jButton3.setText("ELIMINAR");
+        BtnEliminar.setText("ELIMINAR");
 
         JTFnombreTratamiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,18 +100,18 @@ public class GestionTratamientos extends javax.swing.JFrame {
 
         txtEstado.setText("Estado del tratamiento:");
 
-        jButton4.setText("LIMPIAR");
+        BtnLimpiar.setText("LIMPIAR");
 
-        jButton5.setText("BUSCAR");
+        btnBuscar.setText("BUSCAR");
 
-        jButton1.setText("AGREGAR");
+        BtnAgregar.setText("AGREGAR");
 
         jLabel3.setText("Codigo de tratamiento:");
 
-        jButton2.setText("MODIFICAR");
+        BtnModificar.setText("MODIFICAR");
 
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(BtnEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(JTFcostoTratamiento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(JTFnombreTratamiento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -123,13 +123,13 @@ public class GestionTratamientos extends javax.swing.JFrame {
         jDesktopPane1.setLayer(txtDuracion1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(CbEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(txtEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(BtnLimpiar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(BtnAgregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(CmbTipoTratamiento, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(BtnModificar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(JTFcodigoTratamiento, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -150,7 +150,7 @@ public class GestionTratamientos extends javax.swing.JFrame {
                                 .addComponent(jLabel3))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addComponent(BtnAgregar)))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -161,16 +161,16 @@ public class GestionTratamientos extends javax.swing.JFrame {
                             .addComponent(JTFduracionTratamiento, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CmbTipoTratamiento, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JTFcostoTratamiento, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTFcodigoTratamiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTFnombreTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                            .addComponent(jButton2)
+                            .addComponent(BtnModificar)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton5)
+                            .addComponent(btnBuscar)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton4)
+                            .addComponent(BtnLimpiar)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton3))))
+                            .addComponent(BtnEliminar))))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -201,18 +201,18 @@ public class GestionTratamientos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTFcodigoTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEstado)
                     .addComponent(CbEstado))
                 .addGap(27, 27, 27)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(BtnAgregar)
+                    .addComponent(BtnModificar)
+                    .addComponent(BtnEliminar)
+                    .addComponent(BtnLimpiar)
+                    .addComponent(btnBuscar))
                 .addGap(20, 20, 20))
         );
 
@@ -284,22 +284,22 @@ public class GestionTratamientos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAgregar;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnLimpiar;
+    private javax.swing.JButton BtnModificar;
     private javax.swing.JCheckBox CbEstado;
     private javax.swing.JComboBox<String> CmbTipoTratamiento;
+    private javax.swing.JTextField JTFcodigoTratamiento;
     private javax.swing.JTextField JTFcostoTratamiento;
     private javax.swing.JTextField JTFdetalleTratamiento1;
     private javax.swing.JTextField JTFduracionTratamiento;
     private javax.swing.JTextField JTFnombreTratamiento;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel txtDetalle;
     private javax.swing.JLabel txtDuracion;
     private javax.swing.JLabel txtDuracion1;
