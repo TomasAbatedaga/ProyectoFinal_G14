@@ -8,14 +8,15 @@ package Vista;
  *
  * @author abate
  */
-public class MasajistaDisponible extends javax.swing.JFrame {
+public class MasajistaDisponible extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form MasajistaDisponible
      */
     public MasajistaDisponible() {
+       
         initComponents();
-        this.setLocationRelativeTo(null);
+        
     }
 
     /**

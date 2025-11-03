@@ -8,14 +8,15 @@ package Vista;
  *
  * @author abate
  */
-public class InstalacionMasSolicitada extends javax.swing.JFrame {
+public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form InstalacionMasSolicitada
      */
     public InstalacionMasSolicitada() {
+      
         initComponents();
-        this.setLocationRelativeTo(null);
+        
     }
 
     /**

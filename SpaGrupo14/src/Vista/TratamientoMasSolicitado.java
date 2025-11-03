@@ -8,14 +8,16 @@ package Vista;
  *
  * @author abate
  */
-public class TratamientoMasSolicitado extends javax.swing.JFrame {
+public class TratamientoMasSolicitado extends javax.swing.JInternalFrame{
 
     /**
      * Creates new form TratamientoMasSolicitado
      */
     public TratamientoMasSolicitado() {
+        
         initComponents();
-        this.setLocationRelativeTo(null);
+        
+        
     }
 
     /**
