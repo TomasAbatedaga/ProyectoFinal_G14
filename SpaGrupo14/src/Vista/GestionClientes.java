@@ -8,14 +8,14 @@ package Vista;
  *
  * @author abate
  */
-public class GestionClientes extends javax.swing.JFrame {
+public class GestionClientes extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionClientes
      */
     public GestionClientes() {
+        super("Gestion de Clientes", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**

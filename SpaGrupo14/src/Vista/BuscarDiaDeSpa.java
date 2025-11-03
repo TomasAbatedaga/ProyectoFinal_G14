@@ -3,19 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-
+import javax.swing.JInternalFrame;
 /**
  *
  * @author abate
  */
-public class BuscarDiaDeSpa extends javax.swing.JFrame {
+public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form BuscarDiaDeSpa
      */
     public BuscarDiaDeSpa() {
+        super("Buscar dia de Spa", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
+        
     }
 
     /**

@@ -8,14 +8,15 @@ package Vista;
  *
  * @author abate
  */
-public class BuscarTratamientoPorTipo extends javax.swing.JFrame {
+public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form BuscarTratamientoPorTipo
      */
     public BuscarTratamientoPorTipo() {
+        super("Buscar Tratamiento por Tipo", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
+        
     }
 
     /**
