@@ -14,14 +14,14 @@ import javax.swing.JPanel;
  *
  * @author abate
  */
-public class GestionTratamientos extends javax.swing.JFrame {
+public class GestionTratamientos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionTratamientos
      */
     public GestionTratamientos() {
+        super("Gestion de Tratamientos", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**

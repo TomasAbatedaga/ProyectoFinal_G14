@@ -16,6 +16,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
     public GestionClientes() {
         super("Gestion de Clientes", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
+        this.pack(); // ajusta tamaño al contenido
     }
 
     /**

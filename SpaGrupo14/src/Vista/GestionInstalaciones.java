@@ -14,6 +14,7 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
      * Creates new form GestionInstalaciones
      */
     public GestionInstalaciones() {
+        super("Gestion de Instalaciones", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 
