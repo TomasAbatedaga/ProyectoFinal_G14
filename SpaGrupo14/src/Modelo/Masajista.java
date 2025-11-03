@@ -6,26 +6,27 @@ public class Masajista {
     private int matricula;
     private String nombreCompleto;
     private String telefono;
+    private EspecialidadEnum especialidad;
     private boolean estado;
 
-    public Masajista(int codMasajista,int matricula, String nombreCompleto, String telefono, boolean estado) {
+    public Masajista(int codMasajista, int matricula, String nombreCompleto, String telefono, EspecialidadEnum especialidad, boolean estado) {
         this.codMasajista = codMasajista;
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
+        this.especialidad = especialidad;
         this.estado = estado;
     }
 
-    public Masajista(int matricula,String nombreCompleto, String telefono, boolean estado) {
-        this.codMasajista = -1;
+    public Masajista(int matricula, String nombreCompleto, String telefono, EspecialidadEnum especialidad, boolean estado) {
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
+        this.especialidad = especialidad;
         this.estado = estado;
     }
 
     public Masajista() {
-        this.codMasajista = -1;
     }
 
     public int getCodMasajista() {
@@ -44,7 +45,6 @@ public class Masajista {
         this.matricula = matricula;
     }
 
-    
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -61,6 +61,14 @@ public class Masajista {
         this.telefono = telefono;
     }
 
+    public EspecialidadEnum getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(EspecialidadEnum especialidad) {
+        this.especialidad = especialidad;
+    }
+
     public boolean isEstado() {
         return estado;
     }
@@ -71,8 +79,17 @@ public class Masajista {
 
     @Override
     public String toString() {
-        return "Masajista{" + "codMasajista=" + codMasajista + ", matricula=" + matricula +", nombreCompleto=" + nombreCompleto + ", telefono=" + telefono + ", estado=" + estado + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Masajista{");
+        sb.append("codMasajista=").append(codMasajista);
+        sb.append(", matricula=").append(matricula);
+        sb.append(", nombreCompleto=").append(nombreCompleto);
+        sb.append(", telefono=").append(telefono);
+        sb.append(", especialidad=").append(especialidad);
+        sb.append(", estado=").append(estado);
+        sb.append('}');
+        return sb.toString();
     }
-    
+
     
 }

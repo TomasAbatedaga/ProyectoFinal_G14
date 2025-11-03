@@ -8,12 +8,13 @@ package Vista;
  *
  * @author jorge
  */
-public class VistaInstalacion extends javax.swing.JInternalFrame {
+public class GestionInstalaciones extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionInstalaciones
      */
-    public VistaInstalacion() {
+    public GestionInstalaciones() {
+        super("Gestion de Instalaciones", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 

@@ -8,14 +8,14 @@ package Vista;
  *
  * @author abate
  */
-public class GestionMasajistas extends javax.swing.JFrame {
+public class GestionMasajistas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionMasajistas
      */
     public GestionMasajistas() {
+        super("Gestion Masajistas", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**

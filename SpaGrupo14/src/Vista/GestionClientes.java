@@ -8,14 +8,15 @@ package Vista;
  *
  * @author abate
  */
-public class GestionClientes extends javax.swing.JFrame {
+public class GestionClientes extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionClientes
      */
     public GestionClientes() {
+        super("Gestion de Clientes", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.pack(); // ajusta tamaño al contenido
     }
 
     /**
@@ -27,7 +28,6 @@ public class GestionClientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jTfEdad = new javax.swing.JTextField();
@@ -190,20 +190,10 @@ public class GestionClientes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane1)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(268, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(50, 50, 50)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane1)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(93, 93, 93)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(378, Short.MAX_VALUE)))
         );
 
         pack();
@@ -260,7 +250,6 @@ public class GestionClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTfEdad;
     private javax.swing.JTextField jtfAfecciones;
     private javax.swing.JTextField jtfCodigoCliente;

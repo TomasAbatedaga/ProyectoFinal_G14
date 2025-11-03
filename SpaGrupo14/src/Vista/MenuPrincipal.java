@@ -36,6 +36,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMIgestionMasajistas = new javax.swing.JMenuItem();
         jMIgestionConsultorios = new javax.swing.JMenuItem();
         jMIgestionTratamientos = new javax.swing.JMenuItem();
+        jMIgestionInstalaciones = new javax.swing.JMenuItem();
         jMreservas = new javax.swing.JMenu();
         jMIcrearDiaSpa = new javax.swing.JMenuItem();
         jMIgestionSesiones = new javax.swing.JMenuItem();
@@ -98,6 +99,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMgestion.add(jMIgestionTratamientos);
+
+        jMIgestionInstalaciones.setText("Gestion Instalaciones");
+        jMIgestionInstalaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIgestionInstalacionesActionPerformed(evt);
+            }
+        });
+        jMgestion.add(jMIgestionInstalaciones);
 
         jMenuBar1.add(jMgestion);
 
@@ -366,6 +375,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.moveToFront(vTratamientoMasSolicitado);
     }//GEN-LAST:event_jMItratamientoMasSolicitadoActionPerformed
 
+    private void jMIgestionInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionInstalacionesActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        GestionInstalaciones vGestionInstalaciones = new GestionInstalaciones();
+        vGestionInstalaciones.setVisible(true);
+        escritorio.add(vGestionInstalaciones);
+        escritorio.moveToFront(vGestionInstalaciones);
+    }//GEN-LAST:event_jMIgestionInstalacionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -410,6 +429,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIdiaSpaXFecha;
     private javax.swing.JMenuItem jMIgestionClientes;
     private javax.swing.JMenuItem jMIgestionConsultorios;
+    private javax.swing.JMenuItem jMIgestionInstalaciones;
     private javax.swing.JMenuItem jMIgestionMasajistas;
     private javax.swing.JMenuItem jMIgestionSesiones;
     private javax.swing.JMenuItem jMIgestionTratamientos;

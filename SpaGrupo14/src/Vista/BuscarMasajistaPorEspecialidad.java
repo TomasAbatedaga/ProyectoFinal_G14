@@ -8,14 +8,14 @@ package Vista;
  *
  * @author abate
  */
-public class BuscarMasajistaPorEspecialidad extends javax.swing.JFrame {
+public class BuscarMasajistaPorEspecialidad extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form BuscarMasajistaPorEspecialidad
      */
     public BuscarMasajistaPorEspecialidad() {
+        super("Buscar Masajista por Especialidad", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**

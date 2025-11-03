@@ -8,14 +8,14 @@ package Vista;
  *
  * @author abate
  */
-public class GestionConsultorios extends javax.swing.JFrame {
+public class GestionConsultorios extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionConsultorios
      */
     public GestionConsultorios() {
+        super("Gestion de Consultorios", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -5,6 +5,7 @@
 package Persistencia;
 
 import Modelo.Cliente;
+import Modelo.EspecialidadEnum;
 import Modelo.Masajista;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,7 +67,7 @@ public class MasajistaData {
                 m.setMatricula(rs.getInt("matricula"));
                 m.setNombreCompleto(rs.getString("nombre_completo"));
                 m.setTelefono(rs.getString("telefono"));
-                //fijarse la especialidad con enum
+                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("cod_especialidad")));
                 m.setEstado(rs.getBoolean("estado"));
                 
                 listaMasajistas.add(m);
@@ -92,7 +93,7 @@ public class MasajistaData {
                 ps.setInt(2, m.getMatricula());
                 ps.setString(3, m.getNombreCompleto());
                 ps.setString(4, m.getTelefono());
-                //falta la especialidad aca
+                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("cod_especialidad")));
                 ps.setBoolean(6, m.isEstado());
             }
         } catch (SQLException ex) {
@@ -111,7 +112,7 @@ public class MasajistaData {
                 ps.setInt(1, m.getMatricula());
                 ps.setString(2, m.getNombreCompleto());
                 ps.setString(3, m.getTelefono());
-                //cod_especialidad
+                ps.setString(4, m.getEspecialidad().name());
                 ps.setBoolean(5, m.isEstado());
             ps.executeUpdate();
             ps.close();

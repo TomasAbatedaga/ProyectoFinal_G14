@@ -8,14 +8,14 @@ package Vista;
  *
  * @author abate
  */
-public class DiaDeSpaPorFecha extends javax.swing.JFrame {
+public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form DiaDeSpaPorFecha
      */
     public DiaDeSpaPorFecha() {
+        super("Dia de Spa por Fecha", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
