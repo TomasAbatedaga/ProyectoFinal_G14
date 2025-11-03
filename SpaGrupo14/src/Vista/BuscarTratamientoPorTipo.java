@@ -14,9 +14,7 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
      * Creates new form BuscarTratamientoPorTipo
      */
     public BuscarTratamientoPorTipo() {
-        super("Buscar Tratamiento por Tipo", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
-        
     }
 
     /**
@@ -34,7 +32,11 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jL_titulo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jL_titulo.setText("Tratamientos por tipo");
