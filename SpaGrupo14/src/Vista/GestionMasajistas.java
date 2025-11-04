@@ -8,14 +8,13 @@ package Vista;
  *
  * @author abate
  */
-public class GestionMasajistas extends javax.swing.JFrame {
+public class GestionMasajistas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionMasajistas
      */
     public GestionMasajistas() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -45,7 +44,11 @@ public class GestionMasajistas extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         txtTitulo.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         txtTitulo.setText("Gestión Masajistas");

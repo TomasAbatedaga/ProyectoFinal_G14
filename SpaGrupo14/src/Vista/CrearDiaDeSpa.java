@@ -14,7 +14,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
      * Creates new form CrearDiaDeSpa
      */
     public CrearDiaDeSpa() {
-        super("Crear Dia de Spa", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 
@@ -49,9 +48,13 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablesesiondiaspa = new javax.swing.JTable();
-        btnBuscardisponibilidad1 = new javax.swing.JButton();
+        btnquitarsesion = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jdnicliente.setText("DNI del Cliente:");
 
@@ -110,10 +113,10 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTablesesiondiaspa);
 
-        btnBuscardisponibilidad1.setText("QUITAR SESION");
-        btnBuscardisponibilidad1.addActionListener(new java.awt.event.ActionListener() {
+        btnquitarsesion.setText("QUITAR SESION");
+        btnquitarsesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscardisponibilidad1ActionPerformed(evt);
+                btnquitarsesionActionPerformed(evt);
             }
         });
 
@@ -186,7 +189,7 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(200, 200, 200)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscardisponibilidad1)
+                            .addComponent(btnquitarsesion)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -226,16 +229,17 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
                             .addComponent(jServicio1)
                             .addComponent(jtfhorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscarcliente)
-                    .addComponent(btnBuscardisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscaragregar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscardisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscarcliente)
+                        .addComponent(btnBuscaragregar)))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscardisponibilidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnquitarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
 
@@ -254,9 +258,9 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscardisponibilidadActionPerformed
 
-    private void btnBuscardisponibilidad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidad1ActionPerformed
+    private void btnquitarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquitarsesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscardisponibilidad1ActionPerformed
+    }//GEN-LAST:event_btnquitarsesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,7 +301,7 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscaragregar;
     private javax.swing.JButton btnBuscarcliente;
     private javax.swing.JButton btnBuscardisponibilidad;
-    private javax.swing.JButton btnBuscardisponibilidad1;
+    private javax.swing.JButton btnquitarsesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

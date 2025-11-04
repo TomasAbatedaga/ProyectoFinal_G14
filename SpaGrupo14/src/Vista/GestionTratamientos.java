@@ -14,14 +14,13 @@ import javax.swing.JPanel;
  *
  * @author abate
  */
-public class GestionTratamientos extends javax.swing.JFrame {
+public class GestionTratamientos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionTratamientos
      */
     public GestionTratamientos() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -55,7 +54,11 @@ public class GestionTratamientos extends javax.swing.JFrame {
         BtnModificar = new javax.swing.JButton();
         JTFcodigoTratamiento = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jDesktopPane1.setBackground(new java.awt.Color(102, 102, 102));
 

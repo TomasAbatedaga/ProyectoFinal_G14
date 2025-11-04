@@ -207,6 +207,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMreportes);
 
         jMsalir.setText("Salir");
+        jMsalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMsalirMouseClicked(evt);
+            }
+        });
         jMsalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMsalirActionPerformed(evt);
@@ -242,7 +247,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMsalirActionPerformed
         // TODO add your handling code here:
-        //System.exit(0);
+        
     }//GEN-LAST:event_jMsalirActionPerformed
 
     private void jMIgestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionClientesActionPerformed
@@ -384,6 +389,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.add(vGestionInstalaciones);
         escritorio.moveToFront(vGestionInstalaciones);
     }//GEN-LAST:event_jMIgestionInstalacionesActionPerformed
+
+    private void jMsalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMsalirMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jMsalirMouseClicked
 
     /**
      * @param args the command line arguments

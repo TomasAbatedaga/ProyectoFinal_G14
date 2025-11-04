@@ -14,7 +14,6 @@ public class GestionClientes extends javax.swing.JInternalFrame {
      * Creates new form GestionClientes
      */
     public GestionClientes() {
-        super("Gestion de Clientes", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 
@@ -49,7 +48,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         btnLimpiar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("SimSun", 1, 18)); // NOI18N
         jLabel1.setText("GESTION CLIENTE");

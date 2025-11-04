@@ -14,7 +14,6 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
      * Creates new form GestionConsultorios
      */
     public GestionConsultorios() {
-        super("Gestion de Consultorios", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 
@@ -45,7 +44,11 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         btnLimpiar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Gestión de Consultorios");

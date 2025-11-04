@@ -14,7 +14,6 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
      * Creates new form GestionDeSesiones
      */
     public GestionDeSesiones() {
-        super("Gestion de Sesiones", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
     }
 
@@ -27,7 +26,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -46,6 +46,11 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
         lbl_codigo = new javax.swing.JLabel();
         txt_codigo = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
         lbl_titulo.setText("Gestion Instalacion");
 
         lbl_nombre.setText("Nombre:");

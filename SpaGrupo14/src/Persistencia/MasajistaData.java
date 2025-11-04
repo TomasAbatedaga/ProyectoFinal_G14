@@ -31,14 +31,14 @@ public class MasajistaData {
     
     public void agregarMasajista(Masajista m){
         
-        String sql = "INSERT INTO masajista(matricula, nombre_completo, telefono, cod_especialidad, estado) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO masajista(matricula, nombre_completo, telefono, especialidad, estado) VALUES (?, ?, ?, ?, ?)";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, m.getMatricula());
             ps.setString(2, m.getNombreCompleto());
             ps.setString(3, m.getTelefono());
-            ps.setInt(4, m.getCodMasajista());
+            ps.setString(4, m.getEspecialidad().name());
             ps.setBoolean(5, m.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -57,7 +57,7 @@ public class MasajistaData {
     public List<Masajista> listarMasajista(){
         Masajista m = null;
         List<Masajista> listaMasajistas = new ArrayList<>();
-        String sql = "SELECT cod_masajista, matricula, nombre_completo, telefono, cod_especialidad, estado from masajista WHERE estado = 1";
+        String sql = "SELECT cod_masajista, matricula, nombre_completo, telefono, especialidad, estado from masajista WHERE estado = 1";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -67,7 +67,7 @@ public class MasajistaData {
                 m.setMatricula(rs.getInt("matricula"));
                 m.setNombreCompleto(rs.getString("nombre_completo"));
                 m.setTelefono(rs.getString("telefono"));
-                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("cod_especialidad")));
+                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
                 m.setEstado(rs.getBoolean("estado"));
                 
                 listaMasajistas.add(m);
@@ -93,7 +93,7 @@ public class MasajistaData {
                 ps.setInt(2, m.getMatricula());
                 ps.setString(3, m.getNombreCompleto());
                 ps.setString(4, m.getTelefono());
-                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("cod_especialidad")));
+                m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
                 ps.setBoolean(6, m.isEstado());
             }
         } catch (SQLException ex) {
@@ -104,7 +104,7 @@ public class MasajistaData {
     
     public void actualizarMasajista(Masajista m){
         
-        String sql = "UPDATE masajista SET matricula=?, nombre_completo=?, telefono=?, cod_especialidad=?, estado=? WHERE cod_masajista=?";
+        String sql = "UPDATE masajista SET matricula=?, nombre_completo=?, telefono=?, especialidad=?, estado=? WHERE cod_masajista=?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
