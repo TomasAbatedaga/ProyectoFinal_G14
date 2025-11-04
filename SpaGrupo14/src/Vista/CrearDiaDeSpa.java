@@ -27,21 +27,236 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jtfpreferencias = new javax.swing.JTextField();
+        jdnicliente = new javax.swing.JLabel();
+        jtfservicio = new javax.swing.JTextField();
+        jfecha = new javax.swing.JLabel();
+        jpreferencias = new javax.swing.JLabel();
+        jtffecha = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jservicio = new javax.swing.JLabel();
+        jtfdni = new javax.swing.JTextField();
+        jmasajista = new javax.swing.JLabel();
+        jtfmasajista = new javax.swing.JTextField();
+        jServicio = new javax.swing.JLabel();
+        jtfmasajista1 = new javax.swing.JTextField();
+        btnBuscarcliente = new javax.swing.JButton();
+        btnBuscaragregar = new javax.swing.JButton();
+        btnBuscardisponibilidad = new javax.swing.JButton();
+        jServicio1 = new javax.swing.JLabel();
+        jtfhorainicio = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablesesiondiaspa = new javax.swing.JTable();
+        btnBuscardisponibilidad1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jdnicliente.setText("DNI del Cliente:");
+
+        jfecha.setText("Fecha:");
+
+        jpreferencias.setText("Preferencias:");
+
+        jLabel1.setFont(new java.awt.Font("SimSun", 1, 18)); // NOI18N
+        jLabel1.setText("Crea tu dia de Spa");
+
+        jLabel2.setFont(new java.awt.Font("SimSun", 1, 18)); // NOI18N
+        jLabel2.setText("Agregar Sesiones");
+
+        jservicio.setText("Tipo de Servicio:");
+
+        jmasajista.setText("Masajista:");
+
+        jServicio.setText("Servicio:");
+
+        btnBuscarcliente.setText("BUSCAR CLIENTE");
+        btnBuscarcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarclienteActionPerformed(evt);
+            }
+        });
+
+        btnBuscaragregar.setText("AGREGAR SESION");
+        btnBuscaragregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaragregarActionPerformed(evt);
+            }
+        });
+
+        btnBuscardisponibilidad.setText("VERIFICAR DISPONIBILIDAD");
+        btnBuscardisponibilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscardisponibilidadActionPerformed(evt);
+            }
+        });
+
+        jServicio1.setText("Hora Inicio:");
+
+        jLabel3.setFont(new java.awt.Font("SimSun", 1, 18)); // NOI18N
+        jLabel3.setText("Sesiones del Dia de Spa");
+
+        jTablesesiondiaspa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Servicio", "Hora Inicio", "Duracion", "Masajista", "Lugar"
+            }
+        ));
+        jScrollPane1.setViewportView(jTablesesiondiaspa);
+
+        btnBuscardisponibilidad1.setText("QUITAR SESION");
+        btnBuscardisponibilidad1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscardisponibilidad1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jpreferencias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfpreferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarcliente)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jdnicliente)
+                            .addComponent(jfecha))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtffecha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jmasajista)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfmasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jservicio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfservicio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBuscardisponibilidad)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnBuscaragregar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jServicio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfmasajista1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jServicio1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfhorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(104, 104, 104))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(200, 200, 200))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscardisponibilidad1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 601, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jdnicliente)
+                            .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jfecha)
+                            .addComponent(jtffecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jpreferencias)
+                            .addComponent(jtfpreferencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfservicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jservicio))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jmasajista)
+                            .addComponent(jtfmasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jServicio)
+                            .addComponent(jtfmasajista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jServicio1)
+                            .addComponent(jtfhorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarcliente)
+                    .addComponent(btnBuscardisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscaragregar))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscardisponibilidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarclienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarclienteActionPerformed
+
+    private void btnBuscaragregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaragregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscaragregarActionPerformed
+
+    private void btnBuscardisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscardisponibilidadActionPerformed
+
+    private void btnBuscardisponibilidad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidad1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscardisponibilidad1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +294,28 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscaragregar;
+    private javax.swing.JButton btnBuscarcliente;
+    private javax.swing.JButton btnBuscardisponibilidad;
+    private javax.swing.JButton btnBuscardisponibilidad1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jServicio;
+    private javax.swing.JLabel jServicio1;
+    private javax.swing.JTable jTablesesiondiaspa;
+    private javax.swing.JLabel jdnicliente;
+    private javax.swing.JLabel jfecha;
+    private javax.swing.JLabel jmasajista;
+    private javax.swing.JLabel jpreferencias;
+    private javax.swing.JLabel jservicio;
+    private javax.swing.JTextField jtfdni;
+    private javax.swing.JTextField jtffecha;
+    private javax.swing.JTextField jtfhorainicio;
+    private javax.swing.JTextField jtfmasajista;
+    private javax.swing.JTextField jtfmasajista1;
+    private javax.swing.JTextField jtfpreferencias;
+    private javax.swing.JTextField jtfservicio;
     // End of variables declaration//GEN-END:variables
 }
