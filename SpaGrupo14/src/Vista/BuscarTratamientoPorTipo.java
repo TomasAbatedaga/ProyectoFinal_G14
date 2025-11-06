@@ -4,19 +4,83 @@
  */
 package Vista;
 
+
+import Modelo.EspecialidadEnum;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import Modelo.EspecialidadEnum;
+import Modelo.ProductosEnum;
+import Modelo.Masajista;
+import Modelo.Tratamiento;
+import Persistencia.MasajistaData;
+import Persistencia.TratamientoData;
 /**
  *
  * @author abate
  */
 public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
+    private ArrayList<Tratamiento> listaT;
+    private TratamientoData tratamientodata;
+    private DefaultTableModel modeloTabla;
 
-    /**
-     * Creates new form BuscarTratamientoPorTipo
-     */
-    public BuscarTratamientoPorTipo() {
+    public BuscarTratamientoPorTipo(){
+        super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
+
+        tratamientodata = new TratamientoData();
+        listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
+
+        modeloTabla = new DefaultTableModel();
+        cargarColumnasTablas();
+        cargarTratamiento();
+        tratamientoTablaTipos();
+
+        // Listener para actualizar tabla al cambiar selección
+        jcb_listadoTratam.addActionListener(e -> tratamientoTablaTipos());
     }
 
+    // Cargar los valores del enum en el combo
+    public void cargarTratamiento() {
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()){
+            jcb_listadoTratam.addItem(especialidad.toString());
+        }
+    }
+    // Definir columnas de la tabla
+    private void cargarColumnasTablas() {
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Tipo");
+        modeloTabla.addColumn("Detalle");
+        modeloTabla.addColumn("Duración");
+        modeloTabla.addColumn("Costo");
+        tbl_tablaTratamientos.setModel(modeloTabla);
+    }
+    // Borrar todas las filas antes de recargar
+    private void borrarFilaTabla() {
+        int indice = modeloTabla.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modeloTabla.removeRow(i);
+        }
+    }
+    // Filtrar tratamientos por tipo seleccionado
+    private void tratamientoTablaTipos() {
+        borrarFilaTabla();
+        String tipoSeleccionado = (String) jcb_listadoTratam.getSelectedItem();
+        listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
+
+        for (Tratamiento tratamiento : listaT) {
+
+//            if (tratamiento.getEspecialidad()== tipoSeleccionado) {
+            modeloTabla.addRow(new Object[]{
+                tratamiento.getNombre(),
+                tratamiento.getEspecialidad(), // muestra el enum
+                tratamiento.getDetalle(),
+                tratamiento.getDuracion(),
+                tratamiento.getCosto()
+            });
+
+        }
+    }
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,9 +92,9 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
 
         jL_titulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcb_listadoTratam = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_tablaTratamientos = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -44,9 +108,14 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Tratamientos:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_listadoTratam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_listadoTratam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_listadoTratamActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_tablaTratamientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,7 +126,7 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_tablaTratamientos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,7 +138,7 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
                         .addGap(111, 111, 111)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcb_listadoTratam, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -87,7 +156,7 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcb_listadoTratam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -95,6 +164,11 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcb_listadoTratamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_listadoTratamActionPerformed
+        // TODO add your handling code here:
+        tratamientoTablaTipos();
+    }//GEN-LAST:event_jcb_listadoTratamActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,10 +206,10 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jL_titulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> jcb_listadoTratam;
+    private javax.swing.JTable tbl_tablaTratamientos;
     // End of variables declaration//GEN-END:variables
 }

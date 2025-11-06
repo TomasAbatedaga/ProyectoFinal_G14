@@ -6,7 +6,7 @@ import java.util.List;
 public class Tratamiento {
     private int codTratam;
     private String nombre;
-    private EspecialidadEnum tipo;
+    private EspecialidadEnum especialidad;
     private String detalle;
     private int duracion;
     private double costo;
@@ -54,12 +54,12 @@ public class Tratamiento {
         return detalle;
     }
 
-    public EspecialidadEnum getTipo() {
-        return tipo;
+    public EspecialidadEnum getEspecialidad() {
+        return especialidad;
     }
 
-    public void setTipo(EspecialidadEnum tipo) {
-        this.tipo = tipo;
+    public void setEspecialidad(EspecialidadEnum especialidad) {
+        this.especialidad = especialidad;
     }
 
     public void setDetalle(String detalle) {

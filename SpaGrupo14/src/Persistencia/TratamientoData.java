@@ -31,11 +31,11 @@ public class TratamientoData {
     }
 
     public void agregarTratamiento(Tratamiento t) {
-        String sql = "INSERT INTO tratamiento(nombre, tipo, detalle, duracion, costo, estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tratamiento(nombre, especialidad, detalle, duracion, costo, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, t.getNombre());
-            ps.setString(2, t.getTipo().name());
+            ps.setString(2, t.getEspecialidad().name());
             ps.setString(3, t.getDetalle());
             ps.setInt(4, t.getDuracion());
             ps.setDouble(5, t.getCosto());
@@ -55,11 +55,11 @@ public class TratamientoData {
     }
 
     public void actualizarTratamiento(Tratamiento t) {
-        String sql = "UPDATE tratamiento SET nombre=?, tipo=?, detalle=?, duracion=?, costo=?, estado=? WHERE cod_tratamiento=?";
+        String sql = "UPDATE tratamiento SET nombre=?, especialidad=?, detalle=?, duracion=?, costo=?, estado=? WHERE cod_tratamiento=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, t.getNombre());
-            ps.setString(2, t.getTipo().name());
+            ps.setString(2, t.getEspecialidad().name());
             ps.setString(3, t.getDetalle());
             ps.setInt(4, t.getDuracion());
             ps.setDouble(5, t.getCosto());
@@ -76,7 +76,7 @@ public class TratamientoData {
     public List<Tratamiento> listarTratamientos() {
         Tratamiento t = null;
         List<Tratamiento> tratamientos = new ArrayList<>();
-        String sql = "SELECT cod_tratamiento, nombre, tipo, detalle, duracion, costo, estado FROM tratamiento WHERE estado = 1";
+        String sql = "SELECT cod_tratamiento, nombre, especialidad, detalle, duracion, costo, estado FROM tratamiento WHERE estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -84,7 +84,7 @@ public class TratamientoData {
                 t = new Tratamiento();
                 t.setCodTratam(rs.getInt("cod_tratamiento"));
                 t.setNombre(rs.getString("nombre"));
-                t.setTipo(EspecialidadEnum.valueOf(rs.getString("tipo")));
+                t.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
                 t.setDetalle(rs.getString("detalle"));
                 t.setDuracion(rs.getInt("duracion"));
                 t.setCosto(rs.getDouble("costo"));
@@ -110,7 +110,7 @@ public class TratamientoData {
                 t = new Tratamiento();
                 t.setCodTratam(rs.getInt("cod_tratamiento"));
                 t.setNombre(rs.getString("nombre"));
-                t.setTipo(EspecialidadEnum.valueOf(rs.getString("tipo")));
+                t.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
                 t.setDetalle(rs.getString("detalle"));
                 t.setDuracion(rs.getInt("duracion"));
                 t.setCosto(rs.getDouble("costo"));
