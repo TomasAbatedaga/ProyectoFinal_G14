@@ -79,13 +79,13 @@ public class MasajistaData {
         return listaMasajistas;
     }
     
-    public Masajista buscarMasajista(String nombre){
+    public Masajista buscarMasajista(int matricula){
         Masajista m = null;
-        String sql = "SELECT * FROM masajista WHERE nombre_completo = ?";
+        String sql = "SELECT * FROM masajista WHERE matricula = ?";
         PreparedStatement ps;
         try{
             ps = con.prepareStatement(sql);
-            ps.setString(1, nombre);
+            ps.setInt(1, matricula);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 m = new Masajista();

@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Modelo.EspecialidadEnum;
+import javax.swing.JOptionPane;
+import Persistencia.MasajistaData;
+import Modelo.Masajista;
 /**
  *
  * @author abate
@@ -29,13 +33,13 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         txtTitulo = new javax.swing.JLabel();
         txtnombremasajista = new javax.swing.JLabel();
-        JTfNombreMasajista = new javax.swing.JTextField();
+        jTF_NombreMasajista = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTFcodigoMasajista = new javax.swing.JTextField();
+        jTF_espMasajista = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTFtelefonoMasajista = new javax.swing.JTextField();
+        jTF_telefonoMasajista = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfMatriculaMasajista = new javax.swing.JTextField();
+        jTF_matriculaMasajista = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         CBEstado = new javax.swing.JCheckBox();
         btnAgregar = new javax.swing.JButton();
@@ -57,31 +61,56 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Matricula");
 
-        jLabel2.setText("Codigo masajista");
+        jLabel2.setText("Especialidad");
 
         jLabel3.setText("Telefono");
 
         jLabel4.setText("Estado");
 
         btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(txtTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(txtnombremasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(JTfNombreMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTF_NombreMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTFcodigoMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTF_espMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTFtelefonoMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTF_telefonoMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jtfMatriculaMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTF_matriculaMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(CBEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnAgregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -105,9 +134,9 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTitulo)
-                            .addComponent(JTfNombreMasajista)
-                            .addComponent(jTFcodigoMasajista)
-                            .addComponent(jtfMatriculaMasajista, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
+                            .addComponent(jTF_NombreMasajista)
+                            .addComponent(jTF_espMasajista)
+                            .addComponent(jTF_matriculaMasajista, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -115,7 +144,7 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CBEstado)
-                            .addComponent(jTFtelefonoMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTF_telefonoMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(btnAgregar)
                         .addGap(18, 18, 18)
@@ -136,19 +165,19 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtnombremasajista)
-                    .addComponent(JTfNombreMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTF_NombreMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFcodigoMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_espMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(24, 24, 24)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfMatriculaMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_matriculaMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(20, 20, 20)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTFtelefonoMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTF_telefonoMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -176,6 +205,84 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        jTF_matriculaMasajista.setText("");
+        jTF_NombreMasajista.setText("");
+        jTF_telefonoMasajista.setText("");
+        jTF_espMasajista.setText("");
+        CBEstado.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        try{
+        MasajistaData masajistaData = new MasajistaData();
+        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+        String nombreCompleto = jTF_NombreMasajista.getText();
+        String telefono =  jTF_telefonoMasajista.getText();
+        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
+        boolean estado = CBEstado.isSelected();
+        Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+        masajistaData.agregarMasajista(masajista);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+        }
+    
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+     try{
+        MasajistaData masajistaData = new MasajistaData();
+        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+        String nombreCompleto = jTF_NombreMasajista.getText();
+        String telefono =  jTF_telefonoMasajista.getText();
+        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
+        boolean estado = CBEstado.isSelected();
+        Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+        masajistaData.agregarMasajista(masajista);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+           try {
+            MasajistaData masajistaData = new MasajistaData();
+            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+            if (masajistaData.buscarMasajista(matricula) != null) {
+                masajistaData.eliminarMasajista(matricula);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+          try {
+            MasajistaData masajistaData = new MasajistaData();
+            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+            if (masajistaData.buscarMasajista(matricula) != null) {
+                String nombreCompleto = jTF_NombreMasajista.getText();
+                String telefono =  jTF_telefonoMasajista.getText();
+                EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
+                boolean estado = CBEstado.isSelected();
+                 Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+                 masajistaData.actualizarMasajista(masajista);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo dni");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,7 +321,6 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CBEstado;
-    private javax.swing.JTextField JTfNombreMasajista;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
@@ -225,9 +331,10 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTFcodigoMasajista;
-    private javax.swing.JTextField jTFtelefonoMasajista;
-    private javax.swing.JTextField jtfMatriculaMasajista;
+    private javax.swing.JTextField jTF_NombreMasajista;
+    private javax.swing.JTextField jTF_espMasajista;
+    private javax.swing.JTextField jTF_matriculaMasajista;
+    private javax.swing.JTextField jTF_telefonoMasajista;
     private javax.swing.JLabel txtTitulo;
     private javax.swing.JLabel txtnombremasajista;
     // End of variables declaration//GEN-END:variables
