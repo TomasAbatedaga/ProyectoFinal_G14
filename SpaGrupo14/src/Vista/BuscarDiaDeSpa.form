@@ -46,15 +46,15 @@
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtfdni" min="-2" pref="332" max="-2" attributes="0"/>
-                          <Component id="jtffechainicial" min="-2" pref="332" max="-2" attributes="0"/>
-                          <Component id="jtffechafinal" min="-2" pref="332" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jtfdni" pref="332" max="32767" attributes="0"/>
                           <Component id="btnBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDcFechaSpa1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jDcFechaSpa" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="200" max="32767" attributes="0"/>
+              <EmptySpace pref="321" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,14 +69,14 @@
                   <Component id="jdni" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jtffechainicial" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDcFechaSpa1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jtffechafinal" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDcFechaSpa" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
@@ -108,14 +108,14 @@
         <Property name="text" type="java.lang.String" value="Fecha Inicial"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtffechainicial">
+    <Component class="com.toedter.calendar.JDateChooser" name="jDcFechaSpa">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha Final"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtffechafinal">
+    <Component class="com.toedter.calendar.JDateChooser" name="jDcFechaSpa1">
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>

@@ -112,7 +112,6 @@ public class BuscarMasajistaPorEspecialidad extends javax.swing.JInternalFrame {
         jL_Titulo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jL_Titulo.setText("Buscar Masajistas por su Especialidad");
 
-        jcb_Especialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jcb_Especialidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcb_EspecialidadActionPerformed(evt);

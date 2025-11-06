@@ -30,9 +30,9 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
         jdni = new javax.swing.JLabel();
         jtfdni = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtffechainicial = new javax.swing.JTextField();
+        jDcFechaSpa = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        jtffechafinal = new javax.swing.JTextField();
+        jDcFechaSpa1 = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablebuscardiaspa = new javax.swing.JTable();
@@ -87,12 +87,12 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtffechainicial, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtffechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfdni, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                            .addComponent(btnBuscar)
+                            .addComponent(jDcFechaSpa1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDcFechaSpa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,13 +104,13 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
                     .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdni))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtffechainicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jDcFechaSpa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtffechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jDcFechaSpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
                 .addGap(18, 18, 18)
@@ -158,6 +158,8 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private com.toedter.calendar.JDateChooser jDcFechaSpa;
+    private com.toedter.calendar.JDateChooser jDcFechaSpa1;
     private javax.swing.JLabel jL_titulo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -165,7 +167,5 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTablebuscardiaspa;
     private javax.swing.JLabel jdni;
     private javax.swing.JTextField jtfdni;
-    private javax.swing.JTextField jtffechafinal;
-    private javax.swing.JTextField jtffechainicial;
     // End of variables declaration//GEN-END:variables
 }
