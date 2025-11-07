@@ -217,20 +217,23 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        try{
-        MasajistaData masajistaData = new MasajistaData();
-        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
-        String nombreCompleto = jTF_NombreMasajista.getText();
-        String telefono =  jTF_telefonoMasajista.getText();
-        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
-        boolean estado = CBEstado.isSelected();
-        Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
-        masajistaData.agregarMasajista(masajista);
+try {
+            MasajistaData masajistaData = new MasajistaData();
+            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+            Masajista masajista = masajistaData.buscarMasajista(matricula);
+            if (masajista != null) {
+                jTF_NombreMasajista.setText(masajista.getNombreCompleto());
+                jTF_telefonoMasajista.setText(masajista.getTelefono());
+                jTF_espMasajista.setText(masajista.getEspecialidad().toString());
+                CBEstado.setSelected(masajista.isEstado());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+            }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
         }
-    
-        
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -282,6 +285,7 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo dni");
         }
+          
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**

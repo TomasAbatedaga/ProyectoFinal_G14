@@ -89,12 +89,12 @@ public class MasajistaData {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 m = new Masajista();
-                ps.setInt(1, m.getCodMasajista());
-                ps.setInt(2, m.getMatricula());
-                ps.setString(3, m.getNombreCompleto());
-                ps.setString(4, m.getTelefono());
+                m.setCodMasajista(rs.getInt("cod_Masajista"));
+                m.setMatricula(rs.getInt("matricula"));
+                m.setNombreCompleto(rs.getString("nombre_completo"));
+                m.setTelefono(rs.getString("telefono"));
                 m.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
-                ps.setBoolean(6, m.isEstado());
+                m.setEstado(rs.getBoolean("estado"));
             }
         } catch (SQLException ex) {
             System.out.println("No existe ese nombre" + ex);
