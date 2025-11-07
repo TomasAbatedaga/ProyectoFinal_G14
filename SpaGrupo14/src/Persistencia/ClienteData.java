@@ -86,14 +86,7 @@ public class ClienteData {
             ps.setInt(1, dni);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                  c = new Cliente();
-//                ps.setInt(1, c.getCodCli());
-//                ps.setInt(2, c.getDni());
-//                ps.setString(3, c.getNombreCompleto());
-//                ps.setString(4, c.getTelefono());
-//                ps.setInt(5, c.getEdad());
-//                ps.setString(6, c.getAfecciones());
-//                ps.setBoolean(7, c.isEstado());
+                c = new Cliente();
                 c.setCodCli(rs.getInt("codCLi"));
                 c.setDni(rs.getInt("Dni"));
                 c.setNombreCompleto(rs.getString("nombre_completo"));
@@ -111,24 +104,27 @@ public class ClienteData {
     
     public void actualizarCliente(Cliente c){
         
-        String sql = "UPDATE cliente SET nombre_completo=?, telefono=?, edad=?, afecciones=?, estado=? WHERE dni=?";
+        String sql = "UPDATE cliente SET CodCli=?, nombre_completo=?, telefono=?, edad=?, afecciones=?, estado=? WHERE dni=?";
         
-        try{
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
-                
-                ps.setString(1, c.getNombreCompleto());
-                ps.setString(2, c.getTelefono());
-                ps.setInt(3, c.getEdad());
-                ps.setString(4, c.getAfecciones());
-                ps.setBoolean(5, c.isEstado());
-            ps.executeUpdate();
-            ps.close();
-            JOptionPane.showMessageDialog(null,"Cliente Actualizado con exito");
+            
+            ps.setInt(1, c.getCodCli());
+            ps.setString(2, c.getNombreCompleto());
+            ps.setString(3, c.getTelefono());
+            ps.setInt(4, c.getEdad());
+            ps.setString(5, c.getAfecciones());
+            ps.setBoolean(6, c.isEstado());
+            ps.setInt(7, c.getDni());
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Cliente Actualizado con exito");
+            }
         } catch (SQLException ex) {
             System.out.println("Error de actualizacion " + ex);
         }
     }
-    
+
     public void eliminarCliente(int dni){
         
         String sql = "DELETE FROM cliente WHERE dni=?";

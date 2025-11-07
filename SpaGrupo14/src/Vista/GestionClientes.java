@@ -75,6 +75,8 @@ public class GestionClientes extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Estado");
 
+        jtfCodigoCliente.setEditable(false);
+
         btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,6 +255,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
             ClienteData clienteData = new ClienteData();
              int dni = Integer.parseInt(jtfDniCliente.getText());
             if (clienteData.buscarCliente(dni) != null) {
+  //             int codCli = Integer.parseInt(jtfCodigoCliente.getText());
                  String nombre_completo = jtfNombreCliente.getText();
                  String telefono =  jtfTelefono.getText();
                  int edad = Integer.parseInt(jTfEdad.getText());
