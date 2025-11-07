@@ -2,15 +2,15 @@
 package Modelo;
 
 public class Masajista {
-    private int codMasajista;
+    private int cod_Masajista;
     private int matricula;
     private String nombreCompleto;
     private String telefono;
     private EspecialidadEnum especialidad;
     private boolean estado;
 
-    public Masajista(int codMasajista, int matricula, String nombreCompleto, String telefono, EspecialidadEnum especialidad, boolean estado) {
-        this.codMasajista = codMasajista;
+    public Masajista(int cod_Masajista, int matricula, String nombreCompleto, String telefono, EspecialidadEnum especialidad, boolean estado) {
+        this.cod_Masajista = cod_Masajista;
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -29,12 +29,12 @@ public class Masajista {
     public Masajista() {
     }
 
-    public int getCodMasajista() {
-        return codMasajista;
+    public int getCod_Masajista() {
+        return cod_Masajista;
     }
 
-    public void setCodMasajista(int codMasajista) {
-        this.codMasajista = codMasajista;
+    public void setCod_Masajista(int codMasajista) {
+        this.cod_Masajista = cod_Masajista;
     }
 
     public int getMatricula() {
@@ -81,7 +81,7 @@ public class Masajista {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Masajista{");
-        sb.append("codMasajista=").append(codMasajista);
+        sb.append("codMasajista=").append(cod_Masajista);
         sb.append(", matricula=").append(matricula);
         sb.append(", nombreCompleto=").append(nombreCompleto);
         sb.append(", telefono=").append(telefono);

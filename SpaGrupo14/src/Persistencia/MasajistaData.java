@@ -43,7 +43,7 @@ public class MasajistaData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
-                m.setCodMasajista(rs.getInt(1));
+                m.setCod_Masajista(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Masajista ingresado con exito");
             }
         }catch(SQLIntegrityConstraintViolationException ex){
@@ -63,7 +63,7 @@ public class MasajistaData {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 m = new Masajista();
-                m.setCodMasajista(rs.getInt("cod_masajista"));
+                m.setCod_Masajista(rs.getInt("cod_masajista"));
                 m.setMatricula(rs.getInt("matricula"));
                 m.setNombreCompleto(rs.getString("nombre_completo"));
                 m.setTelefono(rs.getString("telefono"));
@@ -89,7 +89,7 @@ public class MasajistaData {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 m = new Masajista();
-                m.setCodMasajista(rs.getInt("cod_Masajista"));
+                m.setCod_Masajista(rs.getInt("cod_Masajista"));
                 m.setMatricula(rs.getInt("matricula"));
                 m.setNombreCompleto(rs.getString("nombre_completo"));
                 m.setTelefono(rs.getString("telefono"));
@@ -104,19 +104,18 @@ public class MasajistaData {
     
     public void actualizarMasajista(Masajista m){
         
-        String sql = "UPDATE masajista SET matricula=?, nombre_completo=?, telefono=?, especialidad=?, estado=? WHERE cod_masajista=?";
+        String sql = "UPDATE masajista SET cod_masajista=?, nombre_completo=?, telefono=?, especialidad=?, estado=? WHERE matricula=?";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, m.getCod_Masajista());
+        ps.setString(2, m.getNombreCompleto());
+        ps.setString(3, m.getTelefono());
+        ps.setString(4, m.getEspecialidad().name());
+        ps.setBoolean(5, m.isEstado());
+        ps.setInt(6, m.getMatricula()); 
         
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-                
-                ps.setInt(1, m.getMatricula());
-                ps.setString(2, m.getNombreCompleto());
-                ps.setString(3, m.getTelefono());
-                ps.setString(4, m.getEspecialidad().name());
-                ps.setBoolean(5, m.isEstado());
-            ps.executeUpdate();
-            ps.close();
-            JOptionPane.showMessageDialog(null,"Masajista actualizado con exito");
+        int filas = ps.executeUpdate();
+        if (filas > 0) JOptionPane.showMessageDialog(null,"Masajista actualizado con exito");
         } catch (SQLException ex) {
             System.out.println("Error de actualizacion " + ex);
         }
