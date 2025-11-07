@@ -86,14 +86,21 @@ public class ClienteData {
             ps.setInt(1, dni);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                c = new Cliente();
-                ps.setInt(1, c.getCodCli());
-                ps.setInt(2, c.getDni());
-                ps.setString(3, c.getNombreCompleto());
-                ps.setString(4, c.getTelefono());
-                ps.setInt(5, c.getEdad());
-                ps.setString(6, c.getAfecciones());
-                ps.setBoolean(7, c.isEstado());
+                  c = new Cliente();
+//                ps.setInt(1, c.getCodCli());
+//                ps.setInt(2, c.getDni());
+//                ps.setString(3, c.getNombreCompleto());
+//                ps.setString(4, c.getTelefono());
+//                ps.setInt(5, c.getEdad());
+//                ps.setString(6, c.getAfecciones());
+//                ps.setBoolean(7, c.isEstado());
+                c.setCodCli(rs.getInt("codCLi"));
+                c.setDni(rs.getInt("Dni"));
+                c.setNombreCompleto(rs.getString("nombre_completo"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setEdad(rs.getInt("edad"));
+                c.setAfecciones(rs.getString("afecciones"));
+                c.setEstado(rs.getBoolean("estado"));
             }
         } catch (SQLException ex) {
             System.out.println("No existe ese dni" + ex);

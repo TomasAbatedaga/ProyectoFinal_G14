@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Modelo.Cliente;
+import Persistencia.ClienteData;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author abate
@@ -41,7 +45,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jtfCodigoCliente = new javax.swing.JTextField();
         jtfAfecciones = new javax.swing.JTextField();
         jtfTelefono = new javax.swing.JTextField();
-        CBestado = new javax.swing.JCheckBox();
+        CBEstado = new javax.swing.JCheckBox();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -72,14 +76,39 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jLabel8.setText("Estado");
 
         btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTfEdad, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -95,7 +124,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(jtfCodigoCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jtfAfecciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jtfTelefono, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(CBestado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(CBEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnAgregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnModificar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -141,7 +170,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                             .addComponent(jtfDniCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfAfecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CBestado))
+                            .addComponent(CBEstado))
                         .addGap(71, 71, 71))))
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -176,7 +205,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(CBestado))
+                    .addComponent(CBEstado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
@@ -200,6 +229,93 @@ public class GestionClientes extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+         try{
+        ClienteData clienteData = new ClienteData();
+        int dni = Integer.parseInt(jtfDniCliente.getText());
+        String nombre_completo = jtfNombreCliente.getText();
+        String telefono =  jtfTelefono.getText();
+        int edad = Integer.parseInt(jTfEdad.getText());
+        String afecciones = jtfAfecciones.getText();
+        boolean estado = CBEstado.isSelected();
+        Cliente cliente = new Cliente(dni, nombre_completo, telefono, edad, afecciones, estado);
+        clienteData.agregarCliente(cliente);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+         try {
+            ClienteData clienteData = new ClienteData();
+             int dni = Integer.parseInt(jtfDniCliente.getText());
+            if (clienteData.buscarCliente(dni) != null) {
+                 String nombre_completo = jtfNombreCliente.getText();
+                 String telefono =  jtfTelefono.getText();
+                 int edad = Integer.parseInt(jTfEdad.getText());
+                 String afecciones = jtfAfecciones.getText();
+                 boolean estado = CBEstado.isSelected();
+                 Cliente cliente = new Cliente(dni, nombre_completo, telefono, edad, afecciones, estado);
+                 clienteData.actualizarCliente(cliente);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            ClienteData clienteData = new ClienteData();
+            int dni = Integer.parseInt(jtfDniCliente.getText());
+            Cliente cliente = clienteData.buscarCliente(dni);
+            if (cliente != null) {
+                jtfCodigoCliente.setText(String.valueOf(cliente.getCodCli()));
+                jtfNombreCliente.setText(cliente.getNombreCompleto());
+                jtfTelefono.setText(cliente.getTelefono());
+                jTfEdad.setText(String.valueOf(cliente.getEdad()));
+                jtfAfecciones.setText(cliente.getAfecciones());
+                CBEstado.setSelected(cliente.isEstado());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresada");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        jtfDniCliente.setText("");
+        jtfNombreCliente.setText("");
+        jtfTelefono.setText("");
+        jTfEdad.setText("");
+        jtfAfecciones.setText("");
+        CBEstado.setSelected(false);
+        jtfCodigoCliente.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+       try {
+            ClienteData clienteData = new ClienteData();
+            int dni = Integer.parseInt(jtfDniCliente.getText());
+            if (clienteData.buscarCliente(dni) != null) {
+                clienteData.eliminarCliente(dni);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresada");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+        }
+         
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,7 +353,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox CBestado;
+    private javax.swing.JCheckBox CBEstado;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;

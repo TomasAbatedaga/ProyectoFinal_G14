@@ -226,7 +226,7 @@ try {
                 jTF_telefonoMasajista.setText(masajista.getTelefono());
                 jTF_espMasajista.setText(masajista.getEspecialidad().toString());
                 CBEstado.setSelected(masajista.isEstado());
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
             }
@@ -283,7 +283,7 @@ try {
                 JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo dni");
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
         }
           
     }//GEN-LAST:event_btnModificarActionPerformed
