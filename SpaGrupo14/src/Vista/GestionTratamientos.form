@@ -76,7 +76,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
                               <Component id="JTFdetalleTratamiento1" min="-2" pref="331" max="-2" attributes="0"/>
-                              <Component id="CbEstado" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CBEstado" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="JTFduracionTratamiento" alignment="0" max="32767" attributes="0"/>
                               <Component id="CmbTipoTratamiento" alignment="0" max="32767" attributes="0"/>
                               <Component id="JTFcostoTratamiento" alignment="0" max="32767" attributes="0"/>
@@ -136,7 +136,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtEstado" min="-2" max="-2" attributes="0"/>
-                      <Component id="CbEstado" min="-2" max="-2" attributes="0"/>
+                      <Component id="CBEstado" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -207,9 +207,9 @@
             <Property name="text" type="java.lang.String" value="Tipo de tratamiento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="CbEstado">
+        <Component class="javax.swing.JCheckBox" name="CBEstado">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CbEstadoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CBEstadoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="txtEstado">
@@ -231,6 +231,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="AGREGAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAgregarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>

@@ -4,10 +4,14 @@
  */
 package Vista;
 
+import Modelo.EspecialidadEnum;
+import Modelo.Tratamiento;
+import Persistencia.TratamientoData;
 import java.awt.Graphics;
 import java.awt.Image;
 import static java.lang.reflect.Array.set;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -21,8 +25,16 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
      */
     public GestionTratamientos() {
         initComponents();
+        cargarEspecialidad();
     }
-
+    public void cargarEspecialidad() {
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()){
+            CmbTipoTratamiento.addItem(especialidad.toString());
+        }
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +56,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         txtDuracion = new javax.swing.JLabel();
         JTFdetalleTratamiento1 = new javax.swing.JTextField();
         txtDuracion1 = new javax.swing.JLabel();
-        CbEstado = new javax.swing.JCheckBox();
+        CBEstado = new javax.swing.JCheckBox();
         txtEstado = new javax.swing.JLabel();
         BtnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -95,9 +107,9 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
 
         txtDuracion1.setText("Tipo de tratamiento:");
 
-        CbEstado.addActionListener(new java.awt.event.ActionListener() {
+        CBEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CbEstadoActionPerformed(evt);
+                CBEstadoActionPerformed(evt);
             }
         });
 
@@ -108,6 +120,11 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         btnBuscar.setText("BUSCAR");
 
         BtnAgregar.setText("AGREGAR");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAgregarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Codigo de tratamiento:");
 
@@ -124,7 +141,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(txtDuracion, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(JTFdetalleTratamiento1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(txtDuracion1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(CbEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(CBEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(txtEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(BtnLimpiar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -160,7 +177,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
                     .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(JTFdetalleTratamiento1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CbEstado, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CBEstado, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JTFduracionTratamiento, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CmbTipoTratamiento, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JTFcostoTratamiento, javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +225,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEstado)
-                    .addComponent(CbEstado))
+                    .addComponent(CBEstado))
                 .addGap(27, 27, 27)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAgregar)
@@ -235,9 +252,9 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbEstadoActionPerformed
+    private void CBEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBEstadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CbEstadoActionPerformed
+    }//GEN-LAST:event_CBEstadoActionPerformed
 
     private void JTFdetalleTratamiento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFdetalleTratamiento1ActionPerformed
         // TODO add your handling code here:
@@ -250,6 +267,23 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
     private void JTFnombreTratamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFnombreTratamientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTFnombreTratamientoActionPerformed
+
+    private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
+        // TODO add your handling code here:
+          try{
+        TratamientoData tratamientoData = new TratamientoData();
+        String nombre = JTFnombreTratamiento.getText();
+        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(CmbTipoTratamiento.getSelectedItem().toString().trim().toUpperCase());
+        String detalle =  JTFdetalleTratamiento1.getText();
+        int duracion = Integer.parseInt(JTFduracionTratamiento.getText());
+        double costo = Double.parseDouble(JTFcostoTratamiento.getText());
+        boolean estado = CBEstado.isSelected();
+        Tratamiento tratamiento = new Tratamiento (nombre, especialidad, detalle, duracion, costo, estado);
+        tratamientoData.agregarTratamiento(tratamiento);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos Duración y Costo");
+        }
+    }//GEN-LAST:event_BtnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,7 +325,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnLimpiar;
     private javax.swing.JButton BtnModificar;
-    private javax.swing.JCheckBox CbEstado;
+    private javax.swing.JCheckBox CBEstado;
     private javax.swing.JComboBox<String> CmbTipoTratamiento;
     private javax.swing.JTextField JTFcodigoTratamiento;
     private javax.swing.JTextField JTFcostoTratamiento;

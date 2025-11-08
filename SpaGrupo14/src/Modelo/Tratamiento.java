@@ -21,9 +21,10 @@ public class Tratamiento {
         this.estado = estado;
     }
 
-    public Tratamiento(String nombre, String detalle, int duracion, double costo, boolean estado) {
+    public Tratamiento(String nombre,EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
         this.codTratam = -1;
         this.nombre = nombre;
+        this.especialidad = especialidad;
         this.detalle = detalle;
         this.duracion = duracion;
         this.costo = costo;
