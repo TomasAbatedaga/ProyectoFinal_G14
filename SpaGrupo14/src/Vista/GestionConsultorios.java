@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Modelo.Consultorio;
+import Persistencia.ConsultorioData;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author abate
@@ -35,7 +39,7 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jtfCodigoConsul = new javax.swing.JTextField();
-        JtfEquimapientos = new javax.swing.JTextField();
+        JtfEquipamientos = new javax.swing.JTextField();
         jtfUsos = new javax.swing.JTextField();
         CBEstado = new javax.swing.JCheckBox();
         btnAgregar = new javax.swing.JButton();
@@ -64,6 +68,11 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         jLabel6.setText("Estado");
 
         btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,10 +82,25 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         });
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnBorrar.setText("BORRAR");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -86,7 +110,7 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jtfCodigoConsul, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(JtfEquimapientos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(JtfEquipamientos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jtfUsos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(CBEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnAgregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -122,7 +146,7 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(JtfEquimapientos, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                                    .addComponent(JtfEquipamientos, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                                     .addComponent(jtfUsos)
                                     .addComponent(CBEstado)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
@@ -153,7 +177,7 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(JtfEquimapientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JtfEquipamientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -188,7 +212,86 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+     try {
+            ConsultorioData consultorioData = new ConsultorioData();
+             int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
+             
+            if (consultorioData.buscarConsultorio(codigoConsultorio)!= null) {
+                int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText()); 
+                 String equipamiento = JtfEquipamientos.getText();
+                 String usos =  jtfUsos.getText();
+                 boolean estado = CBEstado.isSelected();
+                 Consultorio consultorio = new Consultorio(codigoConsultorio, nro_consultorio, equipamiento, usos, estado);
+                 consultorioData.actualizarConsultorio(consultorio);
+                 
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Consultorio ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+    try{
+        ConsultorioData consultorioData = new ConsultorioData();
+        int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText());
+        String equipamiento = JtfEquipamientos.getText();
+        String usos =  jtfUsos.getText();
+        boolean estado = CBEstado.isSelected();
+        Consultorio consultorio = new Consultorio(nro_consultorio, equipamiento, usos, estado);
+        consultorioData.agregarConsultorio(consultorio);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+        }  
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            ConsultorioData consultorioData = new ConsultorioData();
+            int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
+            Consultorio consultorio = consultorioData.buscarConsultorio(codigoConsultorio);
+            if (consultorio != null) {
+            //  jtfCodigoConsul.setText(String.valueOf(consultorio.getCodConsultorio()));
+                JTFnumeroConsultorio.setText(String.valueOf(consultorio.getNroConsultorio()));
+                JtfEquipamientos.setText(consultorio.getEquipamiento());
+                jtfUsos.setText(consultorio.getUsos());
+                CBEstado.setSelected(consultorio.isEstado());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo del Consultorio ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        JTFnumeroConsultorio.setText("");
+        jtfCodigoConsul.setText("");
+        JtfEquipamientos.setText("");
+        jtfUsos.setText("");
+        CBEstado.setSelected(false); 
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+         try {
+            ConsultorioData consultorioData = new ConsultorioData();
+            int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
+            if (consultorioData.buscarConsultorio(codigoConsultorio) != null) {
+                consultorioData.eliminarConsultorio(codigoConsultorio);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Consultorio ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+        }
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,7 +331,7 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CBEstado;
     private javax.swing.JTextField JTFnumeroConsultorio;
-    private javax.swing.JTextField JtfEquimapientos;
+    private javax.swing.JTextField JtfEquipamientos;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;

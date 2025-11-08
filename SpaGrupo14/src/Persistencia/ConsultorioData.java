@@ -89,22 +89,24 @@ public class ConsultorioData {
     
     public void actualizarConsultorio(Consultorio consultorio){
         
-        String sql = "UPDATE consultorio SET nro_consultorio=?, uso=?, equipamiento=?, estado=? WHERE cod_consultorio=?";
+        String sql = "UPDATE consultorio SET  cod_consultorio=? , uso=?, equipamiento=?, estado=? WHERE nro_consultorio=? ";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
                 ps.setInt(1, consultorio.getCodConsultorio());
-                ps.setInt(2, consultorio.getNroConsultorio());
-                ps.setString(3, consultorio.getUsos());
-                ps.setString(4, consultorio.getEquipamiento());
-                ps.setBoolean(5, consultorio.isEstado());
-            ps.executeUpdate();
-            ps.close();
-            JOptionPane.showMessageDialog(null,"Consultorio Actualizado con exito");
+                           
+                ps.setString(2, consultorio.getUsos());
+                ps.setString(3, consultorio.getEquipamiento());
+                ps.setBoolean(4, consultorio.isEstado());
+                ps.setInt(5, consultorio.getNroConsultorio());
+                
+            int filas = ps.executeUpdate();
+            if (filas > 0)
+                   JOptionPane.showMessageDialog(null,"Consultorio Actualizado con exito");
         } catch (SQLException ex) {
             System.out.println("Error de actualizacion " + ex);
         }
-    }
+    }    
     
     public void eliminarConsultorio(int codigoConsultorio){
         
