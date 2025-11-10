@@ -28,7 +28,7 @@ public class Sesion {
     }
 
     public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, List<Instalacion> instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
-        this.codSesion = -1;
+        this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.tratamiento = tratamiento;
@@ -40,7 +40,7 @@ public class Sesion {
     }
 
     public Sesion() {
-        this.codSesion = -1;
+        this.codSesion = codSesion;
     }
 
     public int getCodSesion() {

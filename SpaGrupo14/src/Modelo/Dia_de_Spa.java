@@ -24,7 +24,7 @@ public class Dia_de_Spa {
     }
 
     public Dia_de_Spa(LocalDate fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
-        this.codPack = -1;
+        this.codPack = codPack;
         this.fechaYHora = fechaYHora;
         this.preferencias = preferencias;
         this.cliente = cliente;
@@ -34,7 +34,7 @@ public class Dia_de_Spa {
     }
 
     public Dia_de_Spa() {
-        this.codPack = -1;
+        this.codPack = codPack;
     }
 
     public int getCodPack() {

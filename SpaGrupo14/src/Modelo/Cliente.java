@@ -21,7 +21,7 @@ public class Cliente {
     }
 
     public Cliente(int dni, String nombreCompleto, String telefono, int edad, String afecciones, boolean estado) {
-        this.codCli = -1;
+        this.codCli = codCli;
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -31,7 +31,7 @@ public class Cliente {
     }
 
     public Cliente() {
-        this.codCli = -1;
+        this.codCli = codCli;
     }
 
     public int getCodCli() {

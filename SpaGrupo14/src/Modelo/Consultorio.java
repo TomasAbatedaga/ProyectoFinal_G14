@@ -17,7 +17,7 @@ public class Consultorio {
     }
 
     public Consultorio(int nroConsultorio, String usos, String equipamiento, boolean estado) {
-        this.cod_Consultorio = -1;
+        this.cod_Consultorio = cod_Consultorio;
         this.nroConsultorio = nroConsultorio;
         this.usos = usos;
         this.equipamiento = equipamiento;
@@ -25,7 +25,7 @@ public class Consultorio {
     }
 
     public Consultorio() {
-        this.cod_Consultorio = -1;
+        this.cod_Consultorio = cod_Consultorio;
     }
 
     public int getCodConsultorio() {

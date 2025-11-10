@@ -23,7 +23,7 @@ public class Tratamiento {
     }
 
     public Tratamiento( String nombre,EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
-        this.codTratam = -1;
+        this.codTratam = codTratam;
         this.nombre = nombre;
         this.especialidad = especialidad;
         this.detalle = detalle;
@@ -33,7 +33,7 @@ public class Tratamiento {
     }
 
     public Tratamiento() {
-        this.codTratam = -1 ;
+        this.codTratam = codTratam ;
     }
 
     public int getCodTratam() {

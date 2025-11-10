@@ -17,7 +17,7 @@ public class Instalacion {
     }
 
     public Instalacion(String nombre, String detalleUso, double precio30M, boolean estado) {
-        this.codInstal = -1;
+        this.codInstal = codInstal;
         this.nombre = nombre;
         this.detalleUso = detalleUso;
         this.precio30M = precio30M;
@@ -25,7 +25,7 @@ public class Instalacion {
     }
 
     public Instalacion() {
-        this.codInstal = -1;
+        this.codInstal = codInstal;
     }
 
     public int getCodInstal() {
