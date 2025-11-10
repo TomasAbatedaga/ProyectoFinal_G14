@@ -70,8 +70,10 @@ public class Consultorio {
 
     @Override
     public String toString() {
-        return "Consultorio{" + "codConsultorio=" + cod_Consultorio + ", nroConsultorio=" + nroConsultorio + ", usos=" + usos + ", equipamiento=" + equipamiento + ", estado=" + estado + '}';
+        return "Consultorio N°" + nroConsultorio;
     }
+
+    
     
     
     

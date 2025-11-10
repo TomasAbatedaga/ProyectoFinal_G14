@@ -59,8 +59,6 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Numero de Consultorio");
 
-        JTFnumeroConsultorio.setEditable(false);
-
         jLabel3.setText("Codigo");
 
         jLabel4.setText("Equipamientos");
@@ -68,6 +66,8 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         jLabel5.setText("Usos");
 
         jLabel6.setText("Estado");
+
+        jtfCodigoConsul.setEditable(false);
 
         btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {

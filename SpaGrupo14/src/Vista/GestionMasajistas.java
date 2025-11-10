@@ -19,6 +19,12 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
      */
     public GestionMasajistas() {
         initComponents();
+        cargarEspecialidad();
+    }
+    public void cargarEspecialidad() {
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()){
+            jCbEspecialidad.addItem(especialidad.toString());
+        }
     }
 
     /**
@@ -35,7 +41,6 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         txtnombremasajista = new javax.swing.JLabel();
         jTF_NombreMasajista = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTF_espMasajista = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTF_telefonoMasajista = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -47,6 +52,7 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        jCbEspecialidad = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -106,7 +112,6 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(txtnombremasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTF_NombreMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTF_espMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTF_telefonoMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -118,6 +123,7 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnLimpiar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jCbEspecialidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -135,8 +141,8 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTitulo)
                             .addComponent(jTF_NombreMasajista, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                            .addComponent(jTF_espMasajista)
-                            .addComponent(jTF_matriculaMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTF_matriculaMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCbEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -168,10 +174,10 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                     .addComponent(txtnombremasajista)
                     .addComponent(jTF_NombreMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTF_espMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(24, 24, 24)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jCbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTF_matriculaMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
@@ -190,7 +196,7 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,7 +218,6 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         jTF_matriculaMasajista.setText("");
         jTF_NombreMasajista.setText("");
         jTF_telefonoMasajista.setText("");
-        jTF_espMasajista.setText("");
         CBEstado.setSelected(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -225,7 +230,7 @@ try {
             if (masajista != null) {
                 jTF_NombreMasajista.setText(masajista.getNombreCompleto());
                 jTF_telefonoMasajista.setText(masajista.getTelefono());
-                jTF_espMasajista.setText(masajista.getEspecialidad().toString());
+                //jTF_espMasajista.setText(masajista.getEspecialidad().toString());
                 CBEstado.setSelected(masajista.isEstado());
                 
             } else {
@@ -244,7 +249,7 @@ try {
         int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
         String nombreCompleto = jTF_NombreMasajista.getText();
         String telefono =  jTF_telefonoMasajista.getText();
-        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
+        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
         boolean estado = CBEstado.isSelected();
         Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
         masajistaData.agregarMasajista(masajista);
@@ -276,7 +281,7 @@ try {
             if (masajistaData.buscarMasajista(matricula) != null) {
                 String nombreCompleto = jTF_NombreMasajista.getText();
                 String telefono =  jTF_telefonoMasajista.getText();
-                EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jTF_espMasajista.getText().trim().toUpperCase());
+                EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
                 boolean estado = CBEstado.isSelected();
                  Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
                  masajistaData.actualizarMasajista(masajista);
@@ -331,13 +336,13 @@ try {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> jCbEspecialidad;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTF_NombreMasajista;
-    private javax.swing.JTextField jTF_espMasajista;
     private javax.swing.JTextField jTF_matriculaMasajista;
     private javax.swing.JTextField jTF_telefonoMasajista;
     private javax.swing.JLabel txtTitulo;
