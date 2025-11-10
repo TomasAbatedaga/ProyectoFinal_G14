@@ -12,16 +12,17 @@ public class Tratamiento {
     private double costo;
     private boolean estado;
 
-    public Tratamiento(int codTratam, String nombre, String detalle, int duracion, double costo, boolean estado) {
+    public Tratamiento(int codTratam, String nombre, EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
         this.codTratam = codTratam;
         this.nombre = nombre;
+        this.especialidad = especialidad;
         this.detalle = detalle;
         this.duracion = duracion;
         this.costo = costo;
         this.estado = estado;
     }
 
-    public Tratamiento(String nombre,EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
+    public Tratamiento( String nombre,EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
         this.codTratam = -1;
         this.nombre = nombre;
         this.especialidad = especialidad;

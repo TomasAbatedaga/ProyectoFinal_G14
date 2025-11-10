@@ -65,9 +65,9 @@ public class TratamientoData {
             ps.setDouble(5, t.getCosto());
             ps.setBoolean(6, t.isEstado());
             ps.setInt(7, t.getCodTratam());
-            ps.executeUpdate();
-            ps.close();
-            JOptionPane.showMessageDialog(null, "Tratamiento actualizado con éxito");
+            
+            int filas = ps.executeUpdate();
+            if (filas > 0)  JOptionPane.showMessageDialog(null, "Tratamiento actualizado con éxito");
         } catch (SQLException ex) {
             System.out.println("Error de actualización: " + ex);
         }

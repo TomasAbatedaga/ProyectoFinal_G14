@@ -77,6 +77,11 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         jLabel2.setText("Costo del tratamiento:");
 
         BtnEliminar.setText("ELIMINAR");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
 
         JTFnombreTratamiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,8 +121,18 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         txtEstado.setText("Estado del tratamiento:");
 
         BtnLimpiar.setText("LIMPIAR");
+        BtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         BtnAgregar.setText("AGREGAR");
         BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +144,11 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         jLabel3.setText("Codigo de tratamiento:");
 
         BtnModificar.setText("MODIFICAR");
+        BtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnModificarActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(BtnEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -284,6 +304,74 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos Duración y Costo");
         }
     }//GEN-LAST:event_BtnAgregarActionPerformed
+
+    private void BtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarActionPerformed
+        // TODO add your handling code here:
+        JTFcodigoTratamiento.setText("");
+        JTFnombreTratamiento.setText("");
+        JTFdetalleTratamiento1.setText("");
+        JTFduracionTratamiento.setText("");
+        JTFcostoTratamiento.setText("");
+        CBEstado.setSelected(false);
+    }//GEN-LAST:event_BtnLimpiarActionPerformed
+
+    private void BtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModificarActionPerformed
+        // TODO add your handling code here:
+          try {
+            TratamientoData tratamientoData = new TratamientoData();
+             int codTratamiento = Integer.parseInt(JTFcodigoTratamiento.getText());
+            if (tratamientoData.buscarTratamiento(codTratamiento) != null) {
+                 String nombre = JTFnombreTratamiento.getText();
+                 EspecialidadEnum especialidad = EspecialidadEnum.valueOf(CmbTipoTratamiento.getSelectedItem().toString().trim().toUpperCase());
+                 String detalle =  JTFdetalleTratamiento1.getText();
+                 int duracion = Integer.parseInt(JTFduracionTratamiento.getText());
+                 double costo = Double.parseDouble(JTFcostoTratamiento.getText());
+                 boolean estado = CBEstado.isSelected();
+                 Tratamiento tratamiento = new Tratamiento( codTratamiento,nombre, especialidad, detalle, duracion, costo, estado);
+                 tratamientoData.actualizarTratamiento(tratamiento);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo de Tratamiento ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo de Tratamiento");
+        }
+    }//GEN-LAST:event_BtnModificarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+         try {
+            TratamientoData tratamientoData = new TratamientoData();
+            int codTratamiento = Integer.parseInt(JTFcodigoTratamiento.getText());
+            Tratamiento tratamiento = tratamientoData.buscarTratamiento(codTratamiento);
+            if (tratamiento != null) {
+                 JTFnombreTratamiento.setText(tratamiento.getNombre());
+                 CmbTipoTratamiento.setSelectedItem(tratamiento.getEspecialidad().toString());
+                 JTFdetalleTratamiento1.setText(tratamiento.getDetalle());
+                 JTFduracionTratamiento.setText(String.valueOf(tratamiento.getDuracion()));
+                 JTFcostoTratamiento.setText(String.valueOf(tratamiento.getCosto()));
+                CBEstado.setSelected(tratamiento.isEstado());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el codigo del Tratamiento ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo del Tratamiento");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+         try {
+            TratamientoData tratamientoData = new TratamientoData();
+            int codTratamiento = Integer.parseInt(JTFcodigoTratamiento.getText());
+            if (tratamientoData.buscarTratamiento(codTratamiento) != null) {
+                tratamientoData.eliminarTratamiento(codTratamiento);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Tratamiento ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo de tratamiento");
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
