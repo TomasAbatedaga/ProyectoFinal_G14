@@ -26,25 +26,182 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jtfservicio = new javax.swing.JTextField();
+        jservicio = new javax.swing.JLabel();
+        jServicio1 = new javax.swing.JLabel();
+        jtfhorainicio = new javax.swing.JTextField();
+        btnBuscardisponibilidad = new javax.swing.JButton();
+        jServicio2 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jServicio3 = new javax.swing.JLabel();
+        jServicio4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jServicio5 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        btnBuscardisponibilidad1 = new javax.swing.JButton();
+        btnBuscardisponibilidad2 = new javax.swing.JButton();
+
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
 
+        jLabel2.setFont(new java.awt.Font("SimSun", 1, 24)); // NOI18N
+        jLabel2.setText("Agregar Sesiones");
+
+        jservicio.setText("Tipo de Servicio:");
+
+        jServicio1.setText("Hora Inicio:");
+
+        jtfhorainicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfhorainicioActionPerformed(evt);
+            }
+        });
+
+        btnBuscardisponibilidad.setText("Agregar");
+        btnBuscardisponibilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscardisponibilidadActionPerformed(evt);
+            }
+        });
+
+        jServicio2.setText("Hora Final:");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jServicio3.setText("Consultorio:");
+
+        jServicio4.setText("Masajista:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jServicio5.setText("Estado:");
+
+        btnBuscardisponibilidad1.setText("Borrar");
+        btnBuscardisponibilidad1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscardisponibilidad1ActionPerformed(evt);
+            }
+        });
+
+        btnBuscardisponibilidad2.setText("Modificar");
+        btnBuscardisponibilidad2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscardisponibilidad2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 853, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(btnBuscardisponibilidad))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jServicio1)
+                                    .addComponent(jservicio)
+                                    .addComponent(jServicio3)
+                                    .addComponent(jServicio4)
+                                    .addComponent(jServicio5))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtfhorainicio)
+                                    .addComponent(jtfservicio)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jServicio2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBox3, 0, 109, Short.MAX_VALUE))
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCheckBox1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(67, 67, 67)
+                                .addComponent(btnBuscardisponibilidad2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBuscardisponibilidad1)))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 609, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel2)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jservicio)
+                    .addComponent(jtfservicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jServicio1)
+                    .addComponent(jServicio2)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfhorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jServicio3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jServicio4)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jServicio5))
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscardisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscardisponibilidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscardisponibilidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscardisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscardisponibilidadActionPerformed
+
+    private void jtfhorainicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfhorainicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfhorainicioActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnBuscardisponibilidad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidad1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscardisponibilidad1ActionPerformed
+
+    private void btnBuscardisponibilidad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscardisponibilidad2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscardisponibilidad2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,5 +239,21 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscardisponibilidad;
+    private javax.swing.JButton btnBuscardisponibilidad1;
+    private javax.swing.JButton btnBuscardisponibilidad2;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jServicio1;
+    private javax.swing.JLabel jServicio2;
+    private javax.swing.JLabel jServicio3;
+    private javax.swing.JLabel jServicio4;
+    private javax.swing.JLabel jServicio5;
+    private javax.swing.JLabel jservicio;
+    private javax.swing.JTextField jtfhorainicio;
+    private javax.swing.JTextField jtfservicio;
     // End of variables declaration//GEN-END:variables
 }
