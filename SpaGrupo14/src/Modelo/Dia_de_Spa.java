@@ -95,7 +95,7 @@ public class Dia_de_Spa {
 
     @Override
     public String toString() {
-        return "Dia_de_Spa{" + "codPack=" + codPack + ", fechaHoraInicio=" + fechaYHora + ", preferencias=" + preferencias + ", cliente=" + cliente + ", sesiones=" + sesiones + ", monto=" + monto + ", estado=" + estado + '}';
+        return codPack + "";
     }
 
     

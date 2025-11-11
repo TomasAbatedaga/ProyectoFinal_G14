@@ -61,7 +61,11 @@ public class SesionData {
     public List<Sesion> listarSesion(){
         Sesion s = null;
         List<Sesion> sesiones = new ArrayList<>();
-        String sql = "SELECT * from Sesion WHERE estado = 1";
+        String sql = "SELECT * from Sesion s"
+                + "JOIN tratamiento t ON s.cod_tratamiento = t.cod_tratamiento"
+                + "JOIN consultorio c ON s.cod_consultorio = c.cod_consultorio"
+                + "JOIN masajista m ON s.cod_masajista = m.cod_masajista"
+                + "JOIN dia_de_spa ds ON s.cod_pack = ds.cod_pack WHERE estado = 1";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

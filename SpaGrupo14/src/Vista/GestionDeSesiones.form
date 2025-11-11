@@ -35,38 +35,45 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jServicio1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jservicio" min="-2" max="-2" attributes="0"/>
-                          <Component id="jServicio3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jServicio4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jServicio5" min="-2" max="-2" attributes="0"/>
-                          <Component id="jServicio6" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jCheckEstado" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTfhoraInicio" min="-2" pref="107" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jServicio2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTfhoraFin" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jServicio1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jservicio" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jServicio3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jServicio4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jServicio6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jServicio7" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jCbmasajista" alignment="0" pref="309" max="32767" attributes="0"/>
-                              <Component id="jCbtratamiento" max="32767" attributes="0"/>
-                              <Component id="jCbconsultorio" max="32767" attributes="0"/>
-                              <Component id="jCbInstalacion" alignment="0" pref="309" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jTfhoraInicio" min="-2" pref="107" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jServicio2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jTfhoraFin" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jCbmasajista" alignment="0" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jCbtratamiento" max="32767" attributes="0"/>
+                                  <Component id="jCbconsultorio" max="32767" attributes="0"/>
+                                  <Component id="jCbInstalacion" alignment="0" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jCbCodPaquete" alignment="0" pref="309" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jServicio5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jCheckEstado" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jBtnAgregar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="JBtnModificar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                              <Component id="jBtnBorrar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      <Component id="jBtnAgregar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="JBtnModificar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
-                      <Component id="jBtnBorrar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="82" max="32767" attributes="0"/>
@@ -105,7 +112,12 @@
                   <Component id="jServicio6" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jCbInstalacion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jCbCodPaquete" min="-2" max="-2" attributes="0"/>
+                  <Component id="jServicio7" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jServicio5" min="-2" max="-2" attributes="0"/>
                   <Component id="jCheckEstado" min="-2" max="-2" attributes="0"/>
@@ -116,7 +128,7 @@
                   <Component id="jBtnBorrar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="JBtnModificar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="72" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -236,6 +248,24 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCbInstalacionActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jServicio7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cod. Paquete:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jCbCodPaquete">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCbCodPaqueteActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

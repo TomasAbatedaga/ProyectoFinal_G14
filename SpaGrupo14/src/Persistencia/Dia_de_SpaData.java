@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Modelo.Cliente;
 import Modelo.Dia_de_Spa;
+import Modelo.Sesion;
 import Persistencia.Conexion;
 import Persistencia.ClienteData;
 
@@ -47,6 +48,31 @@ public class Dia_de_SpaData {
         } catch (SQLException ex) {
             System.out.println("Error de conexion: " + ex);
         }
+    }
+    
+    public List<Dia_de_Spa> listarDia_de_Spa(){
+        Dia_de_Spa ds = null;
+        List<Dia_de_Spa> DiasDeSpa = new ArrayList<>();
+        String sql = "SELECT * from dia_de_spa WHERE estado = 1";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ds = new Dia_de_Spa();
+                ds.setCodPack(rs.getInt("cod_pack"));
+                ds.setFechaYHora(rs.getDate("fecha_hora").toLocalDate());
+                ds.setPreferencias(rs.getString("preferencias"));
+                ds.getCliente().setCodCli(rs.getInt("cod_cliente"));
+                ds.setMonto(rs.getDouble("monto"));
+                ds.setEstado(rs.getBoolean("estado"));
+                
+                DiasDeSpa.add(ds);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error de conexion: " + ex);
+        }   
+        return DiasDeSpa;
     }
 
     public List<Dia_de_Spa> listarDiaSpa(String dniCliente, java.time.LocalDate fechaInicio, java.time.LocalDate fechaFin) {

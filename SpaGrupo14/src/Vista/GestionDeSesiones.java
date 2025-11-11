@@ -5,6 +5,7 @@
 package Vista;
 
 import Modelo.Consultorio;
+import Modelo.Dia_de_Spa;
 import Modelo.Instalacion;
 import Modelo.Masajista;
 import Modelo.Sesion;
@@ -12,8 +13,13 @@ import Modelo.Tratamiento;
 import Persistencia.ConsultorioData;
 import Persistencia.InstalacionData;
 import Persistencia.MasajistaData;
+import Persistencia.SesionData;
 import Persistencia.TratamientoData;
 import java.util.ArrayList;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import persistencia.Dia_de_SpaData;
 
 /**
  *
@@ -24,6 +30,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private ArrayList<Consultorio> listaConsultorio;
     private ArrayList<Masajista> listaMasajista;
     private ArrayList<Instalacion> listaInstalacion;
+    private ArrayList<Dia_de_Spa> listaDiaDeSpa;
+    private Dia_de_SpaData abmDia_de_Spa;
     private InstalacionData abmInstalacion;
     private MasajistaData abmMasajista;
     private ConsultorioData abmConsultorio;
@@ -38,6 +46,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         abmTratamiento = new TratamientoData();
         abmMasajista = new MasajistaData();
         abmInstalacion = new InstalacionData();
+        abmDia_de_Spa = new Dia_de_SpaData();
+        listaDiaDeSpa = (ArrayList<Dia_de_Spa>) abmDia_de_Spa.listarDia_de_Spa();
         listaTratamiento = (ArrayList<Tratamiento>) abmTratamiento.listarTratamientos();
         listaConsultorio = (ArrayList<Consultorio>) abmConsultorio.listarConsultorios();
         listaMasajista = (ArrayList<Masajista>) abmMasajista.listarMasajista();
@@ -46,6 +56,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboConsultorio();
         cargarComboMasajista();
         cargarComboInstalacion();
+        cargarComboDiaDeSpa();
     }
 
     /**
@@ -75,6 +86,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         jTfhoraFin = new javax.swing.JTextField();
         jServicio6 = new javax.swing.JLabel();
         jCbInstalacion = new javax.swing.JComboBox<>();
+        jServicio7 = new javax.swing.JLabel();
+        jCbCodPaquete = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -132,6 +145,14 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             }
         });
 
+        jServicio7.setText("Cod. Paquete:");
+
+        jCbCodPaquete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCbCodPaqueteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,33 +165,38 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jServicio1)
-                            .addComponent(jservicio)
-                            .addComponent(jServicio3)
-                            .addComponent(jServicio4)
-                            .addComponent(jServicio5)
-                            .addComponent(jServicio6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckEstado)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jTfhoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jServicio2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTfhoraFin))
-                                .addComponent(jCbmasajista, 0, 309, Short.MAX_VALUE)
-                                .addComponent(jCbtratamiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCbconsultorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCbInstalacion, 0, 309, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jBtnAgregar)
-                        .addGap(67, 67, 67)
-                        .addComponent(JBtnModificar)
-                        .addGap(95, 95, 95)
-                        .addComponent(jBtnBorrar)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jServicio1)
+                                    .addComponent(jservicio)
+                                    .addComponent(jServicio3)
+                                    .addComponent(jServicio4)
+                                    .addComponent(jServicio6)
+                                    .addComponent(jServicio7))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTfhoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jServicio2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTfhoraFin))
+                                    .addComponent(jCbmasajista, 0, 309, Short.MAX_VALUE)
+                                    .addComponent(jCbtratamiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCbconsultorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCbInstalacion, 0, 309, Short.MAX_VALUE)
+                                    .addComponent(jCbCodPaquete, 0, 309, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jServicio5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckEstado))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jBtnAgregar)
+                                .addGap(67, 67, 67)
+                                .addComponent(JBtnModificar)
+                                .addGap(95, 95, 95)
+                                .addComponent(jBtnBorrar)))))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -200,7 +226,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jServicio6)
                     .addComponent(jCbInstalacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCbCodPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jServicio7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jServicio5)
                     .addComponent(jCheckEstado))
@@ -209,7 +239,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                     .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(70, 70, 70))
         );
 
         pack();
@@ -218,8 +248,17 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
         // TODO add your handling code here:
         try {
-            Sesion s = new Sesion();
-            
+            SesionData sd = new SesionData();
+            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+            Time horaInicio = Time.valueOf(jTfhoraInicio.getText());
+            Time horaFin = Time.valueOf(jTfhoraFin.getText());
+            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
+            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
+            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem(); ;
+            boolean estado = jCheckEstado.isSelected();
+            Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa , estado);
+            sd.agregarSesion(sesion);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jBtnAgregarActionPerformed
@@ -239,6 +278,10 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jCbInstalacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbInstalacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCbInstalacionActionPerformed
+
+    private void jCbCodPaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbCodPaqueteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCbCodPaqueteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,10 +343,18 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         }
     }
     
+    private void cargarComboDiaDeSpa(){
+        for (Dia_de_Spa diaDeSpa : listaDiaDeSpa) {
+            jCbCodPaquete.addItem(diaDeSpa.toString());
+            
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnModificar;
     private javax.swing.JButton jBtnAgregar;
     private javax.swing.JButton jBtnBorrar;
+    private javax.swing.JComboBox<String> jCbCodPaquete;
     private javax.swing.JComboBox<String> jCbInstalacion;
     private javax.swing.JComboBox<String> jCbconsultorio;
     private javax.swing.JComboBox<String> jCbmasajista;
@@ -316,6 +367,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jServicio4;
     private javax.swing.JLabel jServicio5;
     private javax.swing.JLabel jServicio6;
+    private javax.swing.JLabel jServicio7;
     private javax.swing.JTextField jTfhoraFin;
     private javax.swing.JTextField jTfhoraInicio;
     private javax.swing.JLabel jservicio;
