@@ -54,13 +54,13 @@ public class ClienteData {
     public List<Cliente> listarCliente(){
         Cliente c = null;
         List<Cliente> clientela = new ArrayList<>();
-        String sql = "SELECT cod_cliente, dni, nombre_completo, telefono, edad, afecciones, estado from Cliente WHERE estado = 1";
+        String sql = "SELECT codCli, dni, nombre_completo, telefono, edad, afecciones, estado from Cliente WHERE estado = 1";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 c = new Cliente();
-                c.setCodCli(rs.getInt("cod_cliente"));
+                c.setCodCli(rs.getInt("codCli"));
                 c.setDni(rs.getInt("dni"));
                 c.setNombreCompleto(rs.getString("nombre_completo"));
                 c.setTelefono(rs.getString("telefono"));
