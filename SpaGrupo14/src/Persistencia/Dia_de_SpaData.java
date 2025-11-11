@@ -49,42 +49,64 @@ public class Dia_de_SpaData {
         }
     }
 
-    public List<Dia_de_Spa> listarDiaSpa() {
-        Dia_de_Spa unDiasdeSpa = null;
-        List<Dia_de_Spa> listadoDiaDeSpa = new ArrayList<>();
-        String sql = "SELECT * from dia_de_spa";
+    public List<Dia_de_Spa> listarDiaSpa(String dniCliente, java.time.LocalDate fechaInicio, java.time.LocalDate fechaFin) {
+    List<Dia_de_Spa> listadoDiaDeSpa = new ArrayList<>();
+    
+    String sql = "SELECT ds.*, c.dni, c.nombre, c.apellido "
+               + "FROM dia_de_spa ds JOIN cliente c ON ds.codCli = c.codCli "
+               + "WHERE 1=1 ";
+    
+    List<Object> parametros = new ArrayList<>();
+    
+    if (dniCliente != null && !dniCliente.isEmpty()) {
+        sql += "AND c.dni = ? "; 
+        parametros.add(dniCliente);
+    }
+    
+    if (fechaInicio != null) {
+        sql += "AND ds.fecha_hora >= ? ";
+        parametros.add(java.sql.Date.valueOf(fechaInicio));
+    }
+    if (fechaFin != null) {
+        sql += "AND ds.fecha_hora <= ? ";
+        if (fechaInicio != null && fechaFin.isBefore(fechaInicio)) {
+        }
+        parametros.add(java.sql.Date.valueOf(fechaFin));
+    }
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        for (int i = 0; i < parametros.size(); i++) {
+            ps.setObject(i + 1, parametros.get(i));
+        }
 
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            ClienteData cd = new ClienteData();
-
+        try (ResultSet rs = ps.executeQuery()) {
+            
             while (rs.next()) {
-                unDiasdeSpa = new Dia_de_Spa();
-                unDiasdeSpa.setCodPack(rs.getInt("codPack"));
+                Dia_de_Spa unDiasdeSpa = new Dia_de_Spa();
+                
+                unDiasdeSpa.setCodPack(rs.getInt("codCli"));
                 unDiasdeSpa.setFechaYHora(rs.getDate("fecha_hora").toLocalDate());
                 unDiasdeSpa.setPreferencias(rs.getString("preferencias"));
-                Cliente cliente = cd.buscarCliente(rs.getInt("codCli"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setCodCli(rs.getInt("codCli")); 
+                cliente.setDni(rs.getInt("dni"));
+                cliente.setNombreCompleto(rs.getString("nombre completo"));
                 unDiasdeSpa.setCliente(cliente);
+                
                 unDiasdeSpa.setEstado(rs.getBoolean("estado"));
                 unDiasdeSpa.setMonto(rs.getDouble("monto"));
 
                 listadoDiaDeSpa.add(unDiasdeSpa);
             }
-
-            for (Dia_de_Spa dias : listadoDiaDeSpa) {
-                System.out.println(dias);
-            }
-
-            ps.close();
-
-        } catch (SQLException ex) {
-
-            System.out.println("Error al listar los dias: " + ex);
-
         }
-        return listadoDiaDeSpa;
+        
+    } catch (SQLException ex) {
+        System.out.println("Error al listar los dias: " + ex);
     }
+    return listadoDiaDeSpa;
+}
 
     public void eliminarDiadeSpa(int codigodelpaquete) {
 

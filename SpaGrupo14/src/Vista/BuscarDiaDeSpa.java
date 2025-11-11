@@ -3,11 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+
+import Modelo.Dia_de_Spa;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import persistencia.Dia_de_SpaData;
+
 /**
  *
  * @author abate
  */
 public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
+    private DefaultTableModel modelo;
+    private Dia_de_SpaData diaSpaData;
 
     /**
      * Creates new form BuscarDiaDeSpa
@@ -15,6 +27,8 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
     public BuscarDiaDeSpa() {
             super("Buscar Dia de Spa", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
         initComponents();
+        diaSpaData = new Dia_de_SpaData();
+        armarCabeceraTabla();
     }
 
     /**
@@ -34,8 +48,8 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtffechafinal = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTablebuscardiaspa = new javax.swing.JTable();
+        jbuscardiaspa = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -48,13 +62,24 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
 
         jdni.setText("DNI");
 
+        jtfdni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfdniActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Fecha Inicial");
 
         jLabel4.setText("Fecha Final");
 
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        jTablebuscardiaspa.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,34 +90,30 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTablebuscardiaspa);
+        jbuscardiaspa.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(154, 154, 154)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(186, 186, 186)
-                            .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jdni)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtffechainicial, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtffechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                            .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jtfdni, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                                .addComponent(jtffechainicial)
+                                .addComponent(jtffechafinal)
+                                .addComponent(btnBuscar)))))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,58 +135,92 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jtfdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfdniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfdniActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String dni = jtfdni.getText().trim();
+        LocalDate fechaInicio = null;
+        LocalDate fechaFin = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    try {
+        if (!jtffechainicial.getText().isEmpty()) {
+            fechaInicio = LocalDate.parse(jtffechainicial.getText().trim(), formatter);
+        }
+        if (!jtffechafinal.getText().isEmpty()) {
+            fechaFin = LocalDate.parse(jtffechafinal.getText().trim(), formatter);
+        }
+    } catch (DateTimeParseException ex) {
+        JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use AAAA-MM-DD.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    if (dni.isEmpty() && fechaInicio == null && fechaFin == null) {
+        JOptionPane.showMessageDialog(this, "Debe ingresar DNI o un rango de fechas.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    borrarFilasTabla();
+
+    List<Dia_de_Spa> resultados = diaSpaData.listarDiaSpa(dni, fechaInicio, fechaFin);
+
+    if (resultados.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No se encontraron Dias de Spa.", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        for (Dia_de_Spa ds : resultados) {
+            modelo.addRow(new Object[]{
+                ds.getCodPack(),
+                ds.getCliente().getDni(), 
+                ds.getCliente().getNombreCompleto(),
+                ds.getFechaYHora(),
+                ds.getMonto(),
+                ds.getEstado()
+            });
+        }
+    }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarDiaDeSpa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarDiaDeSpa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarDiaDeSpa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarDiaDeSpa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscarDiaDeSpa().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jL_titulo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablebuscardiaspa;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jbuscardiaspa;
     private javax.swing.JLabel jdni;
     private javax.swing.JTextField jtfdni;
     private javax.swing.JTextField jtffechafinal;
     private javax.swing.JTextField jtffechainicial;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabeceraTabla() {
+    String[] titulos = {"ID Pack", "DNI Cliente", "Fecha", "Monto", "Estado"};
+    modelo = new DefaultTableModel(null, titulos) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Las celdas no son editables
+        }
+    };
+    jTable1.setModel(modelo);
+}
+
+private void borrarFilasTabla() {
+    int filas = modelo.getRowCount();
+    for (int i = filas - 1; i >= 0; i--) {
+        modelo.removeRow(i);
+    }
+ }
 }
