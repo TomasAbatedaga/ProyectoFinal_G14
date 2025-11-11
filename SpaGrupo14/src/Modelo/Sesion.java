@@ -3,11 +3,12 @@ package Modelo;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.sql.Time;
 
 public class Sesion {
     private int codSesion;
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
+    private Time fechaHoraInicio;
+    private Time fechaHoraFin;
     private Tratamiento tratamiento;
     private Consultorio consultorio;
     private Masajista Masajista;
@@ -18,7 +19,7 @@ public class Sesion {
     public Sesion() {
     }
 
-    public Sesion(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
+    public Sesion(int codSesion, Time fechaHoraInicio, Time fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
         this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
@@ -30,7 +31,7 @@ public class Sesion {
         this.estado = estado;
     }
 
-    public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
+    public Sesion(Time fechaHoraInicio, Time fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.tratamiento = tratamiento;
@@ -49,19 +50,19 @@ public class Sesion {
         this.codSesion = codSesion;
     }
 
-    public LocalDateTime getFechaHoraInicio() {
+    public Time getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+    public void setFechaHoraInicio(Time fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public LocalDateTime getFechaHoraFin() {
+    public Time getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
+    public void setFechaHoraFin(Time fechaHoraFin) {
         this.fechaHoraFin = fechaHoraFin;
     }
 
