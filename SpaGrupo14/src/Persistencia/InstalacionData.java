@@ -23,7 +23,7 @@ public class InstalacionData {
         con = Conexion.getConectar();
     }
     public void guardarIntalacion(Instalacion instalacion){
-        String sql = "INSERT INTO instalacion (nombre, detalleUso, precio30m, estado) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO instalacion (nombre, detalle_uso, precio, estado) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = null;
         
 try {
@@ -50,7 +50,7 @@ try {
         }
     }
     public void modificarInstalacion(Instalacion instalacion){
-        String sql = "UPDATE instalacion SET nombre = ?, detalleUso = ?, precio30m = ?, estado = ? WHERE codInstal = ?";
+        String sql = "UPDATE instalacion SET nombre = ?, detalle_uso = ?, precio = ?, estado = ? WHERE cod_instalacion = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -79,7 +79,7 @@ try {
         }
     }
     public void eliminarInstalacion(int id){
-       String sql = "UPDATE instalacion SET estado = 'Inactivo' WHERE CodInstal = ?";
+       String sql = "UPDATE instalacion SET estado = 'Inactivo' WHERE cod_instalacion = ?";
         PreparedStatement ps = null;
         
         try {
@@ -104,8 +104,9 @@ try {
         } 
     }
     public List<Instalacion> listarInstalaciones(){
-        String sql = "SELECT codInstal, nombre, detalleUso, precio30m, estado FROM instalacion WHERE estado != 'Inactivo'"; 
         ArrayList<Instalacion> lista = new ArrayList<>();
+        String sql = "SELECT cod_instalacion, nombre, detalle_uso, precio, estado FROM instalacion WHERE estado = 1"; 
+        
         PreparedStatement ps = null;
 
         try {
@@ -114,10 +115,10 @@ try {
             
             while (rs.next()) {
                 Instalacion instalacion = new Instalacion();
-                instalacion.setCodInstal(rs.getInt("codInstal"));
+                instalacion.setCodInstal(rs.getInt("cod_instalacion"));
                 instalacion.setNombre(rs.getString("nombre"));
-                instalacion.setDetalleUso(rs.getString("detalleUso"));
-                instalacion.setPrecio30M(rs.getDouble("precio30m"));
+                instalacion.setDetalleUso(rs.getString("detalle_uso"));
+                instalacion.setPrecio30M(rs.getDouble("precio"));
                 instalacion.setEstado(rs.getBoolean("estado"));
                 lista.add(instalacion);
             }

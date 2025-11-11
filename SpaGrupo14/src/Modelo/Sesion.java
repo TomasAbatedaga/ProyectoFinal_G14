@@ -11,36 +11,34 @@ public class Sesion {
     private Tratamiento tratamiento;
     private Consultorio consultorio;
     private Masajista Masajista;
-    private List<Instalacion> instalaciones;
+    private Instalacion instalaciones;
     private Dia_de_Spa diaDeSpa;
     private boolean estado;
 
-    public Sesion(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, List<Instalacion> instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
-        this.codSesion = codSesion;
-        this.fechaHoraInicio = fechaHoraInicio;
-        this.fechaHoraFin = fechaHoraFin;
-        this.tratamiento = tratamiento;
-        this.consultorio = consultorio;
-        this.Masajista = Masajista;
-        this.instalaciones = instalaciones;
-        this.diaDeSpa = diaDeSpa;
-        this.estado = estado;
-    }
-
-    public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, List<Instalacion> instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
-        this.codSesion = codSesion;
-        this.fechaHoraInicio = fechaHoraInicio;
-        this.fechaHoraFin = fechaHoraFin;
-        this.tratamiento = tratamiento;
-        this.consultorio = consultorio;
-        this.Masajista = Masajista;
-        this.instalaciones = instalaciones;
-        this.diaDeSpa = diaDeSpa;
-        this.estado = estado;
-    }
-
     public Sesion() {
+    }
+
+    public Sesion(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
         this.codSesion = codSesion;
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.tratamiento = tratamiento;
+        this.consultorio = consultorio;
+        this.Masajista = Masajista;
+        this.instalaciones = instalaciones;
+        this.diaDeSpa = diaDeSpa;
+        this.estado = estado;
+    }
+
+    public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista Masajista, Instalacion instalaciones, Dia_de_Spa diaDeSpa, boolean estado) {
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.tratamiento = tratamiento;
+        this.consultorio = consultorio;
+        this.Masajista = Masajista;
+        this.instalaciones = instalaciones;
+        this.diaDeSpa = diaDeSpa;
+        this.estado = estado;
     }
 
     public int getCodSesion() {
@@ -91,11 +89,11 @@ public class Sesion {
         this.Masajista = Masajista;
     }
 
-    public List<Instalacion> getInstalaciones() {
+    public Instalacion getInstalaciones() {
         return instalaciones;
     }
 
-    public void setInstalaciones(List<Instalacion> instalaciones) {
+    public void setInstalaciones(Instalacion instalaciones) {
         this.instalaciones = instalaciones;
     }
 
@@ -119,5 +117,6 @@ public class Sesion {
     public String toString() {
         return "Sesion{" + "codSesion=" + codSesion + ", fechaHoraInicio=" + fechaHoraInicio + ", fechaHoraFin=" + fechaHoraFin + ", tratamiento=" + tratamiento + ", consultorio=" + consultorio + ", Masajista=" + Masajista + ", instalaciones=" + instalaciones + ", diaDeSpa=" + diaDeSpa + ", estado=" + estado + '}';
     }
+
     
 }
