@@ -79,17 +79,8 @@ public class Masajista {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Masajista{");
-        sb.append("codMasajista=").append(cod_Masajista);
-        sb.append(", matricula=").append(matricula);
-        sb.append(", nombreCompleto=").append(nombreCompleto);
-        sb.append(", telefono=").append(telefono);
-        sb.append(", especialidad=").append(especialidad);
-        sb.append(", estado=").append(estado);
-        sb.append('}');
-        return sb.toString();
-    }
 
-    
+        return nombreCompleto;
+
+    }
 }
