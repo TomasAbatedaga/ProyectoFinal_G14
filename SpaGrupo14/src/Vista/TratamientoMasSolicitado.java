@@ -1,23 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
+
+import Modelo.EspecialidadEnum;
+import Modelo.Tratamiento;
+import Persistencia.TratamientoData;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author abate
  */
 public class TratamientoMasSolicitado extends javax.swing.JInternalFrame{
+    private ArrayList<Tratamiento> listaT;
+    private TratamientoData tratamientodata;
+    private DefaultTableModel modeloTabla;
 
-    /**
-     * Creates new form TratamientoMasSolicitado
-     */
-    public TratamientoMasSolicitado() {
-        
+    public TratamientoMasSolicitado(){
+        super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
-        
-        
+
+        tratamientodata = new TratamientoData();
+        listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
+
+        modeloTabla = new DefaultTableModel();
+        cargarColumnasTablas();
+        cargarTratamiento();
+        cargarTablaMasVistos();
+
+    }
+
+//     Cargar los valores del enum en el combo
+    public void cargarTratamiento() {
+
+        jCbTratamientos.removeAllItems();
+        jCbTratamientos.addItem("Seleccione un tipo...");
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
+            jCbTratamientos.addItem(especialidad.toString());
+        }
+    }
+    
+    // Definir columnas de la tabla
+    private void cargarColumnasTablas() {
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Tipo");
+        modeloTabla.addColumn("Detalle");
+        modeloTabla.addColumn("Duración");
+        modeloTabla.addColumn("Costo");
+        modeloTabla.addColumn("Sesiones");
+        jTabTratamientos.setModel(modeloTabla);
+    }
+  
+    // Filtra los tratamientos por el mas visto
+    private void cargarTablaMasVistos() {
+           
+     String seleccionado = (String) jCbTratamientos.getSelectedItem();
+    if (seleccionado == null || seleccionado.equals("Seleccione un tipo...")) {
+        return; 
+    }
+     EspecialidadEnum tipo = EspecialidadEnum.valueOf(seleccionado);
+    listaT =(ArrayList<Tratamiento>)tratamientodata.obtenerTratamientosMasUsadosPorTipo(tipo); 
+        for (Tratamiento tratamiento : listaT) {
+
+            modeloTabla.addRow(new Object[]{
+                tratamiento.getNombre(),
+                tratamiento.getEspecialidad(), 
+                tratamiento.getDetalle(),
+                tratamiento.getDuracion(),
+                tratamiento.getCosto(),
+                tratamiento.getCantidadSesiones()
+            });
+
+        }
     }
 
     /**
@@ -48,6 +104,11 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame{
         jLabel2.setText("Seleccione el Tratamiento: ");
 
         jCbTratamientos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCbTratamientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCbTratamientosActionPerformed(evt);
+            }
+        });
 
         jTabTratamientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -88,15 +149,21 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame{
                 .addComponent(jLabel1)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCbTratamientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCbTratamientos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCbTratamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbTratamientosActionPerformed
+        // TODO add your handling code here:
+         cargarTablaMasVistos();
+
+    }//GEN-LAST:event_jCbTratamientosActionPerformed
 
     /**
      * @param args the command line arguments

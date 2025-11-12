@@ -135,6 +135,40 @@ public class TratamientoData {
         }
     }
 
+    public List<Tratamiento> obtenerTratamientosMasUsadosPorTipo(EspecialidadEnum tipo) {
+    List<Tratamiento> lista = new ArrayList<>();
+    String sql = """
+        SELECT t.cod_tratamiento, t.nombre, t.detalle, t.duracion, t.costo, t.especialidad,
+               COUNT(s.cod_sesion) AS cantidadSesiones
+        FROM tratamiento t
+        JOIN sesion s ON t.cod_tratamiento = s.cod_tratamiento
+        WHERE t.especialidad = ? AND s.estado = 1
+        GROUP BY t.cod_tratamiento
+        ORDER BY cantidadSesiones DESC
+    """;
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, tipo.toString());
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Tratamiento t = new Tratamiento();
+            t.setCodTratam(rs.getInt("cod_tratamiento"));
+            t.setNombre(rs.getString("nombre"));
+            t.setDetalle(rs.getString("detalle"));
+            t.setDuracion(rs.getInt("duracion"));
+            t.setCosto(rs.getDouble("costo"));
+            t.setEspecialidad(EspecialidadEnum.valueOf(rs.getString("especialidad")));
+            t.setCantidadSesiones(rs.getInt("cantidadSesiones"));
+            lista.add(t);
+        }
+    } catch (SQLException ex) {
+         JOptionPane.showMessageDialog(null, "Error, no se pueden ver los tratamientos usados: " + ex.getMessage());
+    }
+
+    return lista;
+}
+    
     public void altaLogica(Tratamiento t) {
         String sql = "UPDATE tratamiento SET estado=1 WHERE cod_tratamiento=?";
         try {

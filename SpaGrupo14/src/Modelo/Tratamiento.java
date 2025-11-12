@@ -11,6 +11,7 @@ public class Tratamiento {
     private int duracion;
     private double costo;
     private boolean estado;
+    private int cantidadSesiones;
 
     public Tratamiento(int codTratam, String nombre, EspecialidadEnum especialidad, String detalle, int duracion, double costo, boolean estado) {
         this.codTratam = codTratam;
@@ -59,7 +60,7 @@ public class Tratamiento {
     public EspecialidadEnum getEspecialidad() {
         return especialidad;
     }
-
+  
     public void setEspecialidad(EspecialidadEnum especialidad) {
         this.especialidad = especialidad;
     }
@@ -91,10 +92,18 @@ public class Tratamiento {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+     public int getCantidadSesiones() {
+        return cantidadSesiones;
+    }
+
+    public void setCantidadSesiones(int cantidadSesiones) {
+        this.cantidadSesiones = cantidadSesiones;
+    }
 
     @Override
     public String toString() {
-        return "Tratamiento{" + "codTratam=" + codTratam + ", nombre=" + nombre + ", detalle=" + detalle + ", duracion=" + duracion + ", costo=" + costo + ", estado=" + estado + '}';
+        return "Nombre=" + nombre ;
     }
     
     
