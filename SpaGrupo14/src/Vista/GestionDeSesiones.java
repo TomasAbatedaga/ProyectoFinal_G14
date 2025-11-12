@@ -321,31 +321,31 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     
     private void cargarComboTratamientos() {
         for (Tratamiento tratamiento : listaTratamiento) {
-            jCbtratamiento.addItem(tratamiento.getNombre());
+            jCbtratamiento.addItem(tratamiento);
         }
     }
     
     private void cargarComboConsultorio(){
         for (Consultorio consultorio : listaConsultorio) {
-            jCbconsultorio.addItem(consultorio.toString());
+            jCbconsultorio.addItem(consultorio);
         }
     }
     
     private void cargarComboMasajista(){
         for (Masajista masajista : listaMasajista) {
-            jCbmasajista.addItem(masajista.getNombreCompleto());
+            jCbmasajista.addItem(masajista);
         }
     }
     
     private void cargarComboInstalacion(){
         for (Instalacion instalacion : listaInstalacion) {
-            jCbInstalacion.addItem(instalacion.getNombre());
+            jCbInstalacion.addItem(instalacion);
         }
     }
     
     private void cargarComboDiaDeSpa(){
         for (Dia_de_Spa diaDeSpa : listaDiaDeSpa) {
-            jCbCodPaquete.addItem(diaDeSpa.toString());
+            jCbCodPaquete.addItem(diaDeSpa);
             
         }
     }
@@ -354,11 +354,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBtnModificar;
     private javax.swing.JButton jBtnAgregar;
     private javax.swing.JButton jBtnBorrar;
-    private javax.swing.JComboBox<String> jCbCodPaquete;
-    private javax.swing.JComboBox<String> jCbInstalacion;
-    private javax.swing.JComboBox<String> jCbconsultorio;
-    private javax.swing.JComboBox<String> jCbmasajista;
-    private javax.swing.JComboBox<String> jCbtratamiento;
+    private javax.swing.JComboBox<Dia_de_Spa> jCbCodPaquete;
+    private javax.swing.JComboBox<Instalacion> jCbInstalacion;
+    private javax.swing.JComboBox<Consultorio> jCbconsultorio;
+    private javax.swing.JComboBox<Masajista> jCbmasajista;
+    private javax.swing.JComboBox<Tratamiento> jCbtratamiento;
     private javax.swing.JCheckBox jCheckEstado;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jServicio1;
