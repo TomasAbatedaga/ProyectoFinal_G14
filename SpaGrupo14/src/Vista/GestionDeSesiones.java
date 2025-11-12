@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import javax.swing.JOptionPane;
 import persistencia.Dia_de_SpaData;
 
 /**
@@ -250,16 +251,52 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         try {
             SesionData sd = new SesionData();
             Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
-            Time horaInicio = Time.valueOf(jTfhoraInicio.getText());
-            Time horaFin = Time.valueOf(jTfhoraFin.getText());
+            String horaInicioStr = jTfhoraInicio.getText();
+            String horaFinStr = jTfhoraFin.getText();
+            // Time recibe HH:mm:ss, con esto valido si ingresa solo la hora
+            if (horaInicioStr.length() <= 2) {
+                horaInicioStr += ":00:00"; // agrega eso para que quede en el formato correcto que pide Time
+            }
+            // Aca si ingresa HH:mm
+            else if (horaInicioStr.length() == 5) {
+                horaInicioStr += ":00"; // agrega los segundos
+            }
+            // Hacemos lo mismo para la hora de fin
+            if (horaFinStr.length() <= 2) {
+                horaFinStr += ":00:00";
+            } else if (horaFinStr.length() == 5) {
+                horaFinStr += ":00";
+            }
+            Time horaInicio = Time.valueOf(horaInicioStr);
+            Time horaFin = Time.valueOf(horaFinStr);
             Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
             Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
             Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
-            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem(); ;
+            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
             boolean estado = jCheckEstado.isSelected();
+            
+            if (tratamiento == null || consultorio == null || masajista == null || instalacion == null || diaDeSpa == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar algun dato");
+                return; // Detiene la ejecución si algo falta
+            }
+            
             Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa , estado);
             sd.agregarSesion(sesion);
+            
+            jTfhoraInicio.setText("");
+            jTfhoraFin.setText("");
+            jCheckEstado.setSelected(false);
+            jCbtratamiento.setSelectedIndex(0);
+            jCbtratamiento.setSelectedIndex(-1); // Deselecciona los combos
+            jCbconsultorio.setSelectedIndex(-1);
+            jCbmasajista.setSelectedIndex(-1);
+            jCbInstalacion.setSelectedIndex(-1);
+            jCbCodPaquete.setSelectedIndex(-1);
+            
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de hora. Use HH:mm:ss (ej: 14:30:00).");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar la sesion");
         }
     }//GEN-LAST:event_jBtnAgregarActionPerformed
 

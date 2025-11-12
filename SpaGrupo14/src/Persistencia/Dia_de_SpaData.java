@@ -23,13 +23,13 @@ public class Dia_de_SpaData {
 
     public void agregarDiaSpa(Dia_de_Spa ds) {
 
-        String sql = "INSERT into dia_de_spa (fecha_hora, preferencias, codCli, estado, monto) VALUES(?,?,?,?,?)";
+        String sql = "INSERT into dia_de_spa (fecha_hora, preferencias, cod_cliente, estado, monto) VALUES(?,?,?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDate(1, Date.valueOf(ds.getFechaYHora()));
             ps.setString(2, ds.getPreferencias());
-            ps.setInt(3, ds.getCliente().getCodCli());
+            ps.setInt(3, ds.getCliente().getCod_cliente());
             ps.setBoolean(4, ds.getEstado());
             ps.setDouble(5, ds.getMonto());
 
@@ -62,7 +62,10 @@ public class Dia_de_SpaData {
                 ds.setCodPack(rs.getInt("cod_pack"));
                 ds.setFechaYHora(rs.getDate("fecha_hora").toLocalDate());
                 ds.setPreferencias(rs.getString("preferencias"));
-                ds.getCliente().setCodCli(rs.getInt("cod_cliente"));
+                Cliente cliente = new Cliente();
+                cliente.setCod_cliente(rs.getInt("cod_cliente"));
+                ds.setCliente(cliente);
+                //ds.getCliente().setCod_cliente(rs.getInt("cod_cliente"));
                 ds.setMonto(rs.getDouble("monto"));
                 ds.setEstado(rs.getBoolean("estado"));
                 
@@ -79,7 +82,7 @@ public class Dia_de_SpaData {
     List<Dia_de_Spa> listadoDiaDeSpa = new ArrayList<>();
     
     String sql = "SELECT ds.*, c.dni, c.nombre, c.apellido "
-               + "FROM dia_de_spa ds JOIN cliente c ON ds.codCli = c.codCli "
+               + "FROM dia_de_spa ds JOIN cliente c ON ds.cod_cliente = c.cod_cliente "
                + "WHERE 1=1 ";
     
     List<Object> parametros = new ArrayList<>();
@@ -111,12 +114,12 @@ public class Dia_de_SpaData {
             while (rs.next()) {
                 Dia_de_Spa unDiasdeSpa = new Dia_de_Spa();
                 
-                unDiasdeSpa.setCodPack(rs.getInt("codCli"));
+                unDiasdeSpa.setCodPack(rs.getInt("cod_cliente"));
                 unDiasdeSpa.setFechaYHora(rs.getDate("fecha_hora").toLocalDate());
                 unDiasdeSpa.setPreferencias(rs.getString("preferencias"));
                 
                 Cliente cliente = new Cliente();
-                cliente.setCodCli(rs.getInt("codCli")); 
+                cliente.setCod_cliente(rs.getInt("cod_cliente")); 
                 cliente.setDni(rs.getInt("dni"));
                 cliente.setNombreCompleto(rs.getString("nombre completo"));
                 unDiasdeSpa.setCliente(cliente);
@@ -163,7 +166,7 @@ public class Dia_de_SpaData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, Date.valueOf(c.getFechaYHora()));
             ps.setString(2, c.getPreferencias());
-            ps.setInt(3, c.getCliente().getCodCli());
+            ps.setInt(3, c.getCliente().getCod_cliente());
             ps.setBoolean(4, c.getEstado());
             ps.setDouble(5, c.getMonto());
 
@@ -224,7 +227,7 @@ public class Dia_de_SpaData {
                 unDiasdeSpa.setCodPack(rs.getInt("codPack"));
                 unDiasdeSpa.setFechaYHora(rs.getDate("FechaYHora").toLocalDate());
                 unDiasdeSpa.setPreferencias(rs.getString("preferencias"));
-                Cliente cliente = cd.buscarCliente(rs.getInt("codCli"));
+                Cliente cliente = cd.buscarCliente(rs.getInt("cod_cliente"));
                 unDiasdeSpa.setCliente(cliente);
                 unDiasdeSpa.setEstado(rs.getBoolean("estado"));
                 unDiasdeSpa.setMonto(rs.getDouble("monto"));

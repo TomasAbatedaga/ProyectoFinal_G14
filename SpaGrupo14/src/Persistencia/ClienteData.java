@@ -41,7 +41,7 @@ public class ClienteData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
-                c.setCodCli(rs.getInt(1));
+                c.setCod_cliente(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Cliente ingresado con exito");
             }
         }catch(SQLIntegrityConstraintViolationException ex){
@@ -54,13 +54,13 @@ public class ClienteData {
     public List<Cliente> listarCliente(){
         Cliente c = null;
         List<Cliente> clientela = new ArrayList<>();
-        String sql = "SELECT codCli, dni, nombre_completo, telefono, edad, afecciones, estado from Cliente WHERE estado = 1";
+        String sql = "SELECT cod_cliente, dni, nombre_completo, telefono, edad, afecciones, estado from Cliente WHERE estado = 1";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 c = new Cliente();
-                c.setCodCli(rs.getInt("codCli"));
+                c.setCod_cliente(rs.getInt("cod_cliente"));
                 c.setDni(rs.getInt("dni"));
                 c.setNombreCompleto(rs.getString("nombre_completo"));
                 c.setTelefono(rs.getString("telefono"));
@@ -87,7 +87,7 @@ public class ClienteData {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 c = new Cliente();
-                c.setCodCli(rs.getInt("codCLi"));
+                c.setCod_cliente(rs.getInt("cod_cliente"));
                 c.setDni(rs.getInt("Dni"));
                 c.setNombreCompleto(rs.getString("nombre_completo"));
                 c.setTelefono(rs.getString("telefono"));
@@ -104,12 +104,12 @@ public class ClienteData {
     
     public void actualizarCliente(Cliente c){
         
-        String sql = "UPDATE cliente SET CodCli=?, nombre_completo=?, telefono=?, edad=?, afecciones=?, estado=? WHERE dni=?";
+        String sql = "UPDATE cliente SET cod_cliente=?, nombre_completo=?, telefono=?, edad=?, afecciones=?, estado=? WHERE dni=?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setInt(1, c.getCodCli());
+            ps.setInt(1, c.getCod_cliente());
             ps.setString(2, c.getNombreCompleto());
             ps.setString(3, c.getTelefono());
             ps.setInt(4, c.getEdad());

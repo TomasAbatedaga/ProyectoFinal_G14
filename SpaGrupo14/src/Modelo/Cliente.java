@@ -2,7 +2,7 @@
 package Modelo;
 
 public class Cliente {
-    private int codCli;
+    private int cod_cliente;
     private int dni;
     private String nombreCompleto;
     private String telefono;
@@ -10,8 +10,8 @@ public class Cliente {
     private String afecciones;
     private boolean estado;
 
-    public Cliente(int codCli, int dni, String nombreCompleto, String telefono, int edad, String afecciones, boolean estado) {
-        this.codCli = codCli;
+    public Cliente(int cod_cliente, int dni, String nombreCompleto, String telefono, int edad, String afecciones, boolean estado) {
+        this.cod_cliente = cod_cliente;
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -21,7 +21,6 @@ public class Cliente {
     }
 
     public Cliente(int dni, String nombreCompleto, String telefono, int edad, String afecciones, boolean estado) {
-        this.codCli = codCli;
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -31,15 +30,14 @@ public class Cliente {
     }
 
     public Cliente() {
-        this.codCli = codCli;
     }
 
-    public int getCodCli() {
-        return codCli;
+    public int getCod_cliente() {
+        return cod_cliente;
     }
 
-    public void setCodCli(int codCli) {
-        this.codCli = codCli;
+    public void setCod_cliente(int cod_cliente) {
+        this.cod_cliente = cod_cliente;
     }
 
     public int getDni() {
@@ -92,8 +90,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "codCli=" + codCli + ", dni=" + dni + ", nombreCompleto=" + nombreCompleto + ", telefono=" + telefono + ", edad=" + edad + ", afecciones=" + afecciones + ", estado=" + estado + '}';
+        return nombreCompleto;
     }
-    
-    
 }

@@ -280,7 +280,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
             int dni = Integer.parseInt(jtfDniCliente.getText());
             Cliente cliente = clienteData.buscarCliente(dni);
             if (cliente != null) {
-                jtfCodigoCliente.setText(String.valueOf(cliente.getCodCli()));
+                jtfCodigoCliente.setText(String.valueOf(cliente.getCod_cliente()));
                 jtfNombreCliente.setText(cliente.getNombreCompleto());
                 jtfTelefono.setText(cliente.getTelefono());
                 jTfEdad.setText(String.valueOf(cliente.getEdad()));

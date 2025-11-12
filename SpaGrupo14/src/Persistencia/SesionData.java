@@ -44,6 +44,7 @@ public class SesionData {
             ps.setInt(4, s.getConsultorio().getCodConsultorio());
             ps.setInt(5, s.getMasajista().getCod_Masajista());
             ps.setInt(6, s.getDiaDeSpa().getCodPack());
+            ps.setBoolean(7, s.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
