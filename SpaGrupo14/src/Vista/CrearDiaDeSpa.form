@@ -111,9 +111,7 @@
                                   <Component id="jtfTOTAL" min="-2" pref="152" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  <Component id="btnGUARDARSPA" min="-2" pref="166" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
                                   <Component id="BUSCARSPA" min="-2" pref="166" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="ELIMINARSPA" min="-2" pref="166" max="-2" attributes="0"/>
@@ -176,7 +174,6 @@
                   <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnGUARDARSPA" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="BUSCARSPA" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="ELIMINARSPA" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
@@ -326,14 +323,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar Dia de SPA"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnGUARDARSPA">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Crear Dia de SPA"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGUARDARSPAActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="ELIMINARSPA">
           <Properties>

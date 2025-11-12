@@ -29,7 +29,7 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         ClienteData cd = new ClienteData();
     List<Cliente> lista = cd.listarCliente();
     for (Cliente c : lista) {
-        cmb_clientesActivos.addItem(c.getNombreCompleto());
+        //cmb_clientesActivos.addItem(c.getNombreCompleto());
     }
     }
 
@@ -60,7 +60,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         btnEliminarSESION = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         BUSCARSPA = new javax.swing.JButton();
-        btnGUARDARSPA = new javax.swing.JButton();
         ELIMINARSPA = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jtfTOTAL = new javax.swing.JTextField();
@@ -125,13 +124,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
 
         BUSCARSPA.setText("Buscar Dia de SPA");
 
-        btnGUARDARSPA.setText("Crear Dia de SPA");
-        btnGUARDARSPA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGUARDARSPAActionPerformed(evt);
-            }
-        });
-
         ELIMINARSPA.setText("Eliminar Dia de SPA");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -157,7 +149,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         jDesktopPane3.setLayer(btnEliminarSESION, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(BUSCARSPA, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(btnGUARDARSPA, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(ELIMINARSPA, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jtfTOTAL, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -208,9 +199,7 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jtfTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(btnGUARDARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(129, 129, 129)
+                                .addGap(301, 301, 301)
                                 .addComponent(BUSCARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ELIMINARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -259,7 +248,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGUARDARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BUSCARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ELIMINARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
@@ -291,23 +279,6 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGUARDARSPAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGUARDARSPAActionPerformed
-        Cliente cli = (Cliente) cmb_clientesActivos.getSelectedItem();
-        LocalDate fecha = LocalDate.parse(jtf_fecha.getText());
-        String preferencias = jtfPreferencias.getText();
-        boolean estado = cbEstado.isSelected();
-
-        Dia_de_Spa dia = new Dia_de_Spa(fecha, preferencias, cli, 0.0, estado);
-
-        Dia_de_SpaData dsd = new Dia_de_SpaData();
-        dsd.agregarDiaSpa(dia);
-
-        TXFcodpack.setText(String.valueOf(dia.getCodPack()));
-
-        JOptionPane.showMessageDialog(this, "Día de Spa guardado correctamente. Código: " + dia.getCodPack());
-    }
-    }//GEN-LAST:event_btnGUARDARSPAActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -338,18 +309,16 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearDiaDeSpa().setVisible(true);
+             new CrearDiaDeSpa().setVisible(true);
             }
         });
-    }
-
+    };
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BUSCARSPA;
     private javax.swing.JButton ELIMINARSPA;
     private javax.swing.JTextField JTFCantSesiones;
     private javax.swing.JTextField TXFcodpack;
     private javax.swing.JButton btnEliminarSESION;
-    private javax.swing.JButton btnGUARDARSPA;
     private javax.swing.JButton btnModificarSESION;
     private javax.swing.JCheckBox cbEstado;
     private javax.swing.JComboBox<Cliente> cmb_clientesActivos;
