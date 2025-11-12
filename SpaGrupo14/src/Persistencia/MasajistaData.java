@@ -102,6 +102,45 @@ public class MasajistaData {
         return m;
     }
     
+    public List<Modelo.Masajista> buscarDisponibles(java.time.LocalDateTime fechaHoraReserva, String especialidadFiltro) {
+    List<Modelo.Masajista> masajistasDisponibles = new ArrayList<>();
+    String sql = "SELECT cod_masajista, matricula, nombre_completo, telefono, especialidad, estado FROM masajista m "
+               + "WHERE m.estado = TRUE "
+               + "AND m.cod_masajista NOT IN ("
+               + "    SELECT ds.codMasajista FROM dia_de_spa ds "
+               + "    WHERE ds.fecha_hora = ? "
+               + ") ";
+    
+    List<Object> parametros = new ArrayList<>();
+    parametros.add(java.sql.Timestamp.valueOf(fechaHoraReserva));
+    
+    if (especialidadFiltro != null && !especialidadFiltro.equalsIgnoreCase("Todas")) {
+        sql += "AND m.especialidad = ? ";
+        parametros.add(especialidadFiltro);
+    }
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        for (int i = 0; i < parametros.size(); i++) {
+            ps.setObject(i + 1, parametros.get(i));
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Modelo.Masajista m = new Modelo.Masajista();
+                m.setCod_Masajista(rs.getInt("cod_masajista"));
+                m.setMatricula(rs.getInt("matricula"));
+                m.setNombreCompleto(rs.getString("nombre_completo"));
+                m.setTelefono(rs.getString("telefono"));
+                m.setEspecialidad(Modelo.EspecialidadEnum.valueOf(rs.getString("especialidad")));
+                m.setEstado(rs.getBoolean("estado"));  
+                masajistasDisponibles.add(m);
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar masajistas disponibles: " + ex.getMessage());
+    }
+    return masajistasDisponibles;
+}
+    
     public void actualizarMasajista(Masajista m){
         
         String sql = "UPDATE masajista SET cod_masajista=?, nombre_completo=?, telefono=?, especialidad=?, estado=? WHERE matricula=?";

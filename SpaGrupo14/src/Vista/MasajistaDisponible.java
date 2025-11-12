@@ -4,19 +4,33 @@
  */
 package Vista;
 
+import Persistencia.MasajistaData;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author abate
  */
 public class MasajistaDisponible extends javax.swing.JInternalFrame {
+    private DefaultTableModel modelo;
+    private Persistencia.MasajistaData masajistaData;
+    private javax.swing.JComboBox jCbEspecialidades;
 
     /**
      * Creates new form MasajistaDisponible
      */
     public MasajistaDisponible() {
-       
+        super("Masajistas Disponibles", true, true, true, true);
         initComponents();
-        
+        masajistaData = new MasajistaData();
+        armarCabeceraTabla();
+        borrarFilasTabla();
+        cargarEspecialidades();
     }
 
     /**
@@ -33,6 +47,11 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
         jL_subtitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -50,58 +69,129 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
             }
         });
 
-        jL_subtitulo.setText("Especialidades");
+        jL_subtitulo.setText("Especialidad:");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Matricula", "Nombre Completo", "Especialidad", "Telefono", "Estado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setText("Fecha:");
+
+        jLabel2.setText("Hora:");
+
+        jButton1.setText("Buscar Disponibles");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jL_Titulo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jL_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(59, 59, 59)
-                            .addComponent(jL_subtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(35, 35, 35)
-                            .addComponent(jCb_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(129, 129, 129)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jL_subtitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCb_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(298, 298, 298)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addComponent(jL_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCb_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jL_subtitulo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                    .addComponent(jL_subtitulo)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCb_EspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCb_EspecialidadActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jCb_EspecialidadActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String fechaStr = jTextField1.getText().trim();
+        String horaStr = jTextField2.getText().trim();
+        String especialidad = (String) jCb_Especialidad.getSelectedItem();
+        LocalDateTime fechaHoraReserva;
+        if (fechaStr.isEmpty() || horaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar una Fecha (AAAA-MM-DD) y una Hora (HH:MM).", "Datos Incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            fechaHoraReserva = LocalDateTime.parse(fechaStr + " " + horaStr, formatter);
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Formato incorrecto. Use AAAA-MM-DD para la fecha y HH:MM para la hora.", 
+                "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        borrarFilasTabla(); 
+        List<Modelo.Masajista> disponibles = masajistaData.buscarDisponibles(fechaHoraReserva, especialidad); 
+
+        if (disponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No hay masajistas disponibles en el momento y especialidad seleccionados.", 
+                "Sin Resultados", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Modelo.Masajista m : disponibles) {
+                String estadoTexto = m.isEstado() ? "Activo" : "Inactivo"; 
+                modelo.addRow(new Object[]{
+                    m.getCod_Masajista(),
+                    m.getMatricula(),
+                    m.getNombreCompleto(), 
+                    m.getTelefono(),
+                    m.getEspecialidad(),
+                    estadoTexto
+                });
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,10 +229,42 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCb_Especialidad;
     private javax.swing.JLabel jL_Titulo;
     private javax.swing.JLabel jL_subtitulo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabeceraTabla() {
+
+    String[] titulos = {"Codigo", "Matricula", "Nombre Completo", "Telefono", "Especialidad", "Estado"}; 
+    
+    modelo = new DefaultTableModel(null, titulos) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    jTable1.setModel(modelo);
+}
+
+private void borrarFilasTabla() {
+    int filas = modelo.getRowCount();
+    for (int i = filas - 1; i >= 0; i--) {
+        modelo.removeRow(i);
+    }
+}
+
+private void cargarEspecialidades() {
+    jCb_Especialidad.removeAllItems();
+    jCb_Especialidad.addItem("Todas");
+    jCb_Especialidad.addItem("Facial");
+    jCb_Especialidad.addItem("Estiramiento");
+    }
 }
