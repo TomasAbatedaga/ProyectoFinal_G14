@@ -34,7 +34,7 @@ public class Masajista {
     }
 
     public void setCod_Masajista(int codMasajista) {
-        this.cod_Masajista = cod_Masajista;
+        this.cod_Masajista = codMasajista;
     }
 
     public int getMatricula() {

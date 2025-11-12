@@ -255,7 +255,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             String horaFinStr = jTfhoraFin.getText();
             // Time recibe HH:mm:ss, con esto valido si ingresa solo la hora
             if (horaInicioStr.length() <= 2) {
-                horaInicioStr += ":00:00"; // agrega eso para que quede en el formato correcto que pide Time
+                horaInicioStr += ":00:00"; // agrega minutos y segundos para que quede en el formato correcto que pide Time
             }
             // Aca si ingresa HH:mm
             else if (horaInicioStr.length() == 5) {
@@ -275,10 +275,10 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
             boolean estado = jCheckEstado.isSelected();
             
-            if (tratamiento == null || consultorio == null || masajista == null || instalacion == null || diaDeSpa == null) {
+            /*if (tratamiento == null || consultorio == null || masajista == null || instalacion == null || diaDeSpa == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar algun dato");
-                return; // Detiene la ejecución si algo falta
-            }
+                return;
+            }*/
             
             Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa , estado);
             sd.agregarSesion(sesion);
