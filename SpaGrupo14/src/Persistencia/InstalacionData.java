@@ -30,7 +30,7 @@ try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, instalacion.getNombre());
             ps.setString(2, instalacion.getDetalleUso());
-            ps.setDouble(3, instalacion.getPrecio30M());
+            ps.setDouble(3, instalacion.getPrecio());
             ps.setBoolean(4, instalacion.isEstado());
             ps.executeUpdate();
 
@@ -56,7 +56,7 @@ try {
             ps = con.prepareStatement(sql);
             ps.setString(1, instalacion.getNombre());
             ps.setString(2, instalacion.getDetalleUso());
-            ps.setDouble(3, instalacion.getPrecio30M());
+            ps.setDouble(3, instalacion.getPrecio());
             ps.setBoolean(4, instalacion.isEstado());
             ps.setInt(5, instalacion.getCodInstal());
             
@@ -79,30 +79,19 @@ try {
         }
     }
     public void eliminarInstalacion(int id){
-       String sql = "UPDATE instalacion SET estado = 'Inactivo' WHERE cod_instalacion = ?";
-        PreparedStatement ps = null;
+      String sql = "DELETE FROM instalacion WHERE cod_instalacion= ? " ;
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "Instalacion eliminada con exito");
+       } catch (SQLException ex) {
+            System.out.println("Error al borrar la Instalacion" + ex);
+        }
         
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            int fila = ps.executeUpdate();
-            
-            if (fila > 0) {
-                JOptionPane.showMessageDialog(null, "Instalación dada de baja lógicamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró la Instalación para dar de baja.");
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Instalacion (Eliminar): " + ex.getMessage());
-        } finally {
-            try {
-                if (ps != null) ps.close();
-            } catch (SQLException ex) {
-
-            }
-        } 
     }
+    
     public List<Instalacion> listarInstalaciones(){
         ArrayList<Instalacion> lista = new ArrayList<>();
         String sql = "SELECT cod_instalacion, nombre, detalle_uso, precio, estado FROM instalacion WHERE estado = 1"; 
@@ -118,7 +107,7 @@ try {
                 instalacion.setCodInstal(rs.getInt("cod_instalacion"));
                 instalacion.setNombre(rs.getString("nombre"));
                 instalacion.setDetalleUso(rs.getString("detalle_uso"));
-                instalacion.setPrecio30M(rs.getDouble("precio"));
+                instalacion.setPrecio(rs.getDouble("precio"));
                 instalacion.setEstado(rs.getBoolean("estado"));
                 lista.add(instalacion);
             }
@@ -134,4 +123,58 @@ try {
         }
         return lista;
     }
+
+    public Instalacion buscarInstalacion(int cod_Instalacion) {
+        Instalacion i = null;
+        String sql = "SELECT * FROM instalacion WHERE cod_instalacion = ?";
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cod_Instalacion);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                i = new Instalacion();
+                i.setCodInstal(rs.getInt("cod_instalacion"));
+                i.setNombre(rs.getString("nombre"));
+                i.setDetalleUso(rs.getString("detalle_uso"));
+                i.setPrecio(rs.getDouble("precio"));
+                i.setEstado(rs.getBoolean("estado"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("No existe ese código de Instalaciones: " + ex);
+        }
+        return i;
+    }
+    
+   public List<Instalacion> obtenerInstalacionesMasUsadas() {
+    List<Instalacion> lista = new ArrayList<>();
+    String sql = """
+        SELECT i.cod_instalacion, i.nombre, i.detalle_uso, i.precio,
+                       COUNT(si.cod_sesion) AS cantidadSesiones
+                FROM instalacion i
+                JOIN sesion_instalacion si ON i.cod_instalacion = si.cod_instalacion
+                JOIN sesion s ON si.cod_sesion = s.cod_sesion
+                WHERE s.estado = 1
+                GROUP BY i.cod_instalacion, i.nombre, i.detalle_uso, i.precio
+                ORDER BY cantidadSesiones DESC
+    """;
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Instalacion i = new Instalacion();
+            i.setCodInstal(rs.getInt("cod_instalacion"));
+            i.setNombre(rs.getString("nombre"));
+            i.setDetalleUso(rs.getString("detalle_uso"));
+            i.setPrecio(rs.getDouble("precio"));
+            lista.add(i);
+        }
+    } catch (SQLException ex) {
+         JOptionPane.showMessageDialog(null, "Error, no se pueden ver las instalaciones mas usadas: " + ex.getMessage());
+    }
+
+    return lista;
+}
+
 }

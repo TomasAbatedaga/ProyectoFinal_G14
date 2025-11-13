@@ -2,38 +2,39 @@
 package Modelo;
 
 public class Instalacion {
-    private int codInstal;
+    private int cod_Instalacion;
     private String nombre;
     private String detalleUso;
-    private double precio30M;
+    private double precio;
     private boolean estado;
+    private int cont;
 
-    public Instalacion(int codInstal, String nombre, String detalleUso, double precio30M, boolean estado) {
-        this.codInstal = codInstal;
+    public Instalacion(int cod_Instalacion, String nombre, String detalleUso, double precio, boolean estado) {
+        this.cod_Instalacion = cod_Instalacion;
         this.nombre = nombre;
         this.detalleUso = detalleUso;
-        this.precio30M = precio30M;
+        this.precio = precio;
         this.estado = estado;
     }
 
-    public Instalacion(String nombre, String detalleUso, double precio30M, boolean estado) {
-        this.codInstal = codInstal;
+    public Instalacion(String nombre, String detalleUso, double precio, boolean estado) {
+        this.cod_Instalacion = cod_Instalacion;
         this.nombre = nombre;
         this.detalleUso = detalleUso;
-        this.precio30M = precio30M;
+        this.precio = precio;
         this.estado = estado;
     }
 
     public Instalacion() {
-        this.codInstal = codInstal;
+        this.cod_Instalacion = cod_Instalacion;
     }
 
     public int getCodInstal() {
-        return codInstal;
+        return cod_Instalacion;
     }
 
     public void setCodInstal(int codInstal) {
-        this.codInstal = codInstal;
+        this.cod_Instalacion = codInstal;
     }
 
     public String getNombre() {
@@ -52,12 +53,12 @@ public class Instalacion {
         this.detalleUso = detalleUso;
     }
 
-    public double getPrecio30M() {
-        return precio30M;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setPrecio30M(double precio30M) {
-        this.precio30M = precio30M;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public boolean isEstado() {
@@ -68,6 +69,15 @@ public class Instalacion {
         this.estado = estado;
     }
 
+      public int getCont() {
+        return cont;
+    }
+
+    public void setCont(int cont) {
+        this.cont = cont;
+    }
+
+    
     @Override
     public String toString() {
         return  nombre;

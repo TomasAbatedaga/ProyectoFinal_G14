@@ -4,21 +4,69 @@
  */
 package Vista;
 
+import Modelo.Instalacion;
+import Persistencia.InstalacionData;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author abate
  */
 public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form InstalacionMasSolicitada
-     */
+    private ArrayList<Instalacion> listaT;
+    private InstalacionData instalaciondata;
+    private DefaultTableModel modeloTabla;
+    
     public InstalacionMasSolicitada() {
-      
+        super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
         
+        
+        instalaciondata = new InstalacionData();
+        listaT = (ArrayList<Instalacion>) instalaciondata.listarInstalaciones();
+
+        modeloTabla = new DefaultTableModel();
+        cargarColumnasTablas();
+        cargarTratamiento();
+        cargarTablaMasUsadas();
     }
 
+//     Cargar los valores del enum en el combo
+    public void cargarTratamiento() {
+
+        jCbInstalaciones.removeAllItems();
+        jCbInstalaciones.addItem("Seleccione un tipo...");
+      
+        
+    }
+    
+    // Definir columnas de la tabla
+    private void cargarColumnasTablas() {
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Detalle");
+        modeloTabla.addColumn("Precio");
+        modeloTabla.addColumn("Sesiones Usadas");
+        jTabInstalaciones.setModel(modeloTabla);
+    }
+    
+    
+    private void cargarTablaMasUsadas() {
+    listaT =(ArrayList<Instalacion>)instalaciondata.obtenerInstalacionesMasUsadas();
+   
+
+    for (Instalacion instalacion : listaT) {
+        modeloTabla.addRow(new Object[]{
+            instalacion.getNombre(),
+            instalacion.getDetalleUso(),
+            instalacion.getPrecio(),
+            instalacion.getCont()
+        });
+    }
+}
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +94,11 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
         jLabel2.setText("Seleccione la Instalacion: ");
 
         jCbInstalaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCbInstalaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCbInstalacionesActionPerformed(evt);
+            }
+        });
 
         jTabInstalaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,6 +148,11 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCbInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbInstalacionesActionPerformed
+        // TODO add your handling code here:
+        cargarTablaMasUsadas();
+    }//GEN-LAST:event_jCbInstalacionesActionPerformed
 
     /**
      * @param args the command line arguments

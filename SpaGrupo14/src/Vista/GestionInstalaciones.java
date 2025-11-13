@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Modelo.Instalacion;
+import Persistencia.InstalacionData;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jorge
@@ -40,8 +44,6 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
         btn_modificar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_limpiar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_instalacion = new javax.swing.JTable();
         btn_buscar = new javax.swing.JButton();
         lbl_codigo = new javax.swing.JLabel();
         txt_codigo = new javax.swing.JTextField();
@@ -72,27 +74,39 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
         lbl_estado.setText("Estado:");
 
         btn_agregar.setText("Agregar");
+        btn_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregarActionPerformed(evt);
+            }
+        });
 
         btn_modificar.setText("Modificar");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         btn_eliminar.setText("Eliminar");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
 
         btn_limpiar.setText("Limpiar");
-
-        tbl_instalacion.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btn_limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpiarActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(tbl_instalacion);
+        });
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         lbl_codigo.setText("Codigo:");
 
@@ -100,63 +114,66 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_estado)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_agregar)
+                        .addGap(41, 41, 41)
+                        .addComponent(btn_modificar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbl_precio)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lbl_codigo)
+                            .addGap(105, 105, 105)
+                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btn_buscar))))
+                .addContainerGap(129, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(264, 264, 264)
+                        .addGap(252, 252, 252)
                         .addComponent(lbl_titulo))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(76, 76, 76)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbl_detalle_uso)
-                                .addComponent(lbl_nombre))
-                            .addGap(64, 64, 64)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(chk_estado)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(70, 70, 70)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_precio)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(btn_agregar)
-                                                    .addGap(53, 53, 53)
-                                                    .addComponent(btn_modificar))
-                                                .addComponent(lbl_estado))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btn_eliminar)
-                                            .addGap(43, 43, 43)
-                                            .addComponent(btn_limpiar))
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lbl_codigo)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txt_codigo)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btn_buscar))))))
-                .addContainerGap(91, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_limpiar)
+                                .addGap(36, 36, 36)
+                                .addComponent(btn_eliminar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_detalle_uso)
+                                    .addComponent(lbl_nombre))
+                                .addGap(64, 64, 64)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(chk_estado))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(14, 14, 14)
                 .addComponent(lbl_titulo)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombre)
                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_detalle_uso)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_codigo)
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_precio))
@@ -168,17 +185,9 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_agregar)
                     .addComponent(btn_modificar)
-                    .addComponent(btn_eliminar)
-                    .addComponent(btn_limpiar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_buscar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbl_codigo)
-                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(btn_limpiar)
+                    .addComponent(btn_eliminar))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,6 +196,86 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
     private void txt_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_precioActionPerformed
+
+    private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
+        // TODO add your handling code here:
+            try{
+        InstalacionData instalacionData = new InstalacionData();
+        String nombre = txt_nombre.getText();
+        String detalleUso =  textArea_detalle_uso.getText();
+        double precio = Double.parseDouble(txt_precio.getText());
+        boolean estado = chk_estado.isSelected();
+        Instalacion instalacion = new Instalacion (nombre, detalleUso, precio, estado);
+        instalacionData.guardarIntalacion(instalacion);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores correctos en el campo precio");
+        }
+    }//GEN-LAST:event_btn_agregarActionPerformed
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        // TODO add your handling code here:
+          try {
+            InstalacionData instalacionData = new InstalacionData();
+             int cod_instalacion = Integer.parseInt(txt_codigo.getText());
+            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
+                 String nombre = txt_nombre.getText();
+                 String detalle_uso =  textArea_detalle_uso.getText();
+                 double precio = Double.parseDouble(txt_precio.getText());
+                 boolean estado = chk_estado.isSelected();
+                 Instalacion instalacion = new Instalacion( cod_instalacion,nombre, detalle_uso, precio, estado);
+                 instalacionData.modificarInstalacion(instalacion);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo de Instalacion ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo de Instalacion");
+        }
+        
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
+        // TODO add your handling code here:
+        txt_codigo.setText("");
+        txt_nombre.setText("");
+        textArea_detalle_uso.setText("");
+        txt_precio.setText("");
+        chk_estado.setSelected(false);
+    }//GEN-LAST:event_btn_limpiarActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            InstalacionData instalacionData = new InstalacionData();
+            int cod_instalacion = Integer.parseInt(txt_codigo.getText());
+            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
+                instalacionData.eliminarInstalacion(cod_instalacion);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Instalacion ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo de Instalacion");
+        }
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            InstalacionData instalacionData = new InstalacionData();
+            int cod_Instalacion = Integer.parseInt(txt_codigo.getText());
+            Instalacion instalacion = instalacionData.buscarInstalacion(cod_Instalacion);
+            if (instalacion != null) {
+                 txt_nombre.setText(instalacion.getNombre());
+                 textArea_detalle_uso.setText(instalacion.getDetalleUso());
+                 txt_precio.setText(String.valueOf(instalacion.getPrecio()));
+                 chk_estado.setSelected(instalacion.isEstado());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra el codigo de la Instalacion ingresado");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo del Instalacion");
+        }
+        
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -197,14 +286,12 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_modificar;
     private javax.swing.JCheckBox chk_estado;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_detalle_uso;
     private javax.swing.JLabel lbl_estado;
     private javax.swing.JLabel lbl_nombre;
     private javax.swing.JLabel lbl_precio;
     private javax.swing.JLabel lbl_titulo;
-    private javax.swing.JTable tbl_instalacion;
     private javax.swing.JTextArea textArea_detalle_uso;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_nombre;

@@ -301,7 +301,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         Tratamiento tratamiento = new Tratamiento (nombre, especialidad, detalle, duracion, costo, estado);
         tratamientoData.agregarTratamiento(tratamiento);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos Duración y Costo");
+            JOptionPane.showMessageDialog(this, "Ingrese valores correctos para Duración y/o Costo");
         }
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
