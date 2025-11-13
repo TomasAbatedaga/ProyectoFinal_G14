@@ -20,7 +20,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.swing.JOptionPane;
-import persistencia.Dia_de_SpaData;
+import Persistencia.Dia_de_SpaData;
 
 /**
  *
@@ -37,6 +37,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private MasajistaData abmMasajista;
     private ConsultorioData abmConsultorio;
     private TratamientoData abmTratamiento;
+    private int codigoSeleccionado;
     
     /**
      * Creates new form GestionDeSesiones
@@ -58,6 +59,40 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboMasajista();
         cargarComboInstalacion();
         cargarComboDiaDeSpa();
+    }
+    
+    public GestionDeSesiones(int codPack) {
+        initComponents();
+        this.codigoSeleccionado = codPack;
+        inicializarDatos(); 
+        seleccionarDiaDeSpa(); 
+    }
+        private void inicializarDatos() {
+        abmConsultorio = new ConsultorioData();
+        abmTratamiento = new TratamientoData();
+        abmMasajista = new MasajistaData();
+        abmInstalacion = new InstalacionData();
+        abmDia_de_Spa = new Dia_de_SpaData();
+
+        listaDiaDeSpa = (ArrayList<Dia_de_Spa>) abmDia_de_Spa.listarDia_de_Spa();
+        listaTratamiento = (ArrayList<Tratamiento>) abmTratamiento.listarTratamientos();
+        listaConsultorio = (ArrayList<Consultorio>) abmConsultorio.listarConsultorios();
+        listaMasajista = (ArrayList<Masajista>) abmMasajista.listarMasajista();
+        listaInstalacion = (ArrayList<Instalacion>) abmInstalacion.listarInstalaciones();
+
+        cargarComboTratamientos();
+        cargarComboConsultorio();
+        cargarComboMasajista();
+        cargarComboInstalacion();
+        cargarComboDiaDeSpa();
+    }
+        private void seleccionarDiaDeSpa() {
+        for (Dia_de_Spa dia : listaDiaDeSpa) {
+            if (dia.getCodPack() == codigoSeleccionado) {
+                jCbCodPaquete.setSelectedItem(dia);
+                break;
+            }
+        }
     }
 
     /**

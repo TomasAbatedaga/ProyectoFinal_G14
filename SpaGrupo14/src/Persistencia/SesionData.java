@@ -33,7 +33,7 @@ public class SesionData {
     
     public void agregarSesion(Sesion s){
         
-        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, cod_instalacion,estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try{
             
@@ -44,7 +44,8 @@ public class SesionData {
             ps.setInt(4, s.getConsultorio().getCodConsultorio());
             ps.setInt(5, s.getMasajista().getCod_Masajista());
             ps.setInt(6, s.getDiaDeSpa().getCodPack());
-            ps.setBoolean(7, s.isEstado());
+            ps.setInt(7, s.getInstalaciones().getCodInstal());
+            ps.setBoolean(8, s.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
@@ -79,6 +80,7 @@ public class SesionData {
                 s.getConsultorio().setCodConsultorio(rs.getInt("cod_consultorio"));
                 s.getMasajista().setCod_Masajista(rs.getInt("cod_masajista"));
                 s.getDiaDeSpa().setCodPack(rs.getInt("cod_pack"));
+                s.getInstalaciones().setCodInstal(rs.getInt("cod_instalacion"));
                 s.setEstado(rs.getBoolean("estado"));
                 
                 sesiones.add(s);
@@ -107,6 +109,7 @@ public class SesionData {
                 s.getConsultorio().setCodConsultorio(rs.getInt("cod_consultorio"));
                 s.getMasajista().setCod_Masajista(rs.getInt("cod_masajista"));
                 s.getDiaDeSpa().setCodPack(rs.getInt("cod_pack"));
+                s.getInstalaciones().setCodInstal(rs.getInt("cod_instalacion"));
                 s.setEstado(rs.getBoolean("estado"));
             }
         } catch (SQLException ex) {
@@ -117,7 +120,7 @@ public class SesionData {
     
     public void actualizarSesion(Sesion s){
         
-        String sql = "UPDATE sesion SET fecha_hora_inicio=?, fecha_hora_fin=?, cod_tratamiento=?, cod_consultorio=?, cod_masajista=?, cod_pack=?, estado=? WHERE cod_sesion=?";
+        String sql = "UPDATE sesion SET fecha_hora_inicio=?, fecha_hora_fin=?, cod_tratamiento=?, cod_consultorio=?, cod_masajista=?, cod_pack=?, cod_instalacion, estado=? WHERE cod_sesion=?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -128,6 +131,7 @@ public class SesionData {
             ps.setInt(4, s.getConsultorio().getCodConsultorio());
             ps.setInt(5, s.getMasajista().getCod_Masajista());
             ps.setInt(6, s.getDiaDeSpa().getCodPack());
+            ps.setInt(7, s.getInstalaciones().getCodInstal());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 JOptionPane.showMessageDialog(null, "Sesion Actualizado con exito");
