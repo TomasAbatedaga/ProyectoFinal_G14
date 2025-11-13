@@ -29,13 +29,9 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jServicio1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jservicio" min="-2" max="-2" attributes="0"/>
@@ -43,6 +39,7 @@
                                   <Component id="jServicio4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jServicio6" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jServicio7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jServicio8" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -53,11 +50,16 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jTfhoraFin" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="jCbmasajista" alignment="0" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jCbmasajista" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jCbtratamiento" max="32767" attributes="0"/>
                                   <Component id="jCbconsultorio" max="32767" attributes="0"/>
-                                  <Component id="jCbInstalacion" alignment="0" pref="309" max="32767" attributes="0"/>
-                                  <Component id="jCbCodPaquete" alignment="0" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jCbInstalacion" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jCbCodPaquete" alignment="0" min="-2" pref="309" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jTfCodSesion" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jBtnBuscar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -75,8 +77,12 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="82" max="32767" attributes="0"/>
+              <EmptySpace pref="80" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,7 +91,13 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jTfCodSesion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBtnBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="jServicio8" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jservicio" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jCbtratamiento" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -117,7 +129,7 @@
                   <Component id="jCbCodPaquete" min="-2" max="-2" attributes="0"/>
                   <Component id="jServicio7" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jServicio5" min="-2" max="-2" attributes="0"/>
                   <Component id="jCheckEstado" min="-2" max="-2" attributes="0"/>
@@ -128,7 +140,7 @@
                   <Component id="jBtnBorrar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="JBtnModificar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -270,6 +282,21 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Dia_de_Spa&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jServicio8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar Sesion:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTfCodSesion">
+    </Component>
+    <Component class="javax.swing.JButton" name="jBtnBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBuscarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

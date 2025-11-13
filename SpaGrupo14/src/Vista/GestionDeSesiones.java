@@ -87,10 +87,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboDiaDeSpa();
     }
         private void seleccionarDiaDeSpa() {
-        for (Dia_de_Spa dia : listaDiaDeSpa) {
+        for (int i = 0; i < jCbCodPaquete.getItemCount(); i++) {
+            Dia_de_Spa dia = jCbCodPaquete.getItemAt(i);
             if (dia.getCodPack() == codigoSeleccionado) {
-                jCbCodPaquete.setSelectedItem(dia);
-                break;
+                jCbCodPaquete.setSelectedIndex(i);
+                return;
             }
         }
     }
@@ -124,6 +125,9 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         jCbInstalacion = new javax.swing.JComboBox<>();
         jServicio7 = new javax.swing.JLabel();
         jCbCodPaquete = new javax.swing.JComboBox<>();
+        jServicio8 = new javax.swing.JLabel();
+        jTfCodSesion = new javax.swing.JTextField();
+        jBtnBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -189,6 +193,15 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             }
         });
 
+        jServicio8.setText("Buscar Sesion:");
+
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,10 +209,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +218,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                                     .addComponent(jServicio3)
                                     .addComponent(jServicio4)
                                     .addComponent(jServicio6)
-                                    .addComponent(jServicio7))
+                                    .addComponent(jServicio7)
+                                    .addComponent(jServicio8))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -217,11 +228,15 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                                         .addComponent(jServicio2)
                                         .addGap(18, 18, 18)
                                         .addComponent(jTfhoraFin))
-                                    .addComponent(jCbmasajista, 0, 309, Short.MAX_VALUE)
+                                    .addComponent(jCbmasajista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jCbtratamiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jCbconsultorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCbInstalacion, 0, 309, Short.MAX_VALUE)
-                                    .addComponent(jCbCodPaquete, 0, 309, Short.MAX_VALUE)))
+                                    .addComponent(jCbInstalacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCbCodPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jTfCodSesion)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBtnBuscar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jServicio5)
                                 .addGap(18, 18, 18)
@@ -232,15 +247,23 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                                 .addGap(67, 67, 67)
                                 .addComponent(JBtnModificar)
                                 .addGap(95, 95, 95)
-                                .addComponent(jBtnBorrar)))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                                .addComponent(jBtnBorrar))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel2)))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel2)
-                .addGap(41, 41, 41)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTfCodSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jServicio8))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jservicio)
                     .addComponent(jCbtratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,7 +289,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jCbCodPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jServicio7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jServicio5)
                     .addComponent(jCheckEstado))
@@ -275,7 +298,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                     .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70))
+                .addGap(44, 44, 44))
         );
 
         pack();
@@ -285,9 +308,40 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             SesionData sd = new SesionData();
-            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+            
+            //----CONTROL DE LA HORA
             String horaInicioStr = jTfhoraInicio.getText();
             String horaFinStr = jTfhoraFin.getText();
+            int horaInicioInt;
+            int horaFinInt;
+
+            
+            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+            if (tratamiento == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tratamiento primero");
+                return;
+            }
+
+            try {
+                horaInicioInt = Integer.parseInt(horaInicioStr);
+                horaFinInt = Integer.parseInt(horaFinStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al ingresar la hora, ingrese un numero dependiendo la hora que sea");
+                return;
+            }
+
+            int duracionAgendada = horaFinInt - horaInicioInt; 
+            int duracionRequerida = tratamiento.getDuracion();
+
+            if (duracionAgendada != duracionRequerida) {
+                JOptionPane.showMessageDialog(this, 
+                    "La duración de la sesión no coincide con la del tratamiento.\n\n" +
+                    "Duración Agendada: " + duracionAgendada + " hora(s) (de " + horaInicioInt + " a " + horaFinInt + ")\n" +
+                    "Duración Tratamiento: " + duracionRequerida + " hora(s)");
+                return;
+            }
+            
             // Time recibe HH:mm:ss, con esto valido si ingresa solo la hora
             if (horaInicioStr.length() <= 2) {
                 horaInicioStr += ":00:00"; // agrega minutos y segundos para que quede en el formato correcto que pide Time
@@ -304,10 +358,29 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             }
             Time horaInicio = Time.valueOf(horaInicioStr);
             Time horaFin = Time.valueOf(horaFinStr);
+            if (!horaFin.after(horaInicio)) {
+                JOptionPane.showMessageDialog(this,"La hora final debe ser posterior a la de inicio");
+                return;
+            }
+            //CONTROL DE LA HORA----
+            
+            
             Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
             Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
             Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+            
+            //VALIDACION DE LA ESPECIALIDAD
             Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
+            if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
+                JOptionPane.showMessageDialog(this,"El masajista no tiene la especialidad requerida para este tratamiento.\n\n" +
+                    "Masajista: " + masajista.getEspecialidad() + "\n" +
+                    "Tratamiento: " + tratamiento.getEspecialidad(), 
+                    "Especialidad no coincide", 
+                    JOptionPane.ERROR_MESSAGE);
+                return; // Detiene la operación
+            }
+            
+            
             boolean estado = jCheckEstado.isSelected();
             
             /*if (tratamiento == null || consultorio == null || masajista == null || instalacion == null || diaDeSpa == null) {
@@ -318,7 +391,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             LocalDate fechaDiaDeSpa = diaDeSpa.getFechaYHora();
             // validamos si masajista esta ocupado
             if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDiaDeSpa, horaInicio, horaFin)) {
-                JOptionPane.showMessageDialog(this,"El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario.");
+                JOptionPane.showMessageDialog(this,"El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario");
                 return;
             }
 
@@ -360,10 +433,110 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
     private void jBtnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBorrarActionPerformed
         // TODO add your handling code here:
+        try {
+            int codSesion = Integer.parseInt(jTfCodSesion.getText());
+
+            int respuesta = JOptionPane.showConfirmDialog(this, 
+                    "Estas seguro de eliminar la sesion " + codSesion + "?");
+
+            SesionData sd = new SesionData();
+            sd.eliminarSesion(codSesion);
+
+            jTfCodSesion.setText("");
+            jTfhoraInicio.setText("");
+            jTfhoraFin.setText("");
+            jCheckEstado.setSelected(false);
+            jCbtratamiento.setSelectedIndex(-1); // Deselecciona los combos
+            jCbconsultorio.setSelectedIndex(-1);
+            jCbmasajista.setSelectedIndex(-1);
+            jCbInstalacion.setSelectedIndex(-1);
+            jCbCodPaquete.setSelectedIndex(-1);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "No existe esa sesion");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar la sesion: " + e.getMessage());
+        }
+        
     }//GEN-LAST:event_jBtnBorrarActionPerformed
 
     private void JBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnModificarActionPerformed
         // TODO add your handling code here:
+        try {
+            SesionData sd = new SesionData();
+
+            int codSesion;
+            try {
+                codSesion = Integer.parseInt(jTfCodSesion.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Numero de sesion no existe");
+                return;
+            }
+            String horaInicioStr = jTfhoraInicio.getText().trim();
+            String horaFinStr = jTfhoraFin.getText().trim();
+            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+
+            int horaInicioInt = Integer.parseInt(horaInicioStr);
+            int horaFinInt = Integer.parseInt(horaFinStr);
+            int duracionAgendada = horaFinInt - horaInicioInt; 
+            int duracionRequerida = tratamiento.getDuracion();
+
+            if (duracionAgendada != duracionRequerida) {
+                 JOptionPane.showMessageDialog(this, "La duracion agendada es distinta a la requerida");
+                return;
+            }
+            if (horaFinInt <= horaInicioInt) {
+                JOptionPane.showMessageDialog(this, "La hora final debe ser posterior a la de inicio");
+                return;
+            }
+
+            if (horaInicioStr.length() <= 2) {
+                horaInicioStr += ":00:00";
+            }
+            else if (horaInicioStr.length() == 5) {
+                horaInicioStr += ":00"; 
+            }
+            if (horaFinStr.length() <= 2) {
+                horaFinStr += ":00:00";
+            } else if (horaFinStr.length() == 5) {
+                horaFinStr += ":00";
+            }
+            Time horaInicio = Time.valueOf(horaInicioStr);
+            Time horaFin = Time.valueOf(horaFinStr);
+
+            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
+            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
+            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
+            boolean estado = jCheckEstado.isSelected();
+            LocalDate fechaDeLaSesion = diaDeSpa.getFechaYHora();
+
+            if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
+                JOptionPane.showMessageDialog(this, "Especialidad no coincide.");
+                return; 
+            }
+            
+            if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
+                JOptionPane.showMessageDialog(this, "El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario");
+                return; 
+            }
+            if (sd.consultorioOcupado(consultorio.getCodConsultorio(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
+                JOptionPane.showMessageDialog(this, "El consultorio numero " + consultorio.getNroConsultorio() + " esta ocupado en esa fecha y horario");
+                return; 
+            }
+            if (sd.instalacionOcupada(instalacion.getCodInstal(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
+                JOptionPane.showMessageDialog(this, "La instalacion " + instalacion.getNombre() + " esta ocupada en esa fecha y horario");
+                return; 
+            }
+
+            Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa, estado);
+            sesion.setCodSesion(codSesion);
+            
+            sd.actualizarSesion(sesion);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al modificar la sesion" + e.getMessage());
+        }
     }//GEN-LAST:event_JBtnModificarActionPerformed
 
     private void jCbInstalacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbInstalacionActionPerformed
@@ -373,6 +546,70 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jCbCodPaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbCodPaqueteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCbCodPaqueteActionPerformed
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            SesionData sd = new SesionData();
+            int codSesion = Integer.parseInt(jTfCodSesion.getText());
+
+            // Asumiendo que tienes un método buscarSesiones() en SesionData
+            Sesion sesionEncontrada = sd.buscarSesiones(codSesion); 
+
+            if (sesionEncontrada != null) {
+                // Llenar campos de texto
+                jTfhoraInicio.setText(sesionEncontrada.getFechaHoraInicio().toString().substring(0, 5)); // Muestra "HH:mm"
+                jTfhoraFin.setText(sesionEncontrada.getFechaHoraFin().toString().substring(0, 5));
+                jCheckEstado.setSelected(sesionEncontrada.isEstado());
+
+                // --- Lógica para seleccionar en los ComboBox ---
+                // (Esto busca el objeto en tu lista que coincida con el ID de la sesión)
+
+                for (Tratamiento t : listaTratamiento) {
+                    if (t.getCodTratam() == sesionEncontrada.getTratamiento().getCodTratam()) {
+                        jCbtratamiento.setSelectedItem(t);
+                        break;
+                    }
+                }
+
+                for (Consultorio c : listaConsultorio) {
+                    if (c.getCodConsultorio() == sesionEncontrada.getConsultorio().getCodConsultorio()) {
+                        jCbconsultorio.setSelectedItem(c);
+                        break;
+                    }
+                }
+
+                for (Masajista m : listaMasajista) {
+                    if (m.getCod_Masajista() == sesionEncontrada.getMasajista().getCod_Masajista()) {
+                        jCbmasajista.setSelectedItem(m);
+                        break;
+                    }
+                }
+
+                for (Instalacion i : listaInstalacion) {
+                    if (i.getCodInstal() == sesionEncontrada.getInstalaciones().getCodInstal()) {
+                        jCbInstalacion.setSelectedItem(i);
+                        break;
+                    }
+                }
+
+                for (Dia_de_Spa d : listaDiaDeSpa) {
+                    if (d.getCodPack() == sesionEncontrada.getDiaDeSpa().getCodPack()) {
+                        jCbCodPaquete.setSelectedItem(d);
+                        break;
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna sesión con ese código.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de sesión numérico válido.");
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Error. La sesión encontrada tiene datos nulos. Verifique su método buscarSesiones()");
+        }
+
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,6 +682,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBtnModificar;
     private javax.swing.JButton jBtnAgregar;
     private javax.swing.JButton jBtnBorrar;
+    private javax.swing.JButton jBtnBuscar;
     private javax.swing.JComboBox<Dia_de_Spa> jCbCodPaquete;
     private javax.swing.JComboBox<Instalacion> jCbInstalacion;
     private javax.swing.JComboBox<Consultorio> jCbconsultorio;
@@ -459,6 +697,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jServicio5;
     private javax.swing.JLabel jServicio6;
     private javax.swing.JLabel jServicio7;
+    private javax.swing.JLabel jServicio8;
+    private javax.swing.JTextField jTfCodSesion;
     private javax.swing.JTextField jTfhoraFin;
     private javax.swing.JTextField jTfhoraInicio;
     private javax.swing.JLabel jservicio;
