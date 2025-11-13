@@ -65,12 +65,12 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
     private void cargarTablaMasUsadas() {
         borrarFilaTabla();
 
-        String seleccionado = (String) jCbInstalaciones.getSelectedItem();
-        if (seleccionado == null || seleccionado.equals("Seleccione un tipo...")) {
+        String nombreSeleccionado = (String) jCbInstalaciones.getSelectedItem();
+        if (nombreSeleccionado == null || nombreSeleccionado.equals("Seleccione un tipo...")) {
             return;
         }
         try {
-            listaT = (ArrayList<Instalacion>) instalaciondata.obtenerInstalacionesMasUsadas();
+            listaT = (ArrayList<Instalacion>) instalaciondata.obtenerInstalacionesMasUsadas(nombreSeleccionado);
         
         // Validación de lista vacía
         if (listaT == null || listaT.isEmpty()) {

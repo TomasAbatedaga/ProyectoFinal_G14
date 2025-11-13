@@ -146,20 +146,20 @@ try {
         return i;
     }
     
-   public List<Instalacion> obtenerInstalacionesMasUsadas() {
+   public List<Instalacion> obtenerInstalacionesMasUsadas(String nombreSeleccionado) {
     List<Instalacion> lista = new ArrayList<>();
     String sql = """
         SELECT i.cod_instalacion, i.nombre, i.detalle_uso, i.precio,
-                       COUNT(si.cod_sesion) AS cont
+                       COUNT(s.cod_sesion) AS cont
                 FROM instalacion i
-                JOIN sesion_instalacion si ON i.cod_instalacion = si.cod_instalacion
-                JOIN sesion s ON si.cod_sesion = s.cod_sesion
-                WHERE s.estado = 1
-                GROUP BY i.cod_instalacion, i.nombre, i.detalle_uso, i.precio
+                JOIN sesion s ON i.cod_instalacion = s.cod_instalacion
+                WHERE i.nombre = ? AND s.estado = 1
+                GROUP BY i.cod_instalacion
                 ORDER BY cont DESC
     """;
 
     try (PreparedStatement ps = con.prepareStatement(sql)) {
+         ps.setString(1, nombreSeleccionado);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -168,6 +168,9 @@ try {
             i.setNombre(rs.getString("nombre"));
             i.setDetalleUso(rs.getString("detalle_uso"));
             i.setPrecio(rs.getDouble("precio"));
+            //arranca el contador
+            i.setCont(rs.getInt("cont"));
+            
             lista.add(i);
         }
     } catch (SQLException ex) {
