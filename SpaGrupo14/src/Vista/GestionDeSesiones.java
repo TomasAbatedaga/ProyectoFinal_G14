@@ -280,6 +280,25 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                 return;
             }*/
             
+            LocalDate fechaDiaDeSpa = diaDeSpa.getFechaYHora();
+            // validamos si masajista esta ocupado
+            if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                JOptionPane.showMessageDialog(this,"El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario.");
+                return;
+            }
+
+            // validamos si el consultorio esta ocupado
+            if (sd.consultorioOcupado(consultorio.getCodConsultorio(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                JOptionPane.showMessageDialog(this,"El consultorio " + consultorio.toString() + " esta ocupado en esa fecha y horario.");
+                return;
+            }
+            
+            // validamos si la instalacion esta ocupada
+            if (sd.instalacionOcupada(instalacion.getCodInstal(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                JOptionPane.showMessageDialog(this,"La instalacion " + instalacion.getNombre() + " esta ocupada en esa fecha y horario.");
+                return;
+            }
+            
             Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa , estado);
             sd.agregarSesion(sesion);
             
