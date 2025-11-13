@@ -1,4 +1,4 @@
-package persistencia;
+package Persistencia;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import Modelo.Dia_de_Spa;
 import Modelo.Sesion;
 import Persistencia.Conexion;
 import Persistencia.ClienteData;
+import java.time.LocalDate;
 
 
 public class Dia_de_SpaData {
@@ -240,4 +241,35 @@ public class Dia_de_SpaData {
         }
         return unDiasdeSpa;
     }
+    /*public List<Sesion> listarSesionesPorPack(int codPack) {
+    List<Sesion> lista = new ArrayList<>();
+    String sql = "SELECT * FROM sesion WHERE cod_pack = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, codPack);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Sesion s = new Sesion();
+            s.setCodSesion(rs.getInt("cod_sesion"));
+            s.setFechaHoraInicio(rs.getTime("fecha_hora_inicio").toLocalTime().atDate(LocalDate.now()));
+            s.setFechaHoraFin(rs.getTime("fecha_hora_fin").toLocalTime().atDate(LocalDate.now()));
+
+            
+            s.setTratamiento(TratamientoData.(rs.getInt("cod_tratamiento")));
+            s.setConsultorio(ConsultorioData(rs.getInt("cod_consultorio")));
+            s.setMasajista(masajistaData.buscarMasajistaPorID(rs.getInt("cod_masajista")));
+
+            s.setEstado(rs.getBoolean("estado"));
+            lista.add(s);
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al listar sesiones: " + ex.getMessage());
+    }
+
+    return lista;
+}*/
 }

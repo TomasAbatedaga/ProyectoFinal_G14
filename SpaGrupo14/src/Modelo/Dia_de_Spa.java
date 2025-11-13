@@ -23,6 +23,15 @@ public class Dia_de_Spa {
         this.estado = estado;
     }
 
+    public Dia_de_Spa(LocalDate fechaYHora, String preferencias, Cliente cliente, double monto, boolean estado) {
+        this.fechaYHora = fechaYHora;
+        this.preferencias = preferencias;
+        this.cliente = cliente;
+        this.monto = monto;
+        this.estado = estado;
+    }
+    
+
     public Dia_de_Spa(LocalDate fechaYHora, String preferencias, Cliente cliente, List<Sesion> sesiones, double monto, boolean estado) {
         this.codPack = codPack;
         this.fechaYHora = fechaYHora;

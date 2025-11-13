@@ -54,7 +54,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="591" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -82,8 +82,8 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="jtf_fecha" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jdcFecha" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="cbEstado" min="-2" pref="122" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -95,7 +95,7 @@
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jtfPreferencias" min="-2" pref="270" max="-2" attributes="0"/>
-                                  <EmptySpace pref="150" max="32767" attributes="0"/>
+                                  <EmptySpace pref="185" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -111,12 +111,12 @@
                                   <Component id="jtfTOTAL" min="-2" pref="152" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="btnGuardarSpa" min="-2" pref="166" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
                                   <Component id="BUSCARSPA" min="-2" pref="166" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="ELIMINARSPA" min="-2" pref="166" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jToolBar1" alignment="1" max="32767" attributes="0"/>
                               <Component id="jScrollPane1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
@@ -125,7 +125,7 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAgregarSesion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
                   <Component id="btnModificarSESION" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -139,19 +139,24 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtf_fecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="TXFcodpack" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="TXFcodpack" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="cbEstado" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="cbEstado" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jdcFecha" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -166,18 +171,17 @@
                   <Component id="jScrollPane1" min="-2" pref="187" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAgregarSesion" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnModificarSESION" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEliminarSESION" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BUSCARSPA" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="ELIMINARSPA" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="btnGuardarSpa" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="57" max="32767" attributes="0"/>
+                  <EmptySpace pref="63" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jtfTOTAL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -297,10 +301,13 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnAgregarSesion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Agregar Sesion"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarSesionActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnModificarSESION">
           <Properties>
@@ -312,13 +319,6 @@
             <Property name="text" type="java.lang.String" value="Eliminar Sesion"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JToolBar" name="jToolBar1">
-          <Properties>
-            <Property name="rollover" type="boolean" value="true"/>
-          </Properties>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-        </Container>
         <Component class="javax.swing.JButton" name="BUSCARSPA">
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar Dia de SPA"/>
@@ -352,7 +352,15 @@
         </Component>
         <Component class="javax.swing.JTextField" name="JTFCantSesiones">
         </Component>
-        <Component class="javax.swing.JTextField" name="jtf_fecha">
+        <Component class="javax.swing.JButton" name="btnGuardarSpa">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Guardar Dia de SPA"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarSpaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jdcFecha">
         </Component>
       </SubComponents>
     </Container>

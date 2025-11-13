@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import persistencia.Dia_de_SpaData;
+import Persistencia.Dia_de_SpaData;
 
 /**
  *
