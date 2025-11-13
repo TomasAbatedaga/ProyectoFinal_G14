@@ -150,13 +150,13 @@ try {
     List<Instalacion> lista = new ArrayList<>();
     String sql = """
         SELECT i.cod_instalacion, i.nombre, i.detalle_uso, i.precio,
-                       COUNT(si.cod_sesion) AS cantidadSesiones
+                       COUNT(si.cod_sesion) AS cont
                 FROM instalacion i
                 JOIN sesion_instalacion si ON i.cod_instalacion = si.cod_instalacion
                 JOIN sesion s ON si.cod_sesion = s.cod_sesion
                 WHERE s.estado = 1
                 GROUP BY i.cod_instalacion, i.nombre, i.detalle_uso, i.precio
-                ORDER BY cantidadSesiones DESC
+                ORDER BY cont DESC
     """;
 
     try (PreparedStatement ps = con.prepareStatement(sql)) {

@@ -8,6 +8,7 @@ import Modelo.Instalacion;
 import Persistencia.InstalacionData;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,58 +16,83 @@ import javax.swing.table.DefaultTableModel;
  * @author abate
  */
 public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
+
     private ArrayList<Instalacion> listaT;
     private InstalacionData instalaciondata;
     private DefaultTableModel modeloTabla;
-    
+
     public InstalacionMasSolicitada() {
-        super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
-        
-        
+
         instalaciondata = new InstalacionData();
         listaT = (ArrayList<Instalacion>) instalaciondata.listarInstalaciones();
 
         modeloTabla = new DefaultTableModel();
         cargarColumnasTablas();
-        cargarTratamiento();
+        cargarInstalacion();
         cargarTablaMasUsadas();
     }
 
 //     Cargar los valores del enum en el combo
-    public void cargarTratamiento() {
+    public void cargarInstalacion() {
 
         jCbInstalaciones.removeAllItems();
         jCbInstalaciones.addItem("Seleccione un tipo...");
-      
-        
+
+        for (Instalacion instalacion : instalaciondata.listarInstalaciones()) {
+            jCbInstalaciones.addItem(instalacion.toString());
+        }
+
     }
-    
+
     // Definir columnas de la tabla
     private void cargarColumnasTablas() {
         modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Detalle");
+        modeloTabla.addColumn("Detalle Uso");
         modeloTabla.addColumn("Precio");
         modeloTabla.addColumn("Sesiones Usadas");
         jTabInstalaciones.setModel(modeloTabla);
     }
-    
-    
-    private void cargarTablaMasUsadas() {
-    listaT =(ArrayList<Instalacion>)instalaciondata.obtenerInstalacionesMasUsadas();
-   
-
-    for (Instalacion instalacion : listaT) {
-        modeloTabla.addRow(new Object[]{
-            instalacion.getNombre(),
-            instalacion.getDetalleUso(),
-            instalacion.getPrecio(),
-            instalacion.getCont()
-        });
+    //Limpia la tabla para dar paso a los nuevos elementos
+    private void borrarFilaTabla() {
+        int indice = modeloTabla.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modeloTabla.removeRow(i);
+        }
     }
-}
+
+    //Carga la tabla con el metodo obtener instalaciones
+    private void cargarTablaMasUsadas() {
+        borrarFilaTabla();
+
+        String seleccionado = (String) jCbInstalaciones.getSelectedItem();
+        if (seleccionado == null || seleccionado.equals("Seleccione un tipo...")) {
+            return;
+        }
+        try {
+            listaT = (ArrayList<Instalacion>) instalaciondata.obtenerInstalacionesMasUsadas();
+        
+        // Validación de lista vacía
+        if (listaT == null || listaT.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron instalaciones para mostrar.");
+            return;
+        }
+            for (Instalacion instalacion : listaT) {
+                modeloTabla.addRow(new Object[]{
+                    instalacion.getNombre(),
+                    instalacion.getDetalleUso(),
+                    instalacion.getPrecio(),
+                    instalacion.getCont()
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener instalaciones: " + e.getMessage());
+            return;
+
+        }
     
-    
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,7 +119,6 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Seleccione la Instalacion: ");
 
-        jCbInstalaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCbInstalaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCbInstalacionesActionPerformed(evt);
