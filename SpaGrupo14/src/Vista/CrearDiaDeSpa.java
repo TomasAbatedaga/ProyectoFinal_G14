@@ -21,7 +21,8 @@ import javax.swing.table.DefaultTableModel;
  * @author abate
  */
 public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
-
+private Dia_de_SpaData abmDiaDeSpa = new Dia_de_SpaData();
+private DefaultTableModel modeloDias;
     /**
      * Creates new form CrearDiaDeSpa
      */
@@ -29,46 +30,58 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     public CrearDiaDeSpa() {
         initComponents();
         LlenarClientes();
+        cargarTablaDias();
     }
-   /* public void cargarSesiones(int codPack){
-     
-    DefaultTableModel modelo = new DefaultTableModel();
-    modelo.setColumnIdentifiers(new Object[]{
-        "Código", "Tratamiento", "Masajista", "Consultorio", "Inicio", "Fin", "Costo", "Estado"
+   private void cargarTablaDias() {
+    modeloDias = new DefaultTableModel();
+    modeloDias.setColumnIdentifiers(new Object[]{
+        "CodPack", "Fecha", "Cliente", "Preferencias", "Estado"
     });
 
-    SesionData sd = new SesionData();
-    List<Sesion> lista = sd.listarSesionesPorPack(codPack);
+    List<Dia_de_Spa> lista = abmDiaDeSpa.listarDia_de_Spa();
 
-    double total = 0.0;
-    int cantidad = 0;
-
-    for (Sesion s : lista) {
-        double costo = s.getTratamiento().getCosto();
-        total += costo;
-        cantidad++;
-
-        modelo.addRow(new Object[]{
-            s.getCodSesion(),
-            s.getTratamiento().getNombre(),
-            s.getMasajista().getNombreCompleto(),
-            s.getConsultorio().getNroConsultorio(),
-            s.getFechaHoraInicio(),
-            s.getFechaHoraFin(),
-            
-            s.isEstado() 
+    for (Dia_de_Spa d : lista) {
+        modeloDias.addRow(new Object[]{
+            d.getCodPack(),
+            d.getFechaYHora(),
+            (d.getCliente() != null) ? d.getCliente().getNombreCompleto() : "Sin cliente",
+            d.getPreferencias(),
+            d.getEstado() ? "Activo" : "Inactivo"
         });
     }
 
-    jtablaSesiones.setModel(modelo);
+    jtablaDiasSpa.setModel(modeloDias);
+}
+   private void limpiarFormulario() {
+    jdcFecha.setDate(null);
+
+    if (cmb_clientesActivos.getItemCount() > 0) {
+        cmb_clientesActivos.setSelectedIndex(0);
     }
-    */
+
+    jtfPreferencias.setText("");
+    cbEstado.setSelected(true);
+    TXFcodpack.setText("");
+
+    btnGuardarSpa.setEnabled(true);
+    btnActualizarSpa.setEnabled(false);
+    ELIMINARSPA.setEnabled(false);
+}
+   
     public void LlenarClientes(){
-        ClienteData cd = new ClienteData();
+     cmb_clientesActivos.removeAllItems(); 
+
+    ClienteData cd = new ClienteData();
     List<Cliente> lista = cd.listarCliente();
+
     for (Cliente c : lista) {
         cmb_clientesActivos.addItem(c);
     }
+
+    
+    btnGuardarSpa.setEnabled(true);
+    btnActualizarSpa.setEnabled(false);
+    ELIMINARSPA.setEnabled(false);
     }
 
     /**
@@ -80,6 +93,8 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jDesktopPane3 = new javax.swing.JDesktopPane();
         jLabel3 = new javax.swing.JLabel();
@@ -91,19 +106,29 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         cmb_clientesActivos = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jtfPreferencias = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtablaSesiones = new javax.swing.JTable();
         btnAgregarSesion = new javax.swing.JButton();
-        btnModificarSESION = new javax.swing.JButton();
-        btnEliminarSESION = new javax.swing.JButton();
-        BUSCARSPA = new javax.swing.JButton();
         ELIMINARSPA = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jtfTOTAL = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        JTFCantSesiones = new javax.swing.JTextField();
         btnGuardarSpa = new javax.swing.JButton();
         jdcFecha = new com.toedter.calendar.JDateChooser();
+        btnActualizarSpa = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnReportesSpa = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtablaDiasSpa = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -119,11 +144,11 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         );
         jDesktopPane2Layout.setVerticalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setText("DIA DE SPA");
+        jLabel3.setText("CREAR DIA DE SPA");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Cod pack");
@@ -131,7 +156,15 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Fecha");
 
+        cbEstado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cbEstado.setSelected(true);
         cbEstado.setText("Estado");
+
+        TXFcodpack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXFcodpackActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Cliente");
@@ -139,7 +172,46 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Preferencias");
 
-        jtablaSesiones.setModel(new javax.swing.table.DefaultTableModel(
+        btnAgregarSesion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAgregarSesion.setText("GESTIONAR SESION");
+        btnAgregarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarSesionActionPerformed(evt);
+            }
+        });
+
+        ELIMINARSPA.setText("Eliminar Dia de SPA");
+        ELIMINARSPA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ELIMINARSPAActionPerformed(evt);
+            }
+        });
+
+        btnGuardarSpa.setText("Guardar Dia de SPA");
+        btnGuardarSpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarSpaActionPerformed(evt);
+            }
+        });
+
+        btnActualizarSpa.setText("ACTUALIZAR DIA SPA");
+        btnActualizarSpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarSpaActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnReportesSpa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReportesSpa.setText("REPORTES DIA DE SPA");
+
+        jtablaDiasSpa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -150,37 +222,15 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jtablaSesiones);
-
-        btnAgregarSesion.setText("Agregar Sesion");
-        btnAgregarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarSesionActionPerformed(evt);
+        jtablaDiasSpa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtablaDiasSpaMouseClicked(evt);
             }
         });
+        jScrollPane2.setViewportView(jtablaDiasSpa);
 
-        btnModificarSESION.setText("Modificar Sesion");
-
-        btnEliminarSESION.setText("Eliminar Sesion");
-
-        BUSCARSPA.setText("Buscar Dia de SPA");
-
-        ELIMINARSPA.setText("Eliminar Dia de SPA");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setText("MONTO TOTAL:");
-
-        jtfTOTAL.setEditable(false);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("SESIONES:");
-
-        btnGuardarSpa.setText("Guardar Dia de SPA");
-        btnGuardarSpa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarSpaActionPerformed(evt);
-            }
-        });
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel6.setText("DIAS DE SPA CREADOS");
 
         jDesktopPane3.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -191,18 +241,15 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         jDesktopPane3.setLayer(cmb_clientesActivos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jtfPreferencias, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(btnAgregarSesion, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(btnModificarSESION, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(btnEliminarSESION, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(BUSCARSPA, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(ELIMINARSPA, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(jtfTOTAL, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(JTFCantSesiones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(btnGuardarSpa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jdcFecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(btnActualizarSpa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(btnLimpiar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(btnReportesSpa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane3Layout = new javax.swing.GroupLayout(jDesktopPane3);
         jDesktopPane3.setLayout(jDesktopPane3Layout);
@@ -210,103 +257,79 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
             jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane3Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnAgregarSesion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane3Layout.createSequentialGroup()
                         .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addComponent(TXFcodpack, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                        .addComponent(jdcFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(74, 74, 74))
-                            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addComponent(cmb_clientesActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtfPreferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(185, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane3Layout.createSequentialGroup()
-                        .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTFCantSesiones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtfTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addComponent(btnGuardarSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(135, 135, 135)
-                                .addComponent(BUSCARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ELIMINARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addGap(74, 74, 74))))
-            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(btnAgregarSesion)
-                .addGap(179, 179, 179)
-                .addComponent(btnModificarSESION)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEliminarSESION)
-                .addGap(99, 99, 99))
+                                .addGap(250, 250, 250)
+                                .addComponent(jLabel3))
+                            .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TXFcodpack, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbEstado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jtfPreferencias, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmb_clientesActivos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jdcFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane2)
+                    .addComponent(btnReportesSpa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane3Layout.createSequentialGroup()
+                        .addComponent(btnGuardarSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnActualizarSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(ELIMINARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(355, 355, 355))
         );
         jDesktopPane3Layout.setVerticalGroup(
             jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane3Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(TXFcodpack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cbEstado)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addComponent(jLabel3)
+                .addGap(40, 40, 40)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(34, 34, 34)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cmb_clientesActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmb_clientesActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jtfPreferencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(cbEstado)
+                .addGap(32, 32, 32)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(TXFcodpack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(btnAgregarSesion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReportesSpa)
+                .addGap(18, 18, 18)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarSesion)
-                    .addComponent(btnModificarSESION)
-                    .addComponent(btnEliminarSESION))
-                .addGap(37, 37, 37)
-                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BUSCARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ELIMINARSPA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jtfTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(JTFCantSesiones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addComponent(btnGuardarSpa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizarSpa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ELIMINARSPA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -314,16 +337,18 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jDesktopPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane2)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jDesktopPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane3))
         );
 
         pack();
@@ -331,56 +356,159 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
 
     private void btnGuardarSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSpaActionPerformed
      try {
-        Cliente cli = (Cliente) cmb_clientesActivos.getSelectedItem();
-        if (cli == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.");
-            return;
-        }
-
         if (jdcFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha válida.");
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha");
+            return;
+        }
+        Cliente cli = (Cliente) cmb_clientesActivos.getSelectedItem();
+        if (cli == null || cli.getCod_cliente() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
             return;
         }
 
-        LocalDate fecha = jdcFecha.getDate()
-                .toInstant()
+        LocalDate fecha = jdcFecha.getDate().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
 
-        String preferencias = jtfPreferencias.getText();
-        boolean estado = cbEstado.isSelected();
+        Dia_de_Spa dia = new Dia_de_Spa(
+                fecha,
+                jtfPreferencias.getText(),
+                cli,
+                0.0,
+                cbEstado.isSelected()
+        );
 
-        Dia_de_Spa dia = new Dia_de_Spa(fecha, preferencias, cli, 0.0, estado);
-
-        Dia_de_SpaData dsd = new Dia_de_SpaData();
-        dsd.agregarDiaSpa(dia);
+        abmDiaDeSpa.agregarDiaSpa(dia);
 
         TXFcodpack.setText(String.valueOf(dia.getCodPack()));
+        JOptionPane.showMessageDialog(this, "Dia de Spa guardado");
 
-        JOptionPane.showMessageDialog(this,
-                "Día de Spa creado correctamente.Código generado: " + dia.getCodPack());
+        cargarTablaDias();
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al crear el Día de Spa: " + e.getMessage());
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage());
     }
 
     }//GEN-LAST:event_btnGuardarSpaActionPerformed
 
     private void btnAgregarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSesionActionPerformed
-      try {
-        int codPack = Integer.parseInt(TXFcodpack.getText());
-        GestionDeSesiones gestionSesiones = new GestionDeSesiones(codPack);
-
-        
-        this.getDesktopPane().add(gestionSesiones);
-        gestionSesiones.setVisible(true);
-        gestionSesiones.toFront();
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Primero guardá el Día de Spa para obtener el código.");
+     if (TXFcodpack.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Guarda el dia primero");
+        return;
     }
+    int cod = Integer.parseInt(TXFcodpack.getText());
+
+    GestionDeSesiones gs = new GestionDeSesiones(cod);
+    this.getDesktopPane().add(gs);
+    gs.setVisible(true);
+    gs.toFront();
 
     }//GEN-LAST:event_btnAgregarSesionActionPerformed
+
+    private void TXFcodpackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXFcodpackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXFcodpackActionPerformed
+
+    private void ELIMINARSPAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARSPAActionPerformed
+        if (TXFcodpack.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un dia");
+            return;
+        }
+
+        int cod = Integer.parseInt(TXFcodpack.getText());
+
+        SesionData sd = new SesionData();
+        List<Sesion> sesiones = sd.listarSesionesPorCodPack(cod);
+
+        if (!sesiones.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No puedes eliminar este dia porque tiene sesiones asociadas, se debe eliminar la sesion");
+            return;
+        }
+
+        int r = JOptionPane.showConfirmDialog(this,
+                "Eliminar dia de spa " + cod + "?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (r == JOptionPane.YES_OPTION) {
+            abmDiaDeSpa.eliminarDiadeSpa(cod);
+            JOptionPane.showMessageDialog(this, "Dia eliminado");
+
+            limpiarFormulario();
+            cargarTablaDias();
+            jtablaDiasSpa.clearSelection();
+        }
+    }//GEN-LAST:event_ELIMINARSPAActionPerformed
+
+    private void btnActualizarSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarSpaActionPerformed
+       if (TXFcodpack.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un Dia primero");
+        return;
+    }
+
+         try {
+        int cod = Integer.parseInt(TXFcodpack.getText());
+        if (jdcFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha");
+            return;
+        }
+        Cliente cli = (Cliente) cmb_clientesActivos.getSelectedItem();
+        if (cli == null || cli.getCod_cliente() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+            return;
+        }
+
+        LocalDate fecha = jdcFecha.getDate().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        Dia_de_Spa dia = new Dia_de_Spa(
+                fecha,
+                jtfPreferencias.getText(),
+                cli,
+                0.0,
+                cbEstado.isSelected()
+        );
+        dia.setCodPack(cod);
+
+        abmDiaDeSpa.actualizarDiaSpa(dia);
+
+        JOptionPane.showMessageDialog(this, "Dia actualizado");
+        cargarTablaDias();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
+    }
+    
+    
+    }//GEN-LAST:event_btnActualizarSpaActionPerformed
+
+    private void jtablaDiasSpaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtablaDiasSpaMouseClicked
+     int fila = jtablaDiasSpa.getSelectedRow();
+    if (fila == -1) return;
+
+    int cod = (int) modeloDias.getValueAt(fila, 0);
+
+    Dia_de_Spa dia = abmDiaDeSpa.buscarDia(cod);
+    if (dia == null) {
+        JOptionPane.showMessageDialog(this, "No encontrado");
+        return;
+    }
+
+    jdcFecha.setDate(java.sql.Date.valueOf(dia.getFechaYHora()));
+    cmb_clientesActivos.setSelectedItem(dia.getCliente());
+    jtfPreferencias.setText(dia.getPreferencias());
+    cbEstado.setSelected(dia.getEstado());
+    TXFcodpack.setText(String.valueOf(dia.getCodPack()));
+
+    btnGuardarSpa.setEnabled(false);
+    btnActualizarSpa.setEnabled(true);
+    ELIMINARSPA.setEnabled(true);
+    }//GEN-LAST:event_jtablaDiasSpaMouseClicked
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,14 +545,13 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
         });
     };
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BUSCARSPA;
     private javax.swing.JButton ELIMINARSPA;
-    private javax.swing.JTextField JTFCantSesiones;
     private javax.swing.JTextField TXFcodpack;
+    private javax.swing.JButton btnActualizarSpa;
     private javax.swing.JButton btnAgregarSesion;
-    private javax.swing.JButton btnEliminarSESION;
     private javax.swing.JButton btnGuardarSpa;
-    private javax.swing.JButton btnModificarSESION;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnReportesSpa;
     private javax.swing.JCheckBox cbEstado;
     private javax.swing.JComboBox<Cliente> cmb_clientesActivos;
     private javax.swing.JDesktopPane jDesktopPane2;
@@ -435,12 +562,12 @@ public class CrearDiaDeSpa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private com.toedter.calendar.JDateChooser jdcFecha;
-    private javax.swing.JTable jtablaSesiones;
+    private javax.swing.JTable jtablaDiasSpa;
     private javax.swing.JTextField jtfPreferencias;
-    private javax.swing.JTextField jtfTOTAL;
     // End of variables declaration//GEN-END:variables
 }
 

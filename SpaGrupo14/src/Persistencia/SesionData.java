@@ -91,7 +91,31 @@ public class SesionData {
         }   
         return sesiones;
     }
-    
+    public List<Sesion> listarSesionesPorCodPack(int codPack) {
+        List<Sesion> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM sesion WHERE cod_pack = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, codPack);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Sesion s = new Sesion();
+                s.setCodSesion(rs.getInt("cod_sesion"));
+
+                lista.add(s);
+            }
+
+            ps.close();
+
+        } catch (SQLException ex) {
+            System.out.println("Error listar sesiones por Dia Spa: " + ex);
+        }
+
+        return lista;
+    }
     public Sesion buscarSesiones(int codSesion){
         Sesion s = null;
         String sql = "SELECT * FROM sesion WHERE cod_sesion = ?";

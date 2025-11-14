@@ -140,6 +140,7 @@ public class ClienteData {
         }
     }
     
+    
     public void altaLogica(Cliente c){
         
         String sql = "UPDATE cliente SET estado=1 WHERE dni=?";
@@ -169,6 +170,28 @@ public class ClienteData {
             System.out.println("Error de actualizacion " + ex);
         }
     }
-    
+    public Cliente buscarClientePorID(int codCliente){
+    Cliente c = null;
+    String sql = "SELECT * FROM cliente WHERE cod_cliente = ?";
+    try{
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, codCliente);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            c = new Cliente();
+            c.setCod_cliente(rs.getInt("cod_cliente"));
+            c.setDni(rs.getInt("dni"));
+            c.setNombreCompleto(rs.getString("nombre_completo"));
+            c.setTelefono(rs.getString("telefono"));
+            c.setEdad(rs.getInt("edad"));
+            c.setAfecciones(rs.getString("afecciones"));
+            c.setEstado(rs.getBoolean("estado"));
+        }
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar cliente: " + ex);
+    }
+    return c;
+}
     
 }
