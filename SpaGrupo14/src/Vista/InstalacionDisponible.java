@@ -176,12 +176,18 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
         // TODO add your handling code here:
-        String instalacion = (String) jCbInstalaciones.getSelectedItem();
+        Instalacion instalacionSeleccionada = (Instalacion) jCbInstalaciones.getSelectedItem();
+        if (instalacionSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una instalacion");
+            return;
+        }
+        
         Date fecha = jDcFecha.getDate();
         if (fecha == null) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha");
         }
         LocalDate fechaLD = new java.sql.Date(fecha.getTime()).toLocalDate();
+        
         String horaInicioStr = jTfHoraInicio.getText().trim();
         String horaFinStr = jTfHoraFin.getText().trim();
         if (horaInicioStr.isEmpty() || horaFinStr.isEmpty()) {
@@ -217,19 +223,36 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
         borrarFilasTabla();
         List<Instalacion> disponibles = abmInstalacion.listaInstalacionesDisponibles(fechaLD, horaInicio, horaFin);
         
+        boolean encontradaEnDisponibles = false;
+        for (Instalacion inst : disponibles) {
+            if (inst.getCodInstal() == instalacionSeleccionada.getCodInstal()) {
+                encontradaEnDisponibles = true;
+                break;
+            }
+        }
+        
+        if (encontradaEnDisponibles) {
+            modelo.addRow(new Object[]{
+                instalacionSeleccionada.getCodInstal(),
+                instalacionSeleccionada.getNombre(),
+                instalacionSeleccionada.getPrecio(),
+                instalacionSeleccionada.getDetalleUso(),
+                "Disponible"
+            });
+        } else {
+            modelo.addRow(new Object[]{
+                instalacionSeleccionada.getCodInstal(),
+                instalacionSeleccionada.getNombre(),
+                instalacionSeleccionada.getPrecio(),
+                instalacionSeleccionada.getDetalleUso(),
+                "Ocupado"
+            });
+            JOptionPane.showMessageDialog(this, "La instalacion '" + instalacionSeleccionada.getNombre() + "' esta ocupada en ese horario.");
+        }
+        
         if (disponibles.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se encontraron instalaciones disponibles para esa fecha y horario");
             return;
-        }
-        
-        for (Instalacion inst : disponibles) {
-            modelo.addRow(new Object[]{
-                inst.getCodInstal(),
-                inst.getNombre(),
-                inst.getPrecio(),
-                inst.getDetalleUso(),
-                inst.isEstado() ? "Activo" : "Inactivo"
-            });
         }
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
