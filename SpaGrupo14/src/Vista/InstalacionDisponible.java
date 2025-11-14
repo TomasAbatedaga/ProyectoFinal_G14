@@ -4,17 +4,34 @@
  */
 package Vista;
 
+import Modelo.Instalacion;
+import Persistencia.InstalacionData;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author abate
  */
 public class InstalacionDisponible extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modelo;
+    private ArrayList<Instalacion> listaInstalacion;
+    private InstalacionData abmInstalacion;
     /**
      * Creates new form InstalacionDisponible
      */
     public InstalacionDisponible() {
         initComponents();
+        abmInstalacion = new InstalacionData();
+        listaInstalacion = (ArrayList<Instalacion>) abmInstalacion.listarInstalaciones();
+        armarCabeceraTabla();
+        borrarFilasTabla();
+        cargarComboInstalacion();
     }
 
     /**
@@ -32,6 +49,12 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
         jCbInstalaciones = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTfHoraInicio = new javax.swing.JTextField();
+        jTfHoraFin = new javax.swing.JTextField();
+        jBtnBuscar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jDcFecha = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -52,18 +75,35 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTabInstalaciones);
 
-        jCbInstalaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel1.setFont(new java.awt.Font("SimSun", 1, 20)); // NOI18N
         jLabel1.setText("Instalaciones Disponibles");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Seleccione la Instalacion: ");
+        jLabel2.setText("Instalacion: ");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Franja horaria:");
+
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Fecha:");
 
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jCbInstalaciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTfHoraInicio, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTfHoraFin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jBtnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jDcFecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -72,17 +112,30 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel1))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCbInstalaciones, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel1)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jTfHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jTfHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jCbInstalaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jDcFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,12 +143,21 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1)
                 .addGap(38, 38, 38)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCbInstalaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addComponent(jLabel4)
+                    .addComponent(jDcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCbInstalaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(55, 55, 55)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jTfHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnBuscar)
+                    .addComponent(jTfHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -111,6 +173,65 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        String instalacion = (String) jCbInstalaciones.getSelectedItem();
+        Date fecha = jDcFecha.getDate();
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha");
+        }
+        LocalDate fechaLD = new java.sql.Date(fecha.getTime()).toLocalDate();
+        String horaInicioStr = jTfHoraInicio.getText().trim();
+        String horaFinStr = jTfHoraFin.getText().trim();
+        if (horaInicioStr.isEmpty() || horaFinStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar una hora de inicio y fin.");
+            return;
+        }
+        int horaInicioInt;
+        int horaFinInt;
+        try {
+            horaInicioInt = Integer.parseInt(horaInicioStr);
+            horaFinInt = Integer.parseInt(horaFinStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"Error al ingresar la hora, ingrese un numero dependiendo la hora que sea");
+            return;
+        }
+        if (horaInicioStr.length() <= 2) {
+            horaInicioStr += ":00:00";
+        }
+        else if (horaInicioStr.length() == 5) {
+            horaInicioStr += ":00";
+        }
+        if (horaFinStr.length() <= 2) {
+            horaFinStr += ":00:00";
+        } else if (horaFinStr.length() == 5) {
+            horaFinStr += ":00";
+        }
+        Time horaInicio = Time.valueOf(horaInicioStr);
+        Time horaFin = Time.valueOf(horaFinStr);
+        if (!horaFin.after(horaInicio)) {
+            JOptionPane.showMessageDialog(this,"La hora final debe ser posterior a la de inicio");
+            return;
+        }
+        borrarFilasTabla();
+        List<Instalacion> disponibles = abmInstalacion.listaInstalacionesDisponibles(fechaLD, horaInicio, horaFin);
+        
+        if (disponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron instalaciones disponibles para esa fecha y horario");
+            return;
+        }
+        
+        for (Instalacion inst : disponibles) {
+            modelo.addRow(new Object[]{
+                inst.getCodInstal(),
+                inst.getNombre(),
+                inst.getPrecio(),
+                inst.getDetalleUso(),
+                inst.isEstado() ? "Activo" : "Inactivo"
+            });
+        }
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,13 +267,44 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
             }
         });
     }
+    
+    private void armarCabeceraTabla() {
+
+    String[] titulos = {"Codigo", "Nombre", "Precio", "Detalle de uso", "Estado"}; 
+    
+    modelo = new DefaultTableModel(null, titulos) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    jTabInstalaciones.setModel(modelo);
+}
+    
+    private void borrarFilasTabla() {
+    int filas = modelo.getRowCount();
+    for (int i = filas - 1; i >= 0; i--) {
+        modelo.removeRow(i);
+    }
+}   
+    private void cargarComboInstalacion(){
+        for (Instalacion instalacion : listaInstalacion) {
+            jCbInstalaciones.addItem(instalacion);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jCbInstalaciones;
+    private javax.swing.JButton jBtnBuscar;
+    private javax.swing.JComboBox<Instalacion> jCbInstalaciones;
+    private com.toedter.calendar.JDateChooser jDcFecha;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTabInstalaciones;
+    private javax.swing.JTextField jTfHoraFin;
+    private javax.swing.JTextField jTfHoraInicio;
     // End of variables declaration//GEN-END:variables
 }

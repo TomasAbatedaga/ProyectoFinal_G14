@@ -6,6 +6,7 @@ package Persistencia;
 
 import Modelo.Instalacion;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -178,6 +179,46 @@ try {
     }
 
     return lista;
+}
+   
+   public List<Instalacion> listaInstalacionesDisponibles(LocalDate fecha, Time horaInicio, Time horaFin) {
+    
+    List<Instalacion> disponibles = new ArrayList<>();
+    
+    String sql = "SELECT * FROM instalacion " +
+                 "WHERE estado = 1 " +
+                 "AND cod_instalacion NOT IN (" +
+                 "    SELECT s.cod_instalacion " +
+                 "    FROM sesion s " +
+                 "    JOIN dia_de_spa ds ON s.cod_pack = ds.cod_pack " +
+                 "    WHERE ds.fecha_hora = ? " +
+                 "    AND (s.fecha_hora_inicio < ? AND s.fecha_hora_fin > ?)" +
+                 ")";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setDate(1, java.sql.Date.valueOf(fecha));
+        ps.setTime(2, horaFin);
+        ps.setTime(3, horaInicio);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Instalacion instalacion = new Instalacion();
+                instalacion.setCodInstal(rs.getInt("cod_instalacion"));
+                instalacion.setNombre(rs.getString("nombre"));
+                instalacion.setDetalleUso(rs.getString("detalle_uso"));
+                instalacion.setPrecio(rs.getDouble("precio"));
+                instalacion.setEstado(rs.getBoolean("estado"));
+                
+                disponibles.add(instalacion);
+            }
+        }
+        
+    } catch (SQLException ex) {
+        System.out.println("Error al listar instalaciones disponibles" + ex.getMessage());
+    }
+    
+    return disponibles;
 }
 
 }
