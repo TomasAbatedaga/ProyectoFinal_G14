@@ -5,6 +5,7 @@
 package Vista;
 
 
+import Estilo.EstiloVisual;
 import Modelo.EspecialidadEnum;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -14,18 +15,22 @@ import Modelo.Masajista;
 import Modelo.Tratamiento;
 import Persistencia.MasajistaData;
 import Persistencia.TratamientoData;
+import javax.swing.JOptionPane;
 /**
  *
  * @author abate
  */
 public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
+
     private ArrayList<Tratamiento> listaT;
     private TratamientoData tratamientodata;
     private DefaultTableModel modeloTabla;
 
-    public BuscarTratamientoPorTipo(){
+    public BuscarTratamientoPorTipo() {
         super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
+        EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
+        EstiloVisual.aplicarEstiloTabla(tbl_tablaTratamientos);
 
         tratamientodata = new TratamientoData();
         listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
@@ -35,16 +40,19 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
         cargarTratamiento();
         tratamientoTablaTipos();
 
-        // Listener para actualizar tabla al cambiar selección
-        jcb_listadoTratam.addActionListener(e -> tratamientoTablaTipos());
     }
 
     // Cargar los valores del enum en el combo
     public void cargarTratamiento() {
-        for (EspecialidadEnum especialidad : EspecialidadEnum.values()){
+
+        jcb_listadoTratam.removeAllItems();
+        jcb_listadoTratam.addItem("Seleccione un tipo...");
+
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
             jcb_listadoTratam.addItem(especialidad.toString());
         }
     }
+
     // Definir columnas de la tabla
     private void cargarColumnasTablas() {
         modeloTabla.addColumn("Nombre");
@@ -54,6 +62,7 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Costo");
         tbl_tablaTratamientos.setModel(modeloTabla);
     }
+
     // Borrar todas las filas antes de recargar
     private void borrarFilaTabla() {
         int indice = modeloTabla.getRowCount() - 1;
@@ -61,26 +70,52 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
             modeloTabla.removeRow(i);
         }
     }
+
     // Filtrar tratamientos por tipo seleccionado
     private void tratamientoTablaTipos() {
         borrarFilaTabla();
+
         String tipoSeleccionado = (String) jcb_listadoTratam.getSelectedItem();
-        listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
+        if (tipoSeleccionado == null || tipoSeleccionado.equals("Seleccione un tipo...")) {
+            return;
+        }
+        try {
 
-        for (Tratamiento tratamiento : listaT) {
+            listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
 
-//            if (tratamiento.getEspecialidad()== tipoSeleccionado) {
-            modeloTabla.addRow(new Object[]{
-                tratamiento.getNombre(),
-                tratamiento.getEspecialidad(), // muestra el enum
-                tratamiento.getDetalle(),
-                tratamiento.getDuracion(),
-                tratamiento.getCosto()
-            });
+            if (listaT == null || listaT.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron instalaciones para mostrar.");
+                return;
+            }
+
+            boolean encontrado = false;
+            for (Tratamiento tratamiento : listaT) {
+                if (tratamiento.getEspecialidad().toString().equalsIgnoreCase(tipoSeleccionado)) {
+                    modeloTabla.addRow(new Object[]{
+                        tratamiento.getNombre(),
+                        tratamiento.getEspecialidad(),
+                        tratamiento.getDetalle(),
+                        tratamiento.getDuracion(),
+                        tratamiento.getCosto()
+                    });
+                    encontrado = true;
+                }
+
+                if (tratamientodata == null) {
+                    JOptionPane.showMessageDialog(this, "Error interno: fuente de datos no disponible.");
+                    return;
+                }
+            }
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(this, "No se encontraron tratamientos del tipo seleccionado.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener Los Tratamientos: " + e.getMessage());
+            return;
 
         }
     }
- 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,11 +125,13 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jL_titulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jcb_listadoTratam = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_tablaTratamientos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -102,19 +139,24 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
 
-        jL_titulo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jL_titulo.setFont(new java.awt.Font("SimSun", 1, 48)); // NOI18N
         jL_titulo.setText("Tratamientos por tipo");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SimSun", 1, 24)); // NOI18N
         jLabel1.setText("Tratamientos:");
 
+        jcb_listadoTratam.setBackground(new java.awt.Color(224, 255, 255));
         jcb_listadoTratam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_listadoTratam.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        jcb_listadoTratam.setOpaque(true);
         jcb_listadoTratam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcb_listadoTratamActionPerformed(evt);
             }
         });
 
+        tbl_tablaTratamientos.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        tbl_tablaTratamientos.setForeground(new java.awt.Color(60, 60, 60));
         tbl_tablaTratamientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -126,40 +168,68 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_tablaTratamientos.setSelectionForeground(new java.awt.Color(60, 60, 60));
         jScrollPane1.setViewportView(tbl_tablaTratamientos);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/mano espalda logo.png"))); // NOI18N
+
+        jDesktopPane1.setLayer(jL_titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jcb_listadoTratam, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jcb_listadoTratam, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jcb_listadoTratam))
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(61, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(171, 171, 171))))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jcb_listadoTratam, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 167, Short.MAX_VALUE)
-                .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(274, 274, 274))
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jcb_listadoTratam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -206,8 +276,10 @@ public class BuscarTratamientoPorTipo extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jL_titulo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcb_listadoTratam;
     private javax.swing.JTable tbl_tablaTratamientos;

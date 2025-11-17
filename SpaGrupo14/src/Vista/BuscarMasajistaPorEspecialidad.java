@@ -16,6 +16,7 @@ import Modelo.EspecialidadEnum;
 import Modelo.Masajista;
 import Persistencia.MasajistaData;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,33 +28,34 @@ public class BuscarMasajistaPorEspecialidad extends javax.swing.JInternalFrame {
     /**
      * Creates new form MasajistaDisponible
      */
-   
     private ArrayList<Masajista> listaM;
     private MasajistaData masajistadata;
     private DefaultTableModel modeloTabla;
 
-    public BuscarMasajistaPorEspecialidad(){
+    public BuscarMasajistaPorEspecialidad() {
         super("Buscar Especialidad por Tipo", true, true, true, true);
         initComponents();
 
         masajistadata = new MasajistaData();
-        listaM = (ArrayList<Masajista>)masajistadata.listarMasajista();
+        listaM = (ArrayList<Masajista>) masajistadata.listarMasajista();
 
         modeloTabla = new DefaultTableModel();
         cargarColumnasTablas();
         cargarTratamiento();
         especialidadTablaTipos();
-
-        // Listener para actualizar tabla al cambiar selección
-        jcb_Especialidad.addActionListener(e -> especialidadTablaTipos());
     }
 
     // Cargar los valores del enum en el combo
     public void cargarTratamiento() {
-        for (EspecialidadEnum especialidad : EspecialidadEnum.values()){
+
+        jcb_Especialidad.removeAllItems();
+        jcb_Especialidad.addItem("Seleccione un tipo...");
+
+        for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
             jcb_Especialidad.addItem(especialidad.toString());
         }
     }
+
     // Definir columnas de la tabla
     private void cargarColumnasTablas() {
         modeloTabla.addColumn("Matricula");
@@ -62,6 +64,7 @@ public class BuscarMasajistaPorEspecialidad extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Especialidad");
         tbl_tablaMasajistas.setModel(modeloTabla);
     }
+
     // Borrar todas las filas antes de recargar
     private void borrarFilaTabla() {
         int indice = modeloTabla.getRowCount() - 1;
@@ -69,22 +72,45 @@ public class BuscarMasajistaPorEspecialidad extends javax.swing.JInternalFrame {
             modeloTabla.removeRow(i);
         }
     }
+
     // Filtrar tratamientos por tipo seleccionado
     private void especialidadTablaTipos() {
         borrarFilaTabla();
+
         String tipoSeleccionado = (String) jcb_Especialidad.getSelectedItem();
-        listaM = (ArrayList<Masajista>) masajistadata.listarMasajista();
+        if (tipoSeleccionado == null || tipoSeleccionado.equals("Seleccione un tipo...")) {
+            return;
+        }
 
-        for (Masajista masajista : listaM) {
+        try {
+            listaM = (ArrayList<Masajista>) masajistadata.listarMasajista();
+            boolean encontrado = false;
+            for (Masajista masajista : listaM) {
+                if (masajista.getEspecialidad().toString().equalsIgnoreCase(tipoSeleccionado)) {
 
-//            if (tratamiento.getEspecialidad()== tipoSeleccionado) {
-            modeloTabla.addRow(new Object[]{
-                masajista.getMatricula(),
-                masajista.getNombreCompleto(), // muestra el enum
-                masajista.getTelefono(),
-                masajista.getEspecialidad()
-            });
+                    modeloTabla.addRow(new Object[]{
+                        masajista.getMatricula(),
+                        masajista.getNombreCompleto(), // muestra el enum
+                        masajista.getTelefono(),
+                        masajista.getEspecialidad()
+                    });
+                    encontrado = true;
+                }
 
+                if (masajistadata == null) {
+                    JOptionPane.showMessageDialog(this, "Error interno: fuente de datos no disponible.");
+                    return;
+                }
+
+            }
+
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(this, "No se encontraron tratamientos del tipo seleccionado.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener Los Tratamientos: " + e.getMessage());
+            return;
         }
     }
 

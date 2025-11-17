@@ -4,7 +4,12 @@
  */
 package Vista;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.Closeable;
+import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,10 +20,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form MenuPrincipal
      */
+    ImagenFondo imagen = new ImagenFondo();
+    
     public MenuPrincipal() {
+        this.setContentPane(imagen);
         initComponents();
         this.setLocationRelativeTo(null);
+        
+      
+}
+   private void cargarVista(JInternalFrame vista) {
+ for (JInternalFrame frame : escritorio.getAllFrames()) {
+        frame.dispose();
     }
+    vista.setVisible(true);
+    vista.setResizable(false);
+    escritorio.add(vista);
+    escritorio.moveToFront(vista);
+}
+
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,6 +51,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        jL_LogoEntreDedos = new javax.swing.JLabel();
+        jL_Logo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jL_Titulo = new javax.swing.JLabel();
+        jL_FondoRelajante = new javax.swing.JLabel();
+        jL_Estudiantes = new javax.swing.JLabel();
+        jL_Fondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMgestion = new javax.swing.JMenu();
         jMIgestionClientes = new javax.swing.JMenuItem();
@@ -55,19 +84,83 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMsalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(237, 255, 255));
+
+        escritorio.setMaximumSize(null);
+        escritorio.setMinimumSize(null);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jL_LogoEntreDedos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_LogoEntreDedos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo masaje chico.png"))); // NOI18N
+        jL_LogoEntreDedos.setMaximumSize(null);
+        jL_LogoEntreDedos.setMinimumSize(null);
+        jPanel1.add(jL_LogoEntreDedos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 500, 380));
+
+        jL_Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Ulp chico 2.png"))); // NOI18N
+        jL_Logo.setMaximumSize(null);
+        jL_Logo.setMinimumSize(null);
+        jPanel1.add(jL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 80, 140));
+
+        jLabel1.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo masajes.jpg"))); // NOI18N
+        jLabel1.setMaximumSize(null);
+        jLabel1.setMinimumSize(null);
+        jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jLabel1ComponentResized(evt);
+            }
+        });
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(601, 0, 344, 647));
+
+        jL_Titulo.setFont(new java.awt.Font("Ballet Harmony", 1, 60)); // NOI18N
+        jL_Titulo.setForeground(new java.awt.Color(122, 158, 149));
+        jL_Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_Titulo.setText("Spa Entre Dedos");
+        jL_Titulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jL_Titulo.setMaximumSize(null);
+        jL_Titulo.setMinimumSize(null);
+        jPanel1.add(jL_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 420, 110));
+
+        jL_FondoRelajante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_FondoRelajante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo relajante.jpg"))); // NOI18N
+        jL_FondoRelajante.setMaximumSize(null);
+        jL_FondoRelajante.setMinimumSize(null);
+        jPanel1.add(jL_FondoRelajante, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 620, 222));
+
+        jL_Estudiantes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jL_Estudiantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_Estudiantes.setText("Lucas  Zarate, Tomas Abatedaga, Daniel Rodrigez, Facundo Calderon Velazquez.");
+        jL_Estudiantes.setMaximumSize(null);
+        jL_Estudiantes.setMinimumSize(null);
+        jPanel1.add(jL_Estudiantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, 480, 90));
+
+        jL_Fondo.setBackground(new java.awt.Color(237, 255, 255));
+        jL_Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_Fondo.setOpaque(true);
+        jPanel1.add(jL_Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 216, 610, 430));
+
+        escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 969, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 680, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jMgestion.setText("Gestion de Datos");
+        jMgestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMgestionActionPerformed(evt);
+            }
+        });
 
         jMIgestionClientes.setText("Gestion Clientes");
         jMIgestionClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -234,11 +327,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -246,12 +341,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMIbuscarMasajistaXEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarMasajistaXEspecialidadActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        BuscarMasajistaPorEspecialidad vBuscarMasajistaPorEspecialidad = new BuscarMasajistaPorEspecialidad();
-        vBuscarMasajistaPorEspecialidad.setVisible(true);
-        escritorio.add(vBuscarMasajistaPorEspecialidad);
-        escritorio.moveToFront(vBuscarMasajistaPorEspecialidad);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        BuscarMasajistaPorEspecialidad vBuscarMasajistaPorEspecialidad = new BuscarMasajistaPorEspecialidad();
+//        vBuscarMasajistaPorEspecialidad.setVisible(true);
+//        escritorio.add(vBuscarMasajistaPorEspecialidad);
+//        escritorio.moveToFront(vBuscarMasajistaPorEspecialidad);
+        cargarVista(new BuscarMasajistaPorEspecialidad());
     }//GEN-LAST:event_jMIbuscarMasajistaXEspecialidadActionPerformed
 
     private void jMsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMsalirActionPerformed
@@ -261,148 +357,174 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMIgestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionClientesActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionClientes vistaClientes = new GestionClientes();
-        vistaClientes.setVisible(true);
-        escritorio.add(vistaClientes);
-        escritorio.moveToFront(vistaClientes);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionClientes vistaClientes = new GestionClientes();
+//        vistaClientes.setVisible(true);
+//        escritorio.add(vistaClientes);
+//        escritorio.moveToFront(vistaClientes);
+    cargarVista(new GestionClientes());
     }//GEN-LAST:event_jMIgestionClientesActionPerformed
 
     private void jMIgestionMasajistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionMasajistasActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionMasajistas vistaMasajistas = new GestionMasajistas();
-        vistaMasajistas.setVisible(true);
-        escritorio.add(vistaMasajistas);
-        escritorio.moveToFront(vistaMasajistas);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionMasajistas vistaMasajistas = new GestionMasajistas();
+//        vistaMasajistas.setVisible(true);
+//        escritorio.add(vistaMasajistas);
+//        escritorio.moveToFront(vistaMasajistas);
+    cargarVista(new GestionMasajistas());
     }//GEN-LAST:event_jMIgestionMasajistasActionPerformed
 
     private void jMIgestionConsultoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionConsultoriosActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionConsultorios vistasConsultorios = new GestionConsultorios();
-        vistasConsultorios.setVisible(true);
-        escritorio.add(vistasConsultorios);
-        escritorio.moveToFront(vistasConsultorios);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionConsultorios vistasConsultorios = new GestionConsultorios();
+//        vistasConsultorios.setVisible(true);
+//        escritorio.add(vistasConsultorios);
+//        escritorio.moveToFront(vistasConsultorios);
+    cargarVista(new GestionConsultorios());
     }//GEN-LAST:event_jMIgestionConsultoriosActionPerformed
 
     private void jMIgestionTratamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionTratamientosActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionTratamientos vistaTratamientos = new GestionTratamientos();
-        vistaTratamientos.setVisible(true);
-        escritorio.add(vistaTratamientos);
-        escritorio.moveToFront(vistaTratamientos);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionTratamientos vistaTratamientos = new GestionTratamientos();
+//        vistaTratamientos.setVisible(true);
+//        escritorio.add(vistaTratamientos);
+//        escritorio.moveToFront(vistaTratamientos);
+    cargarVista(new GestionTratamientos());
     }//GEN-LAST:event_jMIgestionTratamientosActionPerformed
 
     private void jMIcrearDiaSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIcrearDiaSpaActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        CrearDiaDeSpa vCrearDiaDeSpa = new CrearDiaDeSpa();
-        vCrearDiaDeSpa.setVisible(true);
-        escritorio.add(vCrearDiaDeSpa);
-        escritorio.moveToFront(vCrearDiaDeSpa);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        CrearDiaDeSpa vCrearDiaDeSpa = new CrearDiaDeSpa();
+//        vCrearDiaDeSpa.setVisible(true);
+//        escritorio.add(vCrearDiaDeSpa);
+//        escritorio.moveToFront(vCrearDiaDeSpa);
+        cargarVista(new CrearDiaDeSpa());
     }//GEN-LAST:event_jMIcrearDiaSpaActionPerformed
 
     private void jMIgestionSesionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionSesionesActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionDeSesiones vGestionDeSesiones = new GestionDeSesiones();
-        vGestionDeSesiones.setVisible(true);
-        escritorio.add(vGestionDeSesiones);
-        escritorio.moveToFront(vGestionDeSesiones);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionDeSesiones vGestionDeSesiones = new GestionDeSesiones();
+//        vGestionDeSesiones.setVisible(true);
+//        escritorio.add(vGestionDeSesiones);
+//        escritorio.moveToFront(vGestionDeSesiones);
+          cargarVista(new GestionDeSesiones());
     }//GEN-LAST:event_jMIgestionSesionesActionPerformed
 
     private void jMIbuscarDiaSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarDiaSpaActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        BuscarDiaDeSpa vBuscarDiaDeSpa = new BuscarDiaDeSpa();
-        vBuscarDiaDeSpa.setVisible(true);
-        escritorio.add(vBuscarDiaDeSpa);
-        escritorio.moveToFront(vBuscarDiaDeSpa);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        BuscarDiaDeSpa vBuscarDiaDeSpa = new BuscarDiaDeSpa();
+//        vBuscarDiaDeSpa.setVisible(true);
+//        escritorio.add(vBuscarDiaDeSpa);
+//        escritorio.moveToFront(vBuscarDiaDeSpa);
+          cargarVista(new BuscarDiaDeSpa());
     }//GEN-LAST:event_jMIbuscarDiaSpaActionPerformed
 
     private void jMIbuscarTratamientoXTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIbuscarTratamientoXTipoActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        BuscarTratamientoPorTipo vBuscarTratamientoPorTipo = new BuscarTratamientoPorTipo();
-        vBuscarTratamientoPorTipo.setVisible(true);
-        escritorio.add(vBuscarTratamientoPorTipo);
-        escritorio.moveToFront(vBuscarTratamientoPorTipo);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        BuscarTratamientoPorTipo vBuscarTratamientoPorTipo = new BuscarTratamientoPorTipo();
+//        vBuscarTratamientoPorTipo.setVisible(true);
+//        escritorio.add(vBuscarTratamientoPorTipo);
+//        escritorio.moveToFront(vBuscarTratamientoPorTipo);
+          cargarVista(new BuscarTratamientoPorTipo());
     }//GEN-LAST:event_jMIbuscarTratamientoXTipoActionPerformed
 
     private void jMImasajistaDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMImasajistaDisponibleActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        MasajistaDisponible vMasajistaDisponible = new MasajistaDisponible();
-        vMasajistaDisponible.setVisible(true);
-        escritorio.add(vMasajistaDisponible);
-        escritorio.moveToFront(vMasajistaDisponible);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        MasajistaDisponible vMasajistaDisponible = new MasajistaDisponible();
+//        vMasajistaDisponible.setVisible(true);
+//        escritorio.add(vMasajistaDisponible);
+//        escritorio.moveToFront(vMasajistaDisponible);
+          cargarVista(new MasajistaDisponible());
     }//GEN-LAST:event_jMImasajistaDisponibleActionPerformed
 
     private void jMIinstalacionDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIinstalacionDisponibleActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        InstalacionDisponible vInstalacionDisponible = new InstalacionDisponible();
-        vInstalacionDisponible.setVisible(true);
-        escritorio.add(vInstalacionDisponible);
-        escritorio.moveToFront(vInstalacionDisponible);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        InstalacionDisponible vInstalacionDisponible = new InstalacionDisponible();
+//        vInstalacionDisponible.setVisible(true);
+//        escritorio.add(vInstalacionDisponible);
+//        escritorio.moveToFront(vInstalacionDisponible);
+          cargarVista(new InstalacionDisponible());
     }//GEN-LAST:event_jMIinstalacionDisponibleActionPerformed
 
     private void jMIdiaSpaXFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIdiaSpaXFechaActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        DiaDeSpaPorFecha vDiaDeSpaPorFecha = new DiaDeSpaPorFecha();
-        vDiaDeSpaPorFecha.setVisible(true);
-        escritorio.add(vDiaDeSpaPorFecha);
-        escritorio.moveToFront(vDiaDeSpaPorFecha);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        DiaDeSpaPorFecha vDiaDeSpaPorFecha = new DiaDeSpaPorFecha();
+//        vDiaDeSpaPorFecha.setVisible(true);
+//        escritorio.add(vDiaDeSpaPorFecha);
+//        escritorio.moveToFront(vDiaDeSpaPorFecha);
+          cargarVista(new DiaDeSpaPorFecha());
     }//GEN-LAST:event_jMIdiaSpaXFechaActionPerformed
 
     private void jMIinstalacionMasSolicitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIinstalacionMasSolicitadaActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        InstalacionMasSolicitada vInstalacionMasSolicitada = new InstalacionMasSolicitada();
-        vInstalacionMasSolicitada.setVisible(true);
-        escritorio.add(vInstalacionMasSolicitada);
-        escritorio.moveToFront(vInstalacionMasSolicitada);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        InstalacionMasSolicitada vInstalacionMasSolicitada = new InstalacionMasSolicitada();
+//        vInstalacionMasSolicitada.setVisible(true);
+//        escritorio.add(vInstalacionMasSolicitada);
+//        escritorio.moveToFront(vInstalacionMasSolicitada);
+          cargarVista(new InstalacionMasSolicitada());
     }//GEN-LAST:event_jMIinstalacionMasSolicitadaActionPerformed
 
     private void jMItratamientoMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMItratamientoMasSolicitadoActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        TratamientoMasSolicitado vTratamientoMasSolicitado = new TratamientoMasSolicitado();
-        vTratamientoMasSolicitado.setVisible(true);
-        escritorio.add(vTratamientoMasSolicitado);
-        escritorio.moveToFront(vTratamientoMasSolicitado);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        TratamientoMasSolicitado vTratamientoMasSolicitado = new TratamientoMasSolicitado();
+//        vTratamientoMasSolicitado.setVisible(true);
+//        escritorio.add(vTratamientoMasSolicitado);
+//        escritorio.moveToFront(vTratamientoMasSolicitado);
+          cargarVista(new TratamientoMasSolicitado());
     }//GEN-LAST:event_jMItratamientoMasSolicitadoActionPerformed
 
     private void jMIgestionInstalacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIgestionInstalacionesActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        GestionInstalaciones vGestionInstalaciones = new GestionInstalaciones();
-        vGestionInstalaciones.setVisible(true);
-        escritorio.add(vGestionInstalaciones);
-        escritorio.moveToFront(vGestionInstalaciones);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        GestionInstalaciones vGestionInstalaciones = new GestionInstalaciones();
+//        vGestionInstalaciones.setVisible(true);
+//        escritorio.add(vGestionInstalaciones);
+//        escritorio.moveToFront(vGestionInstalaciones);
+          cargarVista(new GestionInstalaciones());
     }//GEN-LAST:event_jMIgestionInstalacionesActionPerformed
 
     private void jMsalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMsalirMouseClicked
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jMsalirMouseClicked
+
+
+
+    private void jMgestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMgestionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMgestionActionPerformed
+
+    private void jLabel1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentResized
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel1ComponentResized
+
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
      escritorio.removeAll();
@@ -447,9 +569,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
     }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JLabel jL_Estudiantes;
+    private javax.swing.JLabel jL_Fondo;
+    private javax.swing.JLabel jL_FondoRelajante;
+    private javax.swing.JLabel jL_Logo;
+    private javax.swing.JLabel jL_LogoEntreDedos;
+    private javax.swing.JLabel jL_Titulo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMIbuscarDiaSpa;
     private javax.swing.JMenuItem jMIbuscarMasajistaXEspecialidad;
     private javax.swing.JMenuItem jMIbuscarTratamientoXTipo;
@@ -473,5 +603,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMreportes;
     private javax.swing.JMenu jMreservas;
     private javax.swing.JMenu jMsalir;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+ class ImagenFondo extends JPanel {
+       private Image imagen;
+       
+       public void paint (Graphics g){
+       imagen = new ImageIcon(getClass().getResource("/Images/spabelleza.jpg")).getImage();
+       g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+       setOpaque(false);
+       super.paint(g);
+       }
+   }
