@@ -33,7 +33,8 @@ public class SesionData {
     
     public void agregarSesion(Sesion s){
         
-        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, cod_instalacion,estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, cod_instalacion,estado) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try{
             
@@ -53,7 +54,7 @@ public class SesionData {
                 JOptionPane.showMessageDialog(null, "Sesion ingresada con exito");
             }
         }catch(SQLIntegrityConstraintViolationException ex){
-            JOptionPane.showMessageDialog(null, "No se pudo agregar la sesion");
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la sesion" + ex);
             
         } catch (SQLException ex) {
             System.out.println("Error de conexion: " + ex);
@@ -235,14 +236,14 @@ public class SesionData {
                      "JOIN dia_de_spa ds ON s.cod_pack = ds.cod_pack " +
                      "WHERE s.cod_masajista = ? " +      // 1. El masajista
                      "AND ds.fecha_hora = ? " +         // 2. La fecha (del Dia de Spa)
-                     "AND (s.fecha_hora_inicio < ? AND s.fecha_hora_fin > ?)"; // 3. La lógica de superposición de tiempo
+                     "AND (s.fecha_hora_inicio < ? AND s.fecha_hora_fin > ?)"; // 3. La logica de superposición de tiempo
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idMasajista);
-            ps.setDate(2, java.sql.Date.valueOf(fecha)); // Convertimos LocalDate a sql.Date
-            ps.setTime(3, horaFinNueva);    // (Inicio existente < Fin nuevo)
-            ps.setTime(4, horaInicioNueva); // (Fin existente > Inicio nuevo)
+            ps.setDate(2, java.sql.Date.valueOf(fecha));
+            ps.setTime(3, horaFinNueva);
+            ps.setTime(4, horaInicioNueva);
 
             ResultSet rs = ps.executeQuery();
 
@@ -262,7 +263,7 @@ public class SesionData {
     public boolean consultorioOcupado(int idConsultorio, LocalDate fecha, Time horaInicioNueva, Time horaFinNueva) {
         String sql = "SELECT COUNT(*) FROM sesion s " +
                      "JOIN dia_de_spa ds ON s.cod_pack = ds.cod_pack " +
-                     "WHERE s.cod_consultorio = ? " +  // <-- Único cambio
+                     "WHERE s.cod_consultorio = ? " +
                      "AND ds.fecha_hora = ? " +
                      "AND (s.fecha_hora_inicio < ? AND s.fecha_hora_fin > ?)";
 

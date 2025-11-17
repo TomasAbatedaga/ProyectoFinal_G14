@@ -80,7 +80,7 @@ public class Masajista {
     @Override
     public String toString() {
 
-        return nombreCompleto;
+        return nombreCompleto + " - " + especialidad;
 
     }
 }

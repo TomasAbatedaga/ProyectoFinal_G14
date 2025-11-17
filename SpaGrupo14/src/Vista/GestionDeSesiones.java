@@ -67,7 +67,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         inicializarDatos(); 
         seleccionarDiaDeSpa(); 
     }
-        private void inicializarDatos() {
+    private void inicializarDatos() {
         abmConsultorio = new ConsultorioData();
         abmTratamiento = new TratamientoData();
         abmMasajista = new MasajistaData();
@@ -86,9 +86,10 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboInstalacion();
         cargarComboDiaDeSpa();
     }
-        private void seleccionarDiaDeSpa() {
-        for (int i = 0; i < jCbCodPaquete.getItemCount(); i++) {
-            Dia_de_Spa dia = jCbCodPaquete.getItemAt(i);
+    private void seleccionarDiaDeSpa() {
+        jCbCodPaquete.setEnabled(false);
+        for (int i = 1; i < jCbCodPaquete.getItemCount(); i++) {
+            Dia_de_Spa dia = (Dia_de_Spa) jCbCodPaquete.getItemAt(i);
             if (dia.getCodPack() == codigoSeleccionado) {
                 jCbCodPaquete.setSelectedIndex(i);
                 return;
@@ -307,7 +308,23 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
         // TODO add your handling code here:
         try {
+            
             SesionData sd = new SesionData();
+            
+            if (jCbtratamiento.getSelectedIndex() == 0 ||
+                jCbconsultorio.getSelectedIndex() == 0 ||
+                jCbmasajista.getSelectedIndex() == 0 ||
+                jCbInstalacion.getSelectedIndex() == 0 ||
+                jCbCodPaquete.getSelectedIndex() == 0) 
+            {
+                JOptionPane.showMessageDialog(this,"Debe seleccionar un valor valido en todas las listas.");
+                return;
+            }
+            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
+            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
+            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
             
             //----CONTROL DE LA HORA
             String horaInicioStr = jTfhoraInicio.getText();
@@ -315,8 +332,6 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             int horaInicioInt;
             int horaFinInt;
 
-            
-            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
             if (tratamiento == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un tratamiento primero");
                 return;
@@ -365,28 +380,14 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             //CONTROL DE LA HORA----
             
             
-            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
-            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
-            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
-            
             //VALIDACION DE LA ESPECIALIDAD
-            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
             if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
                 JOptionPane.showMessageDialog(this,"El masajista no tiene la especialidad requerida para este tratamiento.\n\n" +
-                    "Masajista: " + masajista.getEspecialidad() + "\n" +
-                    "Tratamiento: " + tratamiento.getEspecialidad(), 
-                    "Especialidad no coincide", 
-                    JOptionPane.ERROR_MESSAGE);
-                return; // Detiene la operación
+                    "Masajista: " + masajista.getEspecialidad() + " y " + "Tratamiento: " + tratamiento.getEspecialidad());
+                return;
             }
             
-            
             boolean estado = jCheckEstado.isSelected();
-            
-            /*if (tratamiento == null || consultorio == null || masajista == null || instalacion == null || diaDeSpa == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar algun dato");
-                return;
-            }*/
             
             LocalDate fechaDiaDeSpa = diaDeSpa.getFechaYHora();
             // validamos si masajista esta ocupado
@@ -414,11 +415,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             jTfhoraFin.setText("");
             jCheckEstado.setSelected(false);
             jCbtratamiento.setSelectedIndex(0);
-            jCbtratamiento.setSelectedIndex(-1); // Deselecciona los combos
-            jCbconsultorio.setSelectedIndex(-1);
-            jCbmasajista.setSelectedIndex(-1);
-            jCbInstalacion.setSelectedIndex(-1);
-            jCbCodPaquete.setSelectedIndex(-1);
+            jCbtratamiento.setSelectedIndex(0); // Deselecciona los combos
+            jCbconsultorio.setSelectedIndex(0);
+            jCbmasajista.setSelectedIndex(0);
+            jCbInstalacion.setSelectedIndex(0);
+            jCbCodPaquete.setSelectedIndex(0);
             
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Error en el formato de hora. Use HH:mm:ss (ej: 14:30:00).");
@@ -446,11 +447,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             jTfhoraInicio.setText("");
             jTfhoraFin.setText("");
             jCheckEstado.setSelected(false);
-            jCbtratamiento.setSelectedIndex(-1); // Deselecciona los combos
-            jCbconsultorio.setSelectedIndex(-1);
-            jCbmasajista.setSelectedIndex(-1);
-            jCbInstalacion.setSelectedIndex(-1);
-            jCbCodPaquete.setSelectedIndex(-1);
+            jCbtratamiento.setSelectedIndex(0); // Deselecciona los combos
+            jCbconsultorio.setSelectedIndex(0);
+            jCbmasajista.setSelectedIndex(0);
+            jCbInstalacion.setSelectedIndex(0);
+            jCbCodPaquete.setSelectedIndex(0);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "No existe esa sesion");
@@ -465,6 +466,21 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         try {
             SesionData sd = new SesionData();
 
+            if (jCbtratamiento.getSelectedIndex() == 0 ||
+                jCbconsultorio.getSelectedIndex() == 0 ||
+                jCbmasajista.getSelectedIndex() == 0 ||
+                jCbInstalacion.getSelectedIndex() == 0 ||
+                jCbCodPaquete.getSelectedIndex() == 0) 
+            {
+                JOptionPane.showMessageDialog(this,"Debe seleccionar un valor valido en todas las listas.");
+                return;
+            }
+            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
+            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
+            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
+            
             int codSesion;
             try {
                 codSesion = Integer.parseInt(jTfCodSesion.getText());
@@ -474,7 +490,6 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             }
             String horaInicioStr = jTfhoraInicio.getText().trim();
             String horaFinStr = jTfhoraFin.getText().trim();
-            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
 
             int horaInicioInt = Integer.parseInt(horaInicioStr);
             int horaFinInt = Integer.parseInt(horaFinStr);
@@ -504,10 +519,6 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             Time horaInicio = Time.valueOf(horaInicioStr);
             Time horaFin = Time.valueOf(horaFinStr);
 
-            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
-            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
-            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
-            Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
             boolean estado = jCheckEstado.isSelected();
             LocalDate fechaDeLaSesion = diaDeSpa.getFechaYHora();
 
@@ -648,30 +659,35 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
     
     private void cargarComboTratamientos() {
+        jCbtratamiento.addItem("Seleccione un tratamiento");
         for (Tratamiento tratamiento : listaTratamiento) {
             jCbtratamiento.addItem(tratamiento);
         }
     }
     
     private void cargarComboConsultorio(){
+        jCbconsultorio.addItem(("Seleccione un consultorio"));
         for (Consultorio consultorio : listaConsultorio) {
             jCbconsultorio.addItem(consultorio);
         }
     }
     
     private void cargarComboMasajista(){
+        jCbmasajista.addItem("Seleccione un masajista");
         for (Masajista masajista : listaMasajista) {
             jCbmasajista.addItem(masajista);
         }
     }
     
     private void cargarComboInstalacion(){
+        jCbInstalacion.addItem("Seleccione una instalacion");
         for (Instalacion instalacion : listaInstalacion) {
             jCbInstalacion.addItem(instalacion);
         }
     }
     
     private void cargarComboDiaDeSpa(){
+        jCbCodPaquete.addItem("Seleccione un paquete");
         for (Dia_de_Spa diaDeSpa : listaDiaDeSpa) {
             jCbCodPaquete.addItem(diaDeSpa);
             
@@ -683,11 +699,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBtnAgregar;
     private javax.swing.JButton jBtnBorrar;
     private javax.swing.JButton jBtnBuscar;
-    private javax.swing.JComboBox<Dia_de_Spa> jCbCodPaquete;
-    private javax.swing.JComboBox<Instalacion> jCbInstalacion;
-    private javax.swing.JComboBox<Consultorio> jCbconsultorio;
-    private javax.swing.JComboBox<Masajista> jCbmasajista;
-    private javax.swing.JComboBox<Tratamiento> jCbtratamiento;
+    private javax.swing.JComboBox<Object> jCbCodPaquete;
+    private javax.swing.JComboBox<Object> jCbInstalacion;
+    private javax.swing.JComboBox<Object> jCbconsultorio;
+    private javax.swing.JComboBox<Object> jCbmasajista;
+    private javax.swing.JComboBox<Object> jCbtratamiento;
     private javax.swing.JCheckBox jCheckEstado;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jServicio1;

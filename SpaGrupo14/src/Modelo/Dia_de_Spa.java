@@ -104,7 +104,7 @@ public class Dia_de_Spa {
 
     @Override
     public String toString() {
-        return codPack + "";
+        return codPack + " - " + preferencias;
     }
 
     

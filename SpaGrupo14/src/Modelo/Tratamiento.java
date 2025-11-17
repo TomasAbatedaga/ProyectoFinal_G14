@@ -103,7 +103,7 @@ public class Tratamiento {
 
     @Override
     public String toString() {
-        return nombre ;
+        return nombre + " - " + especialidad ;
     }
     
     
