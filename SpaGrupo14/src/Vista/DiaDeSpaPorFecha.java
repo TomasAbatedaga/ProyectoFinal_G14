@@ -5,13 +5,19 @@
 package Vista;
 
 import Estilo.EstiloVisual;
+import Modelo.Dia_de_Spa;
+import Persistencia.Dia_de_SpaData;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author abate
  */
 public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
-
+private DefaultTableModel modeloSpa = new DefaultTableModel();
     /**
      * Creates new form DiaDeSpaPorFecha
      */
@@ -19,7 +25,7 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
         initComponents();
         EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
         EstiloVisual.aplicarEstiloTabla(jTabSpa);
-        
+         armarCabeceraTablaSpa();
         
     }
 
@@ -38,6 +44,7 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTabSpa = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -64,10 +71,18 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Seleccione la fecha: ");
 
+        jButton1.setText("buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jDcFechaSpa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -76,16 +91,18 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jDcFechaSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(242, 242, 242)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jDcFechaSpa, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(132, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -97,7 +114,9 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDcFechaSpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(40, 40, 40)
+                .addGap(11, 11, 11)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(54, Short.MAX_VALUE))
         );
@@ -116,6 +135,46 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    if (jDcFechaSpa.getDate() == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fecha.");
+        return;
+    }
+
+    LocalDate fecha = jDcFechaSpa.getDate()
+            .toInstant()
+            .atZone(java.time.ZoneId.systemDefault())
+            .toLocalDate();
+
+    cargarTablaPorFecha(fecha);
+    }//GEN-LAST:event_jButton1ActionPerformed
+ private void cargarTablaPorFecha(LocalDate fecha) {
+    modeloSpa.setRowCount(0); // limpia tabla
+
+    Dia_de_SpaData spaData = new Dia_de_SpaData();
+    List<Dia_de_Spa> lista = spaData.listarPorFecha(fecha);
+
+    for (Dia_de_Spa ds : lista) {
+        modeloSpa.addRow(new Object[]{
+            ds.getCodPack(),
+            ds.getCliente() != null ? ds.getCliente().getNombreCompleto() : "—",
+            ds.getCliente() != null ? ds.getCliente().getDni() : "—",
+            ds.getFechaYHora(),
+            ds.getEstado() ? "Activo" : "Inactivo",
+            ds.getMonto()
+        });
+    }
+}
+ private void armarCabeceraTablaSpa() {
+    modeloSpa.addColumn("CodPack");
+    modeloSpa.addColumn("Cliente");
+    modeloSpa.addColumn("DNI");
+    modeloSpa.addColumn("Fecha");
+    modeloSpa.addColumn("Estado");
+    modeloSpa.addColumn("Monto");
+
+    jTabSpa.setModel(modeloSpa);
+}
     /**
      * @param args the command line arguments
      */
@@ -149,9 +208,14 @@ public class DiaDeSpaPorFecha extends javax.swing.JInternalFrame {
                 new DiaDeSpaPorFecha().setVisible(true);
             }
         });
+        
+        
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDcFechaSpa;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
