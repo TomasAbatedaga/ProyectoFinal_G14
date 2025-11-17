@@ -89,19 +89,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.setMaximumSize(null);
         escritorio.setMinimumSize(null);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setOpaque(false);
 
         jL_LogoEntreDedos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_LogoEntreDedos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo masaje chico.png"))); // NOI18N
         jL_LogoEntreDedos.setMaximumSize(null);
         jL_LogoEntreDedos.setMinimumSize(null);
-        jPanel1.add(jL_LogoEntreDedos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 500, 380));
 
         jL_Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Ulp chico 2.png"))); // NOI18N
         jL_Logo.setMaximumSize(null);
         jL_Logo.setMinimumSize(null);
-        jPanel1.add(jL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 80, 140));
 
         jLabel1.setBackground(new java.awt.Color(204, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -113,34 +111,76 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 jLabel1ComponentResized(evt);
             }
         });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(601, 0, 344, 647));
 
-        jL_Titulo.setFont(new java.awt.Font("Ballet Harmony", 1, 60)); // NOI18N
+        jL_Titulo.setFont(new java.awt.Font("SimSun", 3, 48)); // NOI18N
         jL_Titulo.setForeground(new java.awt.Color(122, 158, 149));
         jL_Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_Titulo.setText("Spa Entre Dedos");
         jL_Titulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jL_Titulo.setMaximumSize(null);
-        jL_Titulo.setMinimumSize(null);
-        jPanel1.add(jL_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 420, 110));
+        jL_Titulo.setRequestFocusEnabled(false);
+        jL_Titulo.setVerifyInputWhenFocusTarget(false);
 
         jL_FondoRelajante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_FondoRelajante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo relajante.jpg"))); // NOI18N
         jL_FondoRelajante.setMaximumSize(null);
         jL_FondoRelajante.setMinimumSize(null);
-        jPanel1.add(jL_FondoRelajante, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 620, 222));
 
         jL_Estudiantes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jL_Estudiantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_Estudiantes.setText("Lucas  Zarate, Tomas Abatedaga, Daniel Rodrigez, Facundo Calderon Velazquez.");
         jL_Estudiantes.setMaximumSize(null);
         jL_Estudiantes.setMinimumSize(null);
-        jPanel1.add(jL_Estudiantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, 480, 90));
 
         jL_Fondo.setBackground(new java.awt.Color(237, 255, 255));
         jL_Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_Fondo.setOpaque(true);
-        jPanel1.add(jL_Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 216, 610, 430));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jL_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jL_Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jL_Estudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jL_LogoEntreDedos, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jL_FondoRelajante, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jL_Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jL_FondoRelajante, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jL_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(278, 278, 278)
+                        .addComponent(jL_Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(530, 530, 530)
+                        .addComponent(jL_Estudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(jL_Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(jL_LogoEntreDedos, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -520,11 +560,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMgestionActionPerformed
 
-    private void jLabel1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentResized
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jLabel1ComponentResized
-
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 //     escritorio.removeAll();
@@ -535,6 +570,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //        escritorio.moveToFront(vistaReporteSpa);
         cargarVista(new ReporteDiaDeSpa());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jLabel1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentResized
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1ComponentResized
 
     /**
      * @param args the command line arguments
