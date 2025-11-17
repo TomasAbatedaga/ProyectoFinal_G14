@@ -54,7 +54,7 @@ public class SesionData {
                 JOptionPane.showMessageDialog(null, "Sesion ingresada con exito");
             }
         }catch(SQLIntegrityConstraintViolationException ex){
-            JOptionPane.showMessageDialog(null, "No se pudo agregar la sesion" + ex);
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la sesion");
             
         } catch (SQLException ex) {
             System.out.println("Error de conexion: " + ex);
@@ -95,7 +95,17 @@ public class SesionData {
     public List<Sesion> listarSesionesPorCodPack(int codPack) {
         List<Sesion> lista = new ArrayList<>();
 
-        String sql = "SELECT * FROM sesion WHERE cod_pack = ?";
+        String sql = "SELECT s.cod_sesion, s.fecha_hora_inicio, s.fecha_hora_fin, "
+                + "t.cod_tratamiento, t.nombre AS tratamientoNombre, "
+                + "m.cod_masajista, m.nombre_completo AS masajistaNombre, "
+                + "c.cod_consultorio, c.nro_consultorio AS consultorioNumero, "
+                + "i.cod_instalacion, i.nombre AS instalacionNombre "
+                + "FROM sesion s "
+                + "LEFT JOIN tratamiento t ON s.cod_tratamiento = t.cod_tratamiento "
+                + "LEFT JOIN masajista m ON s.cod_masajista = m.cod_masajista "
+                + "LEFT JOIN consultorio c ON s.cod_consultorio = c.cod_consultorio "
+                + "LEFT JOIN instalacion i ON s.cod_instalacion = i.cod_instalacion "
+                + "WHERE s.cod_pack = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -103,8 +113,44 @@ public class SesionData {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+
                 Sesion s = new Sesion();
                 s.setCodSesion(rs.getInt("cod_sesion"));
+
+                // === HORARIOS (DATETIME -> Time) ===
+                java.sql.Timestamp ini = rs.getTimestamp("fecha_hora_inicio");
+                java.sql.Timestamp fin = rs.getTimestamp("fecha_hora_fin");
+
+                if (ini != null) {
+                    s.setFechaHoraInicio(Time.valueOf(ini.toLocalDateTime().toLocalTime()));
+                }
+                if (fin != null) {
+                    s.setFechaHoraFin(Time.valueOf(fin.toLocalDateTime().toLocalTime()));
+                }
+
+              
+                Tratamiento t = new Tratamiento();
+                t.setCodTratam(rs.getInt("cod_tratamiento"));
+                t.setNombre(rs.getString("tratamientoNombre"));
+                s.setTratamiento(t);
+
+               
+                Masajista m = new Masajista();
+                m.setCod_Masajista(rs.getInt("cod_masajista"));
+                m.setNombreCompleto(rs.getString("masajistaNombre"));
+                s.setMasajista(m);
+
+           
+                Consultorio c = new Consultorio();
+                c.setCodConsultorio(rs.getInt("cod_consultorio"));
+                c.setNroConsultorio(rs.getInt("consultorioNumero"));
+                s.setConsultorio(c);
+
+           
+                Instalacion inst = new Instalacion();
+                inst.setCodInstal(rs.getInt("cod_instalacion"));
+                inst.setNombre(rs.getString("instalacionNombre"));
+                s.setInstalaciones(inst);
 
                 lista.add(s);
             }
@@ -117,6 +163,7 @@ public class SesionData {
 
         return lista;
     }
+    
     public Sesion buscarSesiones(int codSesion){
         Sesion s = null;
         String sql = "SELECT * FROM sesion WHERE cod_sesion = ?";
