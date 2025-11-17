@@ -199,5 +199,49 @@ public class Dia_de_SpaData {
 
         return ds;
     }
+    public List<Dia_de_Spa> listarPorFecha(LocalDate fecha) {
+    List<Dia_de_Spa> lista = new ArrayList<>();
+
+    // Cambié fechaYHora por fecha_hora
+    String sql = "SELECT * FROM dia_de_spa WHERE DATE(fecha_hora) = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setDate(1, java.sql.Date.valueOf(fecha));
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Dia_de_Spa ds = new Dia_de_Spa();
+
+            ds.setCodPack(rs.getInt("cod_pack"));
+
+           
+            ds.setFechaYHora(
+                rs.getTimestamp("fecha_hora").toLocalDateTime().toLocalDate()
+            );
+
+            ds.setPreferencias(rs.getString("preferencias"));
+            ds.setEstado(rs.getBoolean("estado"));
+            ds.setMonto(rs.getDouble("monto"));
+
+           
+            int idCliente = rs.getInt("cod_cliente");
+
+            ClienteData cd = new ClienteData();
+            ds.setCliente(cd.buscarCliente(idCliente));
+
+            lista.add(ds);
+        }
+
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error al listar por fecha: " + ex);
+    }
+
+    return lista;
+}
 }
 

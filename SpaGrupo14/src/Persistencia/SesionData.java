@@ -32,33 +32,76 @@ public class SesionData {
     }
     
     public void agregarSesion(Sesion s){
+        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, cod_instalacion, estado) "
+               + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try {
+
         
-        String sql = "INSERT INTO sesion(fecha_hora_inicio, fecha_hora_fin, cod_tratamiento, cod_consultorio, cod_masajista, cod_pack, cod_instalacion,estado) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        ps.setTime(1, s.getFechaHoraInicio());
+        ps.setTime(2, s.getFechaHoraFin());
+        ps.setInt(3, s.getTratamiento().getCodTratam());
+        ps.setInt(4, s.getConsultorio().getCodConsultorio());
+        ps.setInt(5, s.getMasajista().getCod_Masajista());
+        ps.setInt(6, s.getDiaDeSpa().getCodPack());
+        ps.setInt(7, s.getInstalaciones().getCodInstal());
+        ps.setBoolean(8, s.isEstado());
+
+        ps.executeUpdate();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            s.setCodSesion(rs.getInt(1));
+        }
+        ps.close();
+
+
         
-        try{
-            
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setTime(1, Time.valueOf(s.getFechaHoraInicio().toLocalTime()));
-            ps.setTime(2, Time.valueOf(s.getFechaHoraFin().toLocalTime()));
-            ps.setInt(3, s.getTratamiento().getCodTratam());
-            ps.setInt(4, s.getConsultorio().getCodConsultorio());
-            ps.setInt(5, s.getMasajista().getCod_Masajista());
-            ps.setInt(6, s.getDiaDeSpa().getCodPack());
-            ps.setInt(7, s.getInstalaciones().getCodInstal());
-            ps.setBoolean(8, s.isEstado());
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
-                s.setCodSesion(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Sesion ingresada con exito");
-            }
-        }catch(SQLIntegrityConstraintViolationException ex){
-            JOptionPane.showMessageDialog(null, "No se pudo agregar la sesion");
-            
-        } catch (SQLException ex) {
-            System.out.println("Error de conexion: " + ex);
-        }    
+        double precioTrat = 0;
+        PreparedStatement pst = con.prepareStatement("SELECT precio FROM tratamiento WHERE cod_tratamiento = ?");
+        pst.setInt(1, s.getTratamiento().getCodTratam());
+        ResultSet rst = pst.executeQuery();
+        if (rst.next()) precioTrat = rst.getDouble("precio");
+        pst.close();
+
+
+      
+        double precioInst = 0;
+        PreparedStatement psi = con.prepareStatement("SELECT precio FROM instalacion WHERE cod_instalacion = ?");
+        psi.setInt(1, s.getInstalaciones().getCodInstal());
+        ResultSet rsi = psi.executeQuery();
+        if (rsi.next()) precioInst = rsi.getDouble("precio");
+        psi.close();
+
+
+        
+        double montoExtra = precioTrat + precioInst;
+
+
+       
+        PreparedStatement psu = con.prepareStatement(
+                "UPDATE dia_de_spa SET monto = monto + ? WHERE cod_pack = ?"
+        );
+
+        psu.setDouble(1, montoExtra);
+        psu.setInt(2, s.getDiaDeSpa().getCodPack());
+        psu.executeUpdate();
+        psu.close();
+
+
+        
+        Dia_de_SpaData dsData = new Dia_de_SpaData();
+        Dia_de_Spa actualizado = dsData.buscarDia(s.getDiaDeSpa().getCodPack());
+        s.setDiaDeSpa(actualizado);
+
+        JOptionPane.showMessageDialog(null, "Sesión registrada correctamente");
+
+    } catch (SQLException ex) {
+        System.out.println("Error al agregar sesión: " + ex);
+    }
+       
     }
     
     public List<Sesion> listarSesion(){

@@ -39,6 +39,7 @@ private DefaultTableModel modeloDias;
         
         LlenarClientes();
         cargarTablaDias();
+        
     }
    private void cargarTablaDias() {
     modeloDias = new DefaultTableModel();
