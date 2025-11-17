@@ -210,6 +210,11 @@ private DefaultTableModel modeloDias;
 
         btnReportesSpa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnReportesSpa.setText("REPORTES DIA DE SPA");
+        btnReportesSpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesSpaActionPerformed(evt);
+            }
+        });
 
         jtablaDiasSpa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -509,6 +514,23 @@ private DefaultTableModel modeloDias;
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnReportesSpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesSpaActionPerformed
+    int fila = jtablaDiasSpa.getSelectedRow();
+    
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Seleccione un Día de Spa de la tabla para ver el reporte.");
+        return;
+    }
+
+    int cod = (int) modeloDias.getValueAt(fila, 0);
+
+    ReporteDiaDeSpa reporte = new ReporteDiaDeSpa(cod);
+    this.getDesktopPane().add(reporte);
+    reporte.setVisible(true);
+    reporte.toFront();       
+    }//GEN-LAST:event_btnReportesSpaActionPerformed
 
     /**
      * @param args the command line arguments

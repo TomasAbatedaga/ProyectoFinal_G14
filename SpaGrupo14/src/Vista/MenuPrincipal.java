@@ -51,6 +51,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMIdiaSpaXFecha = new javax.swing.JMenuItem();
         jMIinstalacionMasSolicitada = new javax.swing.JMenuItem();
         jMItratamientoMasSolicitado = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMsalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -203,6 +204,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMreportes.add(jMItratamientoMasSolicitado);
+
+        jMenuItem1.setText("Reporte Dia De Spa");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMreportes.add(jMenuItem1);
 
         jMenuBar1.add(jMreportes);
 
@@ -395,6 +404,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMsalirMouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+     escritorio.removeAll();
+        escritorio.repaint();
+        ReporteDiaDeSpa vistaReporteSpa = new ReporteDiaDeSpa();
+        vistaReporteSpa.setVisible(true);
+        escritorio.add(vistaReporteSpa);
+        escritorio.moveToFront(vistaReporteSpa);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -450,6 +468,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMconsultas;
     private javax.swing.JMenu jMdisponibilidad;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jMgestion;
     private javax.swing.JMenu jMreportes;
     private javax.swing.JMenu jMreservas;
