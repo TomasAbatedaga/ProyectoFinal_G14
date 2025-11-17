@@ -527,12 +527,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-     escritorio.removeAll();
-        escritorio.repaint();
-        ReporteDiaDeSpa vistaReporteSpa = new ReporteDiaDeSpa();
-        vistaReporteSpa.setVisible(true);
-        escritorio.add(vistaReporteSpa);
-        escritorio.moveToFront(vistaReporteSpa);
+//     escritorio.removeAll();
+//        escritorio.repaint();
+//        ReporteDiaDeSpa vistaReporteSpa = new ReporteDiaDeSpa();
+//        vistaReporteSpa.setVisible(true);
+//        escritorio.add(vistaReporteSpa);
+//        escritorio.moveToFront(vistaReporteSpa);
+        cargarVista(new ReporteDiaDeSpa());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
