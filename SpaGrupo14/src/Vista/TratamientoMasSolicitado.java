@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Estilo.EstiloVisual;
 import Modelo.EspecialidadEnum;
 import Modelo.Tratamiento;
 import Persistencia.TratamientoData;
@@ -23,7 +24,9 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
     public TratamientoMasSolicitado() {
         super("Buscar Tratamiento por Tipo", true, true, true, true);
         initComponents();
-
+        EstiloVisual.aplicarEstiloPanel(jPanel1);
+        EstiloVisual.aplicarEstiloTabla(jTabTratamientos);
+        
         tratamientodata = new TratamientoData();
         listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
 
@@ -112,10 +115,10 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
         jCbTratamientos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTabTratamientos = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTabTratamientos = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTabTratamientos1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(245, 245, 220));
+        setBackground(new java.awt.Color(245, 245, 245));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
@@ -123,7 +126,7 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
         setResizable(true);
         setOpaque(true);
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 220));
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
         jLabel1.setFont(new java.awt.Font("SimSun", 1, 30)); // NOI18N
         jLabel1.setText("Tratamientos mas Solicitados");
@@ -153,7 +156,7 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTabTratamientos);
 
-        jTabTratamientos.setModel(new javax.swing.table.DefaultTableModel(
+        jTabTratamientos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -164,7 +167,7 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTabTratamientos);
+        jScrollPane2.setViewportView(jTabTratamientos1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,7 +186,7 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCbTratamientos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,16 +199,14 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,6 +263,8 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTabTratamientos;
+    private javax.swing.JTable jTabTratamientos1;
     // End of variables declaration//GEN-END:variables
 }

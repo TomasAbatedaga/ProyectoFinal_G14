@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Estilo.EstiloVisual;
 import Modelo.Instalacion;
 import Persistencia.InstalacionData;
 import java.sql.Time;
@@ -27,6 +28,10 @@ public class InstalacionDisponible extends javax.swing.JInternalFrame {
      */
     public InstalacionDisponible() {
         initComponents();
+        EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
+        EstiloVisual.aplicarEstiloTabla(jTabInstalaciones);
+        
+        
         abmInstalacion = new InstalacionData();
         listaInstalacion = (ArrayList<Instalacion>) abmInstalacion.listarInstalaciones();
         armarCabeceraTabla();

@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Estilo.EstiloVisual;
 import Modelo.EspecialidadEnum;
 import Modelo.Tratamiento;
 import Persistencia.TratamientoData;
@@ -25,6 +26,12 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
      */
     public GestionTratamientos() {
         initComponents();
+        EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
+        EstiloVisual.aplicarEstiloBoton(btnBuscar);
+        EstiloVisual.aplicarEstiloBoton(BtnAgregar);
+        EstiloVisual.aplicarEstiloBoton(BtnModificar);
+        EstiloVisual.aplicarEstiloBoton(BtnLimpiar);
+        EstiloVisual.aplicarEstiloBoton(BtnEliminar);
         cargarEspecialidad();
     }
     public void cargarEspecialidad() {
@@ -211,7 +218,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
                             .addComponent(BtnLimpiar)
                             .addGap(18, 18, 18)
                             .addComponent(BtnEliminar))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,7 +245,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(JTFcostoTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(JTFcodigoTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,9 +267,7 @@ public class GestionTratamientos extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
