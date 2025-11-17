@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Persistencia.Dia_de_SpaData;
+import java.util.Date;
 
 /**
  *
@@ -26,7 +27,7 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
      * Creates new form BuscarDiaDeSpa
      */
     public BuscarDiaDeSpa() {
-            super("Buscar Dia de Spa", true, true, true, true); // título, resizable, closable, maximizable, iconifiable
+            super("Buscar Dia de Spa", true, true, true, true);
         initComponents();
         EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
         EstiloVisual.aplicarEstiloTabla(jTable1);
@@ -49,14 +50,12 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
         jdni = new javax.swing.JLabel();
         jtfdni = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtffechainicial = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jtffechafinal = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jbuscardiaspa = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jDcFecha = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -75,9 +74,7 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("Fecha Inicial");
-
-        jLabel4.setText("Fecha Final");
+        jLabel3.setText("Fecha");
 
         btnBuscar.setText("BUSCAR");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,13 +85,13 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cod_Pack", "Cod_Cliente", "Nombre Completo", "Fecha", "Monto", "Estado"
             }
         ));
         jbuscardiaspa.setViewportView(jTable1);
@@ -119,38 +116,34 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(jdni, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jtfdni, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jtffechainicial, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jtffechafinal, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jbuscardiaspa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jDcFecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jdni)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jdni))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jtfdni)
-                                .addComponent(jtffechainicial)
-                                .addComponent(jtffechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnBuscar))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jL_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                            .addComponent(jDcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -164,23 +157,19 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
                     .addComponent(jtfdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdni))
                 .addGap(18, 18, 18)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtffechainicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtffechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(30, 30, 30)
+                        .addComponent(btnBuscar)
+                        .addGap(43, 43, 43)
+                        .addComponent(jbuscardiaspa, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,31 +191,31 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtfdniActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String dni = jtfdni.getText().trim();
-        LocalDate fechaInicio = null;
-        LocalDate fechaFin = null;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String dni = jtfdni.getText().trim();
+    LocalDate fechaBusqueda = null; 
 
     try {
-        if (!jtffechainicial.getText().isEmpty()) {
-            fechaInicio = LocalDate.parse(jtffechainicial.getText().trim(), formatter);
-        }
-        if (!jtffechafinal.getText().isEmpty()) {
-            fechaFin = LocalDate.parse(jtffechafinal.getText().trim(), formatter);
-        }
-    } catch (DateTimeParseException ex) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use AAAA-MM-DD.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        Date fecha = jDcFecha.getDate();
+        if (fecha != null) {
+            fechaBusqueda = new java.sql.Date(fecha.getTime()).toLocalDate();
+        } 
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al obtener la fecha: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    
-    if (dni.isEmpty() && fechaInicio == null && fechaFin == null) {
-        JOptionPane.showMessageDialog(this, "Debe ingresar DNI o un rango de fechas.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    if (dni.isEmpty() && fechaBusqueda == null) {
+        JOptionPane.showMessageDialog(this, "Debe ingresar DNI o seleccionar una Fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         return;
     }
+
     borrarFilasTabla();
-
-    List<Dia_de_Spa> resultados = diaSpaData.listarDiaSpa(dni, fechaInicio, fechaFin);
-
+    
+    List<Dia_de_Spa> resultados;
+    if (fechaBusqueda != null) {
+        resultados = diaSpaData.listarDiaSpa(dni, fechaBusqueda, fechaBusqueda);
+    } else {
+        resultados = diaSpaData.listarDiaSpa(dni, null, null);
+    }
     if (resultados.isEmpty()) {
         JOptionPane.showMessageDialog(this, "No se encontraron Dias de Spa.", "Resultado", JOptionPane.INFORMATION_MESSAGE);
     } else {
@@ -250,26 +239,24 @@ public class BuscarDiaDeSpa extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private com.toedter.calendar.JDateChooser jDcFecha;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jL_titulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTable jTable1;
     private javax.swing.JScrollPane jbuscardiaspa;
     private javax.swing.JLabel jdni;
     private javax.swing.JTextField jtfdni;
-    private javax.swing.JTextField jtffechafinal;
-    private javax.swing.JTextField jtffechainicial;
     // End of variables declaration//GEN-END:variables
 
 private void armarCabeceraTabla() {
-    String[] titulos = {"ID Pack", "DNI Cliente", "Fecha", "Monto", "Estado"};
+    String[] titulos = {"cod_pack", "cod_cliente","Nombre_Completo", "Fecha", "Monto", "Estado"};
     modelo = new DefaultTableModel(null, titulos) {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return false; // Las celdas no son editables
+            return false;
         }
     };
     jTable1.setModel(modelo);
