@@ -75,6 +75,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         this.codigoSeleccionado = codPack;
         inicializarDatos();
         seleccionarDiaDeSpa();
+        EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
+        EstiloVisual.aplicarEstiloBoton(jBtnBorrar);
+        EstiloVisual.aplicarEstiloBoton(jBtnAgregar);
+        EstiloVisual.aplicarEstiloBoton(JBtnModificar);
+        EstiloVisual.aplicarEstiloBoton(jBtnBuscar);
     }
 
     private void inicializarDatos() {

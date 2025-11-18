@@ -19,10 +19,11 @@ import javax.swing.table.DefaultTableModel;
  * @author facue
  */
 public class ReporteDiaDeSpa extends javax.swing.JInternalFrame {
-    
-private DefaultTableModel modelo = new DefaultTableModel();
-private final int EXTRA_PRODUCTO = 5000;
-private boolean productoAplicado = false;
+
+    private DefaultTableModel modelo = new DefaultTableModel();
+    private final int EXTRA_PRODUCTO = 5000;
+    private boolean productoAplicado = false;
+
     /**
      * Creates new form ReporteDiaDeSpa
      */
@@ -33,13 +34,16 @@ private boolean productoAplicado = false;
         EstiloVisual.aplicarEstiloBoton(jButton1);
         armarCabeceraTabla();
     }
-    
+
     public ReporteDiaDeSpa(int codPack) {
-    initComponents();
-    armarCabeceraTabla();
-    cargarDiaSpa(codPack);
-    cargarSesionesTabla(codPack);
-}
+        initComponents();
+        armarCabeceraTabla();
+        cargarDiaSpa(codPack);
+        cargarSesionesTabla(codPack);
+        EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
+        EstiloVisual.aplicarEstiloTabla(jtSesiones);
+        EstiloVisual.aplicarEstiloBoton(jButton1);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -282,174 +286,175 @@ private boolean productoAplicado = false;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 public void armarCabeceraTabla() {
-    modelo = new DefaultTableModel();
+        modelo = new DefaultTableModel();
 
-    modelo.addColumn("Cod Sesión");
-    modelo.addColumn("Inicio");
-    modelo.addColumn("Fin");
-    modelo.addColumn("Tratamiento");
-    modelo.addColumn("Masajista");
-    modelo.addColumn("Consultorio");
-    modelo.addColumn("Instalación");
+        modelo.addColumn("Cod Sesión");
+        modelo.addColumn("Inicio");
+        modelo.addColumn("Fin");
+        modelo.addColumn("Tratamiento");
+        modelo.addColumn("Masajista");
+        modelo.addColumn("Consultorio");
+        modelo.addColumn("Instalación");
 
-    jtSesiones.setModel(modelo);
-}
-    private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
-    SesionData sd = new SesionData();
-    Dia_de_SpaData spadata=new Dia_de_SpaData();
-        if (jtfCodpack.getText().isEmpty()) {
-         
-         
-        JOptionPane.showMessageDialog(this, "Seleccione un Día de Spa.");
-        return;
+        jtSesiones.setModel(modelo);
     }
+    private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
+        SesionData sd = new SesionData();
+        Dia_de_SpaData spadata = new Dia_de_SpaData();
+        if (jtfCodpack.getText().isEmpty()) {
 
-    int cod = Integer.parseInt(jtfCodpack.getText());
+            JOptionPane.showMessageDialog(this, "Seleccione un Día de Spa.");
+            return;
+        }
 
-    Dia_de_Spa dia = spadata.buscarDia(cod);
+        int cod = Integer.parseInt(jtfCodpack.getText());
 
-    
-    List<Sesion> sesiones = sd.listarSesionesPorCodPack(cod);
+        Dia_de_Spa dia = spadata.buscarDia(cod);
 
-    generarTicketSimple(dia, sesiones);
+        List<Sesion> sesiones = sd.listarSesionesPorCodPack(cod);
+
+        generarTicketSimple(dia, sesiones);
     }//GEN-LAST:event_btnTicketActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     if (jtfCodpack.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un código de Día de Spa.");
-        return;
-    }
+        if (jtfCodpack.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de Día de Spa.");
+            return;
+        }
 
-    int cod;
-    try {
-        cod = Integer.parseInt(jtfCodpack.getText().trim());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Debe ingresar un número válido.");
-        return;
-    }
+        int cod;
+        try {
+            cod = Integer.parseInt(jtfCodpack.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un número válido.");
+            return;
+        }
 
-    Dia_de_SpaData spaData = new Dia_de_SpaData();
-    Dia_de_Spa dia = spaData.buscarDia(cod);
+        Dia_de_SpaData spaData = new Dia_de_SpaData();
+        Dia_de_Spa dia = spaData.buscarDia(cod);
 
-    if (dia == null || dia.getCliente() == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró el Día de Spa.");
-        return;
-    }
+        if (dia == null || dia.getCliente() == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el Día de Spa.");
+            return;
+        }
 
-   
-    cargarDiaSpa(cod);
-    cargarSesionesTabla(cod);
+        cargarDiaSpa(cod);
+        cargarSesionesTabla(cod);
 
-    JOptionPane.showMessageDialog(this, "Día de Spa cargado correctamente.");
+        JOptionPane.showMessageDialog(this, "Día de Spa cargado correctamente.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProductosActionPerformed
-     if (jtfMonto.getText().trim().isEmpty()) return;
-
-    try {
-        double monto = Double.parseDouble(jtfMonto.getText());
-        String prod = (String) cbProductos.getSelectedItem();
-
-        if (prod.equals("-")) {
-            if (productoAplicado) {
-                monto -= EXTRA_PRODUCTO;  // quitar el extra
-                productoAplicado = false;
-            }
-        } else {
-            if (!productoAplicado) {
-                monto += EXTRA_PRODUCTO;  // aplicar el extra
-                productoAplicado = true;
-            }
+        if (jtfMonto.getText().trim().isEmpty()) {
+            return;
         }
 
-        jtfMonto.setText(String.valueOf(monto));
+        try {
+            double monto = Double.parseDouble(jtfMonto.getText());
+            String prod = (String) cbProductos.getSelectedItem();
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al actualizar el monto.");
-    }
+            if (prod.equals("-")) {
+                if (productoAplicado) {
+                    monto -= EXTRA_PRODUCTO;  // quitar el extra
+                    productoAplicado = false;
+                }
+            } else {
+                if (!productoAplicado) {
+                    monto += EXTRA_PRODUCTO;  // aplicar el extra
+                    productoAplicado = true;
+                }
+            }
+
+            jtfMonto.setText(String.valueOf(monto));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el monto.");
+        }
     }//GEN-LAST:event_cbProductosActionPerformed
-public void cargarDiaSpa(int codPack) {
-    Dia_de_SpaData dsData = new Dia_de_SpaData();
-    Dia_de_Spa ds = dsData.buscarDia(codPack);
+    public void cargarDiaSpa(int codPack) {
+        Dia_de_SpaData dsData = new Dia_de_SpaData();
+        Dia_de_Spa ds = dsData.buscarDia(codPack);
 
-    if (ds == null || ds.getCliente() == null) {
-        JOptionPane.showMessageDialog(this, 
-                "No se encontró el Día de Spa o falta el cliente.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-        return;
+        if (ds == null || ds.getCliente() == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No se encontró el Día de Spa o falta el cliente.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        jtfCodpack.setText(String.valueOf(ds.getCodPack()));
+        jdFecha.setDate(java.sql.Date.valueOf(ds.getFechaYHora()));
+        jtfCliente.setText(ds.getCliente().getNombreCompleto());
+        jtfDni.setText(String.valueOf(ds.getCliente().getDni()));
+        jtfPreferencias.setText(ds.getPreferencias());
+        jtfEstado.setText(ds.getEstado() ? "Activo" : "Inactivo");
+        jtfMonto.setText(String.valueOf(ds.getMonto()));
     }
 
-    jtfCodpack.setText(String.valueOf(ds.getCodPack()));
-    jdFecha.setDate(java.sql.Date.valueOf(ds.getFechaYHora()));
-    jtfCliente.setText(ds.getCliente().getNombreCompleto());
-    jtfDni.setText(String.valueOf(ds.getCliente().getDni()));
-    jtfPreferencias.setText(ds.getPreferencias());
-    jtfEstado.setText(ds.getEstado() ? "Activo" : "Inactivo");
-    jtfMonto.setText(String.valueOf(ds.getMonto()));
-} 
-   private void cargarSesionesTabla(int codPack) {
-    modelo.setRowCount(0);
+    private void cargarSesionesTabla(int codPack) {
+        modelo.setRowCount(0);
 
-    SesionData sd = new SesionData();
-    List<Sesion> sesiones = sd.listarSesionesPorCodPack(codPack);
+        SesionData sd = new SesionData();
+        List<Sesion> sesiones = sd.listarSesionesPorCodPack(codPack);
 
-    for (Sesion s : sesiones) {
-        modelo.addRow(new Object[]{
-            s.getCodSesion(),
-            s.getFechaHoraInicio(),
-            s.getFechaHoraFin(),
-            s.getTratamiento() != null ? s.getTratamiento().getNombre() : "—",
-            s.getMasajista() != null ? s.getMasajista().getNombreCompleto() : "—",
-            s.getConsultorio() != null ? s.getConsultorio().getNroConsultorio() : "—",
-            obtenerInstalacionesComoTexto(s)
-        });
-    }
-    cbProductos.setSelectedIndex(0);
-    productoAplicado = false;
-}
-
-public String obtenerInstalacionesComoTexto(Sesion s) {
-try {
-        Instalacion inst = s.getInstalaciones();
-        return (inst != null) ? inst.getNombre() : "—";
-    } catch (Exception e) {
-        return "—";
-    }
-}
-    private void generarTicketSimple(Dia_de_Spa dia, List<Sesion> sesiones) {
- String ticket = "";
-
-    ticket += "===== SPA ENTRE DEDOS =====\n";
-    ticket += "DIA DE SPA - PACK Nº " + dia.getCodPack() + "\n\n";
-
-    ticket += "Cliente: " + dia.getCliente().getNombreCompleto() + "\n";
-    ticket += "Fecha: " + dia.getFechaYHora() + "\n";
-    ticket += "Preferencias: " + dia.getPreferencias() + "\n";
-    ticket += "---------------------------------------------\n";
-    ticket += "SESIONES:\n";
-
-    if (sesiones.isEmpty()) {
-        ticket += "No hay sesiones asignadas.\n";
-    } else {
         for (Sesion s : sesiones) {
+            modelo.addRow(new Object[]{
+                s.getCodSesion(),
+                s.getFechaHoraInicio(),
+                s.getFechaHoraFin(),
+                s.getTratamiento() != null ? s.getTratamiento().getNombre() : "—",
+                s.getMasajista() != null ? s.getMasajista().getNombreCompleto() : "—",
+                s.getConsultorio() != null ? s.getConsultorio().getNroConsultorio() : "—",
+                obtenerInstalacionesComoTexto(s)
+            });
+        }
+        cbProductos.setSelectedIndex(0);
+        productoAplicado = false;
+    }
 
-            ticket += "- " + (s.getTratamiento() != null ? s.getTratamiento().getNombre() : "—") + "\n";
-
-            ticket += "  Horario: " + s.getFechaHoraInicio()
-                    + " a " + s.getFechaHoraFin() + "\n";
-
-            ticket += "  Consultorio: " + 
-                    (s.getConsultorio() != null ? s.getConsultorio().getNroConsultorio() : "—") + "\n";
-
-            ticket += "  Masajista: " + 
-                    (s.getMasajista() != null ? s.getMasajista().getNombreCompleto() : "—") + "\n";
-
-            ticket += "  Instalación: " + obtenerInstalacionesComoTexto(s) + "\n";
-
-            ticket += "---------------------------------------------\n";
+    public String obtenerInstalacionesComoTexto(Sesion s) {
+        try {
+            Instalacion inst = s.getInstalaciones();
+            return (inst != null) ? inst.getNombre() : "—";
+        } catch (Exception e) {
+            return "—";
         }
     }
+
+    private void generarTicketSimple(Dia_de_Spa dia, List<Sesion> sesiones) {
+        String ticket = "";
+
+        ticket += "===== SPA ENTRE DEDOS =====\n";
+        ticket += "DIA DE SPA - PACK Nº " + dia.getCodPack() + "\n\n";
+
+        ticket += "Cliente: " + dia.getCliente().getNombreCompleto() + "\n";
+        ticket += "Fecha: " + dia.getFechaYHora() + "\n";
+        ticket += "Preferencias: " + dia.getPreferencias() + "\n";
+        ticket += "---------------------------------------------\n";
+        ticket += "SESIONES:\n";
+
+        if (sesiones.isEmpty()) {
+            ticket += "No hay sesiones asignadas.\n";
+        } else {
+            for (Sesion s : sesiones) {
+
+                ticket += "- " + (s.getTratamiento() != null ? s.getTratamiento().getNombre() : "—") + "\n";
+
+                ticket += "  Horario: " + s.getFechaHoraInicio()
+                        + " a " + s.getFechaHoraFin() + "\n";
+
+                ticket += "  Consultorio: "
+                        + (s.getConsultorio() != null ? s.getConsultorio().getNroConsultorio() : "—") + "\n";
+
+                ticket += "  Masajista: "
+                        + (s.getMasajista() != null ? s.getMasajista().getNombreCompleto() : "—") + "\n";
+
+                ticket += "  Instalación: " + obtenerInstalacionesComoTexto(s) + "\n";
+
+                ticket += "---------------------------------------------\n";
+            }
+        }
 
         ticket += "\nMonto total: " + dia.getMonto() + "\n";
         String producto = (String) cbProductos.getSelectedItem();
@@ -457,22 +462,13 @@ try {
         if (!producto.equals("-")) {
             ticket += "Producto extra: " + producto + " (+" + EXTRA_PRODUCTO + ")\n";
         }
-    ticket += "Estado del Día: " + (dia.getEstado() ? "Activo" : "Inactivo") + "\n";
-    ticket += "=============================================\n";
+        ticket += "Estado del Día: " + (dia.getEstado() ? "Activo" : "Inactivo") + "\n";
+        ticket += "=============================================\n";
 
-    txtAreaTicket.setText(ticket);
-}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        txtAreaTicket.setText(ticket);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTicket;
     private javax.swing.JComboBox<String> cbProductos;
