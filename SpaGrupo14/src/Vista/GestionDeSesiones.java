@@ -545,26 +545,36 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jBtnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBorrarActionPerformed
         // TODO add your handling code here:
         try {
-            int codSesion = Integer.parseInt(jTfCodSesion.getText());
+            String idStr = jTfCodSesion.getText();
+            if (idStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe buscar una sesion");
+                return;
+            }
+            int codSesion = Integer.parseInt(idStr);
 
             int respuesta = JOptionPane.showConfirmDialog(this,
-                    "Estas seguro de eliminar la sesion " + codSesion + "?");
+                    "Seguo queres eliminar la sesion " + codSesion + "?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+            if (respuesta == JOptionPane.YES_OPTION) {
 
-            SesionData sd = new SesionData();
-            sd.eliminarSesion(codSesion);
+                SesionData sd = new SesionData();
+                sd.eliminarSesion(codSesion);
+                jTfCodSesion.setText("");
+                jTfhoraInicio.setText("");
+                jTfhoraFin.setText("");
+                jCheckEstado.setSelected(false);
 
-            jTfCodSesion.setText("");
-            jTfhoraInicio.setText("");
-            jTfhoraFin.setText("");
-            jCheckEstado.setSelected(false);
-            jCbtratamiento.setSelectedIndex(0);
-            jCbconsultorio.setSelectedIndex(0);
-            jCbmasajista.setSelectedIndex(0);
-            jCbInstalacion.setSelectedIndex(0);
-            jCbCodPaquete.setSelectedIndex(0);
+                jCbtratamiento.setSelectedIndex(0);
+                jCbconsultorio.setSelectedIndex(0);
+                jCbmasajista.setSelectedIndex(0);
+                jCbInstalacion.setSelectedIndex(0);
+                // jCbCodPaquete.setSelectedIndex(0); 
+            }
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "No existe esa sesion");
+            JOptionPane.showMessageDialog(this, "El codigo es invalido");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar la sesion: " + e.getMessage());
         }
