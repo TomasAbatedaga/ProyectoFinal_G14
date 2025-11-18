@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 public class Dia_de_SpaData {
 
@@ -38,7 +39,7 @@ public class Dia_de_SpaData {
             ps.close();
 
         } catch (SQLException ex) {
-            System.out.println("Error agregarDiaSpa: " + ex);
+           JOptionPane.showMessageDialog(null, "error al agregar spa");
         }
     }
 
@@ -124,7 +125,7 @@ public class Dia_de_SpaData {
             ps.close();
 
         } catch (SQLException ex) {
-            System.out.println("Error listarDiaSpa filtrado: " + ex);
+            JOptionPane.showMessageDialog(null, "error al listar por spa");
         }
 
         return lista;
@@ -142,7 +143,7 @@ public class Dia_de_SpaData {
             System.out.println("Dia de spa eliminado");
 
         } catch (SQLException ex) {
-            System.out.println("Error eliminarDiaSpa: " + ex);
+            JOptionPane.showMessageDialog(null, "error al eliminar dia de spa");
         }
     }
     public void actualizarDiaSpa(Dia_de_Spa c) {
@@ -161,10 +162,10 @@ public class Dia_de_SpaData {
 
             ps.executeUpdate();
             ps.close();
-            System.out.println("Dia actualizado correctamente");
+            JOptionPane.showMessageDialog(null, "Dia actualizado");
 
         } catch (SQLException ex) {
-            System.out.println("Error al actualizar el dia: " + ex);
+            JOptionPane.showMessageDialog(null, "error al actualizar dia");
         }
 }
     
@@ -194,7 +195,7 @@ public class Dia_de_SpaData {
             ps.close();
 
         } catch (SQLException ex) {
-            System.out.println("Error buscar dia spa: " + ex);
+            JOptionPane.showMessageDialog(null, "error al buscar dia de spa ");
         }
 
         return ds;
@@ -235,7 +236,7 @@ public class Dia_de_SpaData {
         ps.close();
 
     } catch (SQLException ex) {
-        System.out.println("Error al listar por fecha: " + ex);
+        JOptionPane.showMessageDialog(null, "error al listar por fecha");
     }
 
     return lista;
