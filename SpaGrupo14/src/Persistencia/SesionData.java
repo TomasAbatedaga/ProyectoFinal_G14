@@ -134,10 +134,10 @@ public class SesionData {
         List<Sesion> lista = new ArrayList<>();
 
         String sql = "SELECT s.cod_sesion, s.fecha_hora_inicio, s.fecha_hora_fin, "
-                + "t.cod_tratamiento, t.nombre AS tratamientoNombre, "
+                + "t.cod_tratamiento, t.nombre AS tratamientoNombre, t.costo AS tratamientoPrecio, "
                 + "m.cod_masajista, m.nombre_completo AS masajistaNombre, "
                 + "c.cod_consultorio, c.nro_consultorio AS consultorioNumero, "
-                + "i.cod_instalacion, i.nombre AS instalacionNombre "
+                + "i.cod_instalacion, i.nombre AS instalacionNombre, i.precio AS instalacionPrecio "
                 + "FROM sesion s "
                 + "LEFT JOIN tratamiento t ON s.cod_tratamiento = t.cod_tratamiento "
                 + "LEFT JOIN masajista m ON s.cod_masajista = m.cod_masajista "
@@ -155,7 +155,6 @@ public class SesionData {
                 Sesion s = new Sesion();
                 s.setCodSesion(rs.getInt("cod_sesion"));
 
-                // === HORARIOS (DATETIME -> Time) ===
                 java.sql.Timestamp ini = rs.getTimestamp("fecha_hora_inicio");
                 java.sql.Timestamp fin = rs.getTimestamp("fecha_hora_fin");
 
@@ -169,6 +168,7 @@ public class SesionData {
                 Tratamiento t = new Tratamiento();
                 t.setCodTratam(rs.getInt("cod_tratamiento"));
                 t.setNombre(rs.getString("tratamientoNombre"));
+                t.setCosto(rs.getDouble("tratamientoPrecio"));   // <-- ESTE FALTABA
                 s.setTratamiento(t);
 
                 Masajista m = new Masajista();
@@ -184,6 +184,7 @@ public class SesionData {
                 Instalacion inst = new Instalacion();
                 inst.setCodInstal(rs.getInt("cod_instalacion"));
                 inst.setNombre(rs.getString("instalacionNombre"));
+                inst.setPrecio(rs.getDouble("instalacionPrecio")); // <-- ESTE FALTABA
                 s.setInstalaciones(inst);
 
                 lista.add(s);
@@ -258,6 +259,70 @@ public class SesionData {
             }
         } catch (SQLException ex) {
             System.out.println("Error de actualizacion " + ex);
+        }
+    }
+
+    public void actualizarSesionTratamiento(Sesion s) {
+
+        String sql = "UPDATE sesion SET fecha_hora_inicio=?, fecha_hora_fin=?, "
+                + "cod_tratamiento=?, cod_consultorio=?, cod_masajista=?, "
+                + "cod_pack=?, estado=?, cod_instalacion=NULL "
+                + "WHERE cod_sesion=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setTime(1, Time.valueOf(s.getFechaHoraInicio().toLocalTime()));
+            ps.setTime(2, Time.valueOf(s.getFechaHoraFin().toLocalTime()));
+            ps.setInt(3, s.getTratamiento().getCodTratam());
+            ps.setInt(4, s.getConsultorio().getCodConsultorio());
+            ps.setInt(5, s.getMasajista().getCod_Masajista());
+            ps.setInt(6, s.getDiaDeSpa().getCodPack());
+            ps.setBoolean(7, s.isEstado());
+            ps.setInt(8, s.getCodSesion());
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Sesion de Tratamiento actualizada.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro la sesion para actualizar.");
+            }
+            ps.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar sesion de tratamiento: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    public void actualizarSesionInstalacion(Sesion s) {
+
+        String sql = "UPDATE sesion SET fecha_hora_inicio=?, fecha_hora_fin=?, "
+                + "cod_tratamiento=NULL, cod_consultorio=NULL, cod_masajista=NULL, "
+                + "cod_pack=?, estado=?, cod_instalacion=? "
+                + "WHERE cod_sesion=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setTime(1, Time.valueOf(s.getFechaHoraInicio().toLocalTime()));
+            ps.setTime(2, Time.valueOf(s.getFechaHoraFin().toLocalTime()));
+            ps.setInt(3, s.getDiaDeSpa().getCodPack());
+            ps.setBoolean(4, s.isEstado());
+            ps.setInt(5, s.getInstalaciones().getCodInstal());
+            ps.setInt(6, s.getCodSesion()); // ID para el WHERE
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Sesion de Instalacion actualizada.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro la sesion para actualizar.");
+            }
+            ps.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar sesion de instalacion: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -520,7 +585,6 @@ public class SesionData {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al agregar sesion de tratamiento: " + ex.getMessage());
-            ex.printStackTrace();
         }
     }
 
@@ -571,7 +635,6 @@ public class SesionData {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al agregar sesion de instalacion: " + ex.getMessage());
-            ex.printStackTrace();
         }
     }
 
