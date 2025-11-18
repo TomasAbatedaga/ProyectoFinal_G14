@@ -28,6 +28,7 @@ import Persistencia.Dia_de_SpaData;
  * @author abate
  */
 public class GestionDeSesiones extends javax.swing.JInternalFrame {
+
     private ArrayList<Tratamiento> listaTratamiento;
     private ArrayList<Consultorio> listaConsultorio;
     private ArrayList<Masajista> listaMasajista;
@@ -39,7 +40,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private ConsultorioData abmConsultorio;
     private TratamientoData abmTratamiento;
     private int codigoSeleccionado;
-    
+    private String modoDeSesion;
+
     /**
      * Creates new form GestionDeSesiones
      */
@@ -50,7 +52,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         EstiloVisual.aplicarEstiloBoton(jBtnAgregar);
         EstiloVisual.aplicarEstiloBoton(JBtnModificar);
         EstiloVisual.aplicarEstiloBoton(jBtnBuscar);
-        
+
         abmConsultorio = new ConsultorioData();
         abmTratamiento = new TratamientoData();
         abmMasajista = new MasajistaData();
@@ -67,13 +69,14 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboInstalacion();
         cargarComboDiaDeSpa();
     }
-    
+
     public GestionDeSesiones(int codPack) {
         initComponents();
         this.codigoSeleccionado = codPack;
-        inicializarDatos(); 
-        seleccionarDiaDeSpa(); 
+        inicializarDatos();
+        seleccionarDiaDeSpa();
     }
+
     private void inicializarDatos() {
         abmConsultorio = new ConsultorioData();
         abmTratamiento = new TratamientoData();
@@ -92,7 +95,33 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboMasajista();
         cargarComboInstalacion();
         cargarComboDiaDeSpa();
+
+        Object[] opciones = {"Sesion de Tratamiento", "Sesion de Instalacion"};
+        int eleccion = JOptionPane.showOptionDialog(
+                this, "Que tipo de sesion desea agregar?", "Seleccione un Tipo de Sesion",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        if (eleccion == JOptionPane.YES_OPTION) {
+            this.modoDeSesion = "TRATAMIENTO";
+            jCbInstalacion.setEnabled(false);
+            jCbInstalacion.setSelectedIndex(0);
+
+        } else {
+            this.modoDeSesion = "INSTALACION";
+            jCbtratamiento.setEnabled(false);
+            jCbconsultorio.setEnabled(false);
+            jCbmasajista.setEnabled(false);
+            jCbtratamiento.setSelectedIndex(0);
+            jCbconsultorio.setSelectedIndex(0);
+            jCbmasajista.setSelectedIndex(0);
+        }
     }
+
     private void seleccionarDiaDeSpa() {
         jCbCodPaquete.setEnabled(false);
         for (int i = 1; i < jCbCodPaquete.getItemCount(); i++) {
@@ -171,6 +200,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         });
 
         jServicio5.setText("Estado:");
+
+        jCheckEstado.setSelected(true);
 
         jBtnBorrar.setText("Borrar");
         jBtnBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -373,64 +404,40 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
     private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
         // TODO add your handling code here:
         try {
-            
             SesionData sd = new SesionData();
-            
-            if (jCbtratamiento.getSelectedIndex() == 0 ||
-                jCbconsultorio.getSelectedIndex() == 0 ||
-                jCbmasajista.getSelectedIndex() == 0 ||
-                jCbInstalacion.getSelectedIndex() == 0 ||
-                jCbCodPaquete.getSelectedIndex() == 0) 
-            {
-                JOptionPane.showMessageDialog(this,"Debe seleccionar un valor valido en todas las listas.");
+
+            if (jCbCodPaquete.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un Codigo Paquete.");
                 return;
             }
-            Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
-            Consultorio consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
-            Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
-            Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
             Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
-            
-            //----CONTROL DE LA HORA
+            boolean estado = jCheckEstado.isSelected();
+            LocalDate fechaDiaDeSpa = diaDeSpa.getFechaYHora();
+
+            // VALIDACION DE LA HORA
             String horaInicioStr = jTfhoraInicio.getText();
             String horaFinStr = jTfhoraFin.getText();
             int horaInicioInt;
             int horaFinInt;
 
-            if (tratamiento == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un tratamiento primero");
-                return;
-            }
-
             try {
                 horaInicioInt = Integer.parseInt(horaInicioStr);
                 horaFinInt = Integer.parseInt(horaFinStr);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al ingresar la hora, ingrese un numero dependiendo la hora que sea");
+                JOptionPane.showMessageDialog(this,"Error al ingresar la hora, ingrese un numero (ej: 10).");
                 return;
             }
 
-            int duracionAgendada = horaFinInt - horaInicioInt; 
-            int duracionRequerida = tratamiento.getDuracion();
-
-            if (duracionAgendada != duracionRequerida) {
-                JOptionPane.showMessageDialog(this, 
-                    "La duración de la sesión no coincide con la del tratamiento.\n\n" +
-                    "Duración Agendada: " + duracionAgendada + " hora(s) (de " + horaInicioInt + " a " + horaFinInt + ")\n" +
-                    "Duración Tratamiento: " + duracionRequerida + " hora(s)");
+            if (horaFinInt <= horaInicioInt) {
+                JOptionPane.showMessageDialog(this, "La hora final debe ser posterior a la de inicio");
                 return;
             }
-            
-            // Time recibe HH:mm:ss, con esto valido si ingresa solo la hora
+
             if (horaInicioStr.length() <= 2) {
-                horaInicioStr += ":00:00"; // agrega minutos y segundos para que quede en el formato correcto que pide Time
+                horaInicioStr += ":00:00";
+            } else if (horaInicioStr.length() == 5) {
+                horaInicioStr += ":00";
             }
-            // Aca si ingresa HH:mm
-            else if (horaInicioStr.length() == 5) {
-                horaInicioStr += ":00"; // agrega los segundos
-            }
-            // Hacemos lo mismo para la hora de fin
             if (horaFinStr.length() <= 2) {
                 horaFinStr += ":00:00";
             } else if (horaFinStr.length() == 5) {
@@ -438,58 +445,86 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             }
             Time horaInicio = Time.valueOf(horaInicioStr);
             Time horaFin = Time.valueOf(horaFinStr);
-            if (!horaFin.after(horaInicio)) {
-                JOptionPane.showMessageDialog(this,"La hora final debe ser posterior a la de inicio");
-                return;
-            }
-            //CONTROL DE LA HORA----
-            
-            
-            //VALIDACION DE LA ESPECIALIDAD
-            if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
-                JOptionPane.showMessageDialog(this,"El masajista no tiene la especialidad requerida para este tratamiento.\n\n" +
-                    "Masajista: " + masajista.getEspecialidad() + " y " + "Tratamiento: " + tratamiento.getEspecialidad());
-                return;
-            }
-            
-            boolean estado = jCheckEstado.isSelected();
-            
-            LocalDate fechaDiaDeSpa = diaDeSpa.getFechaYHora();
-            // validamos si masajista esta ocupado
-            if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDiaDeSpa, horaInicio, horaFin)) {
-                JOptionPane.showMessageDialog(this,"El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario");
+
+            // VALIDACION DEL SELECTOR DE TIPO DE GESTION 
+            Tratamiento tratamiento = null;
+            Consultorio consultorio = null;
+            Masajista masajista = null;
+            Instalacion instalacion = null;
+
+            // SI SELECCIONA EL TIPO DE GESTION DE TRATAMIENTO
+            if ("TRATAMIENTO".equals(this.modoDeSesion)) {
+                if (jCbtratamiento.getSelectedIndex() == 0 || jCbconsultorio.getSelectedIndex() == 0 || jCbmasajista.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(this, "Para agregar una sesion de tratamiento debe seleccionar tratamiento, consultorio y masajista.");
+                    return;
+                }
+
+                tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
+                consultorio = (Consultorio) jCbconsultorio.getSelectedItem();
+                masajista = (Masajista) jCbmasajista.getSelectedItem();
+
+                // VALIDACION DE LAS DURACIONES DE TRATAMIENTO
+                int duracionAgendada = horaFinInt - horaInicioInt;
+                int duracionRequerida = tratamiento.getDuracion();
+                if (duracionAgendada != duracionRequerida) {
+                    JOptionPane.showMessageDialog(this, "Duracion Agendada: " + duracionAgendada + "h | Requerida: " + duracionRequerida + "h");
+                    return;
+                }
+                if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
+                    JOptionPane.showMessageDialog(this, "Masajista: " + masajista.getEspecialidad() + " y " + "Tratamiento: " + tratamiento.getEspecialidad());
+                    return;
+                }
+
+                // VALIDACIONES DE LA DISPONIBILIDAD DE MASAJISTA Y CONSULTORIO
+                if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                    JOptionPane.showMessageDialog(this, "El masajista " + masajista.getNombreCompleto() + " esta ocupado.");
+                    return;
+                }
+                if (sd.consultorioOcupado(consultorio.getCodConsultorio(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                    JOptionPane.showMessageDialog(this, "El consultorio " + consultorio.toString() + " esta ocupado.");
+                    return;
+                }
+                Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, null, diaDeSpa, estado);
+                sd.agregarSesionTratamiento(sesion);
+
+                // SI SELECCIONA EL TIPO DE GESTION DE INSTALACION
+            } else if ("INSTALACION".equals(this.modoDeSesion)) {
+                if (jCbInstalacion.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(this, "Para agregar una sesion de instalacion debe seleccionar una instalacion.");
+                    return;
+                }
+
+                instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
+
+                // VALIDACION DE DISPONIBILIDAD DE INSTALACION
+                if (sd.instalacionOcupada(instalacion.getCodInstal(), fechaDiaDeSpa, horaInicio, horaFin)) {
+                    JOptionPane.showMessageDialog(this, "La instalacion " + instalacion.getNombre() + " esta ocupada.");
+                    return;
+                }
+
+            } else {
+                // MODO NO DEFINIDO (si se abrió desde el menú principal sin pop-up)
+                // Aquí puedes decidir si muestras un error o permites modo "Completo"
+                JOptionPane.showMessageDialog(this, "Modo no reconocido. Abra esta vista desde 'Gestión Día de Spa'.");
                 return;
             }
 
-            // validamos si el consultorio esta ocupado
-            if (sd.consultorioOcupado(consultorio.getCodConsultorio(), fechaDiaDeSpa, horaInicio, horaFin)) {
-                JOptionPane.showMessageDialog(this,"El consultorio " + consultorio.toString() + " esta ocupado en esa fecha y horario.");
-                return;
-            }
-            
-            // validamos si la instalacion esta ocupada
-            if (sd.instalacionOcupada(instalacion.getCodInstal(), fechaDiaDeSpa, horaInicio, horaFin)) {
-                JOptionPane.showMessageDialog(this,"La instalacion " + instalacion.getNombre() + " esta ocupada en esa fecha y horario.");
-                return;
-            }
-            
-            Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa , estado);
-            sd.agregarSesion(sesion);
-            
+            Sesion sesion = new Sesion(horaInicio, horaFin, null, null, null, instalacion, diaDeSpa, estado);
+            sd.agregarSesionInstalacion(sesion);
+
             jTfhoraInicio.setText("");
             jTfhoraFin.setText("");
             jCheckEstado.setSelected(false);
+
             jCbtratamiento.setSelectedIndex(0);
-            jCbtratamiento.setSelectedIndex(0); // Deselecciona los combos
             jCbconsultorio.setSelectedIndex(0);
             jCbmasajista.setSelectedIndex(0);
             jCbInstalacion.setSelectedIndex(0);
-            jCbCodPaquete.setSelectedIndex(0);
-            
+
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, "Error en el formato de hora. Use HH:mm:ss (ej: 14:30:00).");
+            JOptionPane.showMessageDialog(this, "Error en el formato de hora");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al agregar la sesion");
+            JOptionPane.showMessageDialog(this, "Error al agregar la sesion: " + e.getMessage());
         }
     }//GEN-LAST:event_jBtnAgregarActionPerformed
 
@@ -502,7 +537,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         try {
             int codSesion = Integer.parseInt(jTfCodSesion.getText());
 
-            int respuesta = JOptionPane.showConfirmDialog(this, 
+            int respuesta = JOptionPane.showConfirmDialog(this,
                     "Estas seguro de eliminar la sesion " + codSesion + "?");
 
             SesionData sd = new SesionData();
@@ -523,7 +558,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar la sesion: " + e.getMessage());
         }
-        
+
     }//GEN-LAST:event_jBtnBorrarActionPerformed
 
     private void JBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnModificarActionPerformed
@@ -531,13 +566,12 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         try {
             SesionData sd = new SesionData();
 
-            if (jCbtratamiento.getSelectedIndex() == 0 ||
-                jCbconsultorio.getSelectedIndex() == 0 ||
-                jCbmasajista.getSelectedIndex() == 0 ||
-                jCbInstalacion.getSelectedIndex() == 0 ||
-                jCbCodPaquete.getSelectedIndex() == 0) 
-            {
-                JOptionPane.showMessageDialog(this,"Debe seleccionar un valor valido en todas las listas.");
+            if (jCbtratamiento.getSelectedIndex() == 0
+                    || jCbconsultorio.getSelectedIndex() == 0
+                    || jCbmasajista.getSelectedIndex() == 0
+                    || jCbInstalacion.getSelectedIndex() == 0
+                    || jCbCodPaquete.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un valor valido en todas las listas.");
                 return;
             }
             Tratamiento tratamiento = (Tratamiento) jCbtratamiento.getSelectedItem();
@@ -545,7 +579,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             Masajista masajista = (Masajista) jCbmasajista.getSelectedItem();
             Instalacion instalacion = (Instalacion) jCbInstalacion.getSelectedItem();
             Dia_de_Spa diaDeSpa = (Dia_de_Spa) jCbCodPaquete.getSelectedItem();
-            
+
             int codSesion;
             try {
                 codSesion = Integer.parseInt(jTfCodSesion.getText());
@@ -558,11 +592,11 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
             int horaInicioInt = Integer.parseInt(horaInicioStr);
             int horaFinInt = Integer.parseInt(horaFinStr);
-            int duracionAgendada = horaFinInt - horaInicioInt; 
+            int duracionAgendada = horaFinInt - horaInicioInt;
             int duracionRequerida = tratamiento.getDuracion();
 
             if (duracionAgendada != duracionRequerida) {
-                 JOptionPane.showMessageDialog(this, "La duracion agendada es distinta a la requerida");
+                JOptionPane.showMessageDialog(this, "La duracion agendada es distinta a la requerida");
                 return;
             }
             if (horaFinInt <= horaInicioInt) {
@@ -572,9 +606,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
             if (horaInicioStr.length() <= 2) {
                 horaInicioStr += ":00:00";
-            }
-            else if (horaInicioStr.length() == 5) {
-                horaInicioStr += ":00"; 
+            } else if (horaInicioStr.length() == 5) {
+                horaInicioStr += ":00";
             }
             if (horaFinStr.length() <= 2) {
                 horaFinStr += ":00:00";
@@ -589,25 +622,25 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
             if (masajista.getEspecialidad() != tratamiento.getEspecialidad()) {
                 JOptionPane.showMessageDialog(this, "Especialidad no coincide.");
-                return; 
+                return;
             }
-            
+
             if (sd.masajistaOcupado(masajista.getCod_Masajista(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
                 JOptionPane.showMessageDialog(this, "El masajista " + masajista.getNombreCompleto() + " esta ocupado en esa fecha y horario");
-                return; 
+                return;
             }
             if (sd.consultorioOcupado(consultorio.getCodConsultorio(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
                 JOptionPane.showMessageDialog(this, "El consultorio numero " + consultorio.getNroConsultorio() + " esta ocupado en esa fecha y horario");
-                return; 
+                return;
             }
             if (sd.instalacionOcupada(instalacion.getCodInstal(), fechaDeLaSesion, horaInicio, horaFin, codSesion)) {
                 JOptionPane.showMessageDialog(this, "La instalacion " + instalacion.getNombre() + " esta ocupada en esa fecha y horario");
-                return; 
+                return;
             }
 
             Sesion sesion = new Sesion(horaInicio, horaFin, tratamiento, consultorio, masajista, instalacion, diaDeSpa, estado);
             sesion.setCodSesion(codSesion);
-            
+
             sd.actualizarSesion(sesion);
 
         } catch (Exception e) {
@@ -630,7 +663,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             int codSesion = Integer.parseInt(jTfCodSesion.getText());
 
             // Asumiendo que tienes un método buscarSesiones() en SesionData
-            Sesion sesionEncontrada = sd.buscarSesiones(codSesion); 
+            Sesion sesionEncontrada = sd.buscarSesiones(codSesion);
 
             if (sesionEncontrada != null) {
                 // Llenar campos de texto
@@ -640,7 +673,6 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
 
                 // --- Lógica para seleccionar en los ComboBox ---
                 // (Esto busca el objeto en tu lista que coincida con el ID de la sesión)
-
                 for (Tratamiento t : listaTratamiento) {
                     if (t.getCodTratam() == sesionEncontrada.getTratamiento().getCodTratam()) {
                         jCbtratamiento.setSelectedItem(t);
@@ -730,43 +762,42 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         });
     }
 
-    
     private void cargarComboTratamientos() {
         jCbtratamiento.addItem("Seleccione un tratamiento");
         for (Tratamiento tratamiento : listaTratamiento) {
             jCbtratamiento.addItem(tratamiento);
         }
     }
-    
-    private void cargarComboConsultorio(){
+
+    private void cargarComboConsultorio() {
         jCbconsultorio.addItem(("Seleccione un consultorio"));
         for (Consultorio consultorio : listaConsultorio) {
             jCbconsultorio.addItem(consultorio);
         }
     }
-    
-    private void cargarComboMasajista(){
+
+    private void cargarComboMasajista() {
         jCbmasajista.addItem("Seleccione un masajista");
         for (Masajista masajista : listaMasajista) {
             jCbmasajista.addItem(masajista);
         }
     }
-    
-    private void cargarComboInstalacion(){
+
+    private void cargarComboInstalacion() {
         jCbInstalacion.addItem("Seleccione una instalacion");
         for (Instalacion instalacion : listaInstalacion) {
             jCbInstalacion.addItem(instalacion);
         }
     }
-    
-    private void cargarComboDiaDeSpa(){
+
+    private void cargarComboDiaDeSpa() {
         jCbCodPaquete.addItem("Seleccione un paquete");
         for (Dia_de_Spa diaDeSpa : listaDiaDeSpa) {
             jCbCodPaquete.addItem(diaDeSpa);
-            
+
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnModificar;
     private javax.swing.JButton jBtnAgregar;
