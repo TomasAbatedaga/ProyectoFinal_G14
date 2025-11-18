@@ -70,6 +70,81 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
         cargarComboDiaDeSpa();
     }
 
+//    public GestionDeSesiones(int codPack) {
+//        initComponents();
+//        this.codigoSeleccionado = codPack;
+//        seleccionarDiaDeSpa();
+//
+//        // 1. Inicializar los ABMs (Data Access)
+//        abmConsultorio = new ConsultorioData();
+//        abmTratamiento = new TratamientoData();
+//        abmMasajista = new MasajistaData();
+//        abmInstalacion = new InstalacionData();
+//        abmDia_de_Spa = new Dia_de_SpaData();
+//
+//        // 2. Cargar TODAS las listas (excepto DiaDeSpa, que cargaremos de forma especial)
+//        listaTratamiento = (ArrayList<Tratamiento>) abmTratamiento.listarTratamientos();
+//        listaConsultorio = (ArrayList<Consultorio>) abmConsultorio.listarConsultorios();
+//        listaMasajista = (ArrayList<Masajista>) abmMasajista.listarMasajista();
+//        listaInstalacion = (ArrayList<Instalacion>) abmInstalacion.listarInstalaciones();
+//        // No cargamos la lista completa de DiaDeSpa, es innecesario
+//
+//        // 3. Cargar los ComboBox
+//        cargarComboTratamientos();
+//        cargarComboConsultorio();
+//        cargarComboMasajista();
+//        cargarComboInstalacion();
+//
+//        // 4. Cargar y seleccionar el Dia de Spa (Paquete)
+//        // Buscamos el objeto Dia_de_Spa que nos pasaron por ID
+//        Dia_de_Spa diaSpa = abmDia_de_Spa.buscarDia(codPack);
+//        if (diaSpa != null) {
+//            jCbCodPaquete.addItem(diaSpa); // Agregamos SOLO ese
+//            jCbCodPaquete.setSelectedItem(diaSpa);
+//        }
+//        jCbCodPaquete.setEnabled(false); // Lo bloqueamos
+//        jCheckEstado.setSelected(true); // Ponemos el estado en Activo
+//
+//        // 5. LÓGICA DEL POP-UP (Tu código, pero mejorado)
+//        Object[] opciones = {"Sesion de Tratamiento", "Sesion de Instalacion"};
+//        int eleccion = JOptionPane.showOptionDialog(
+//                this, "Que tipo de sesion desea agregar?", "Seleccione un Tipo de Sesion",
+//                JOptionPane.YES_NO_OPTION,
+//                JOptionPane.QUESTION_MESSAGE,
+//                null,
+//                opciones,
+//                opciones[0]
+//        );
+//
+//        if (eleccion == JOptionPane.YES_OPTION) {
+//            // Modo Tratamiento: Bloquear Instalación
+//            this.modoDeSesion = "TRATAMIENTO";
+//            jCbInstalacion.setEnabled(false);
+//            jCbInstalacion.setSelectedIndex(0); // Lo dejamos en "Seleccione..."
+//
+//        } else if (eleccion == JOptionPane.NO_OPTION) {
+//            // Modo Instalación: Bloquear Tratamiento
+//            this.modoDeSesion = "INSTALACION";
+//            jCbtratamiento.setEnabled(false);
+//            jCbconsultorio.setEnabled(false);
+//            jCbmasajista.setEnabled(false);
+//            jCbtratamiento.setSelectedIndex(0);
+//            jCbconsultorio.setSelectedIndex(0);
+//            jCbmasajista.setSelectedIndex(0);
+//
+//        } else {
+//            // --- AQUÍ ESTÁ LA LÓGICA PARA "VOLVER" ---
+//            // (Si el usuario cerró el pop-up (eleccion == JOptionPane.CLOSED_OPTION))
+//
+//            this.modoDeSesion = "CANCELADO"; // Ponemos un modo inválido
+//
+//            // Truco: Le decimos a Java que "en el próximo ciclo de eventos"
+//            // (justo después de que este constructor termine) cierre esta ventana.
+//            javax.swing.SwingUtilities.invokeLater(() -> {
+//                this.dispose(); // Cierra el JInternalFrame
+//            });
+//        }
+//    }
     public GestionDeSesiones(int codPack) {
         initComponents();
         this.codigoSeleccionado = codPack;
@@ -111,7 +186,8 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             jCbInstalacion.setEnabled(false);
             jCbInstalacion.setSelectedIndex(0);
 
-        } else {
+        } else if (eleccion == JOptionPane.NO_OPTION) {
+            // Modo Instalación: Bloquear Tratamiento
             this.modoDeSesion = "INSTALACION";
             jCbtratamiento.setEnabled(false);
             jCbconsultorio.setEnabled(false);
@@ -119,6 +195,18 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
             jCbtratamiento.setSelectedIndex(0);
             jCbconsultorio.setSelectedIndex(0);
             jCbmasajista.setSelectedIndex(0);
+
+        } else {
+            // --- AQUÍ ESTÁ LA LÓGICA PARA "VOLVER" ---
+            // (Si el usuario cerró el pop-up (eleccion == JOptionPane.CLOSED_OPTION))
+
+            this.modoDeSesion = "CANCELADO"; // Ponemos un modo inválido
+
+            // Truco: Le decimos a Java que "en el próximo ciclo de eventos"
+            // (justo después de que este constructor termine) cierre esta ventana.
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                this.dispose(); // Cierra el JInternalFrame
+            });
         }
     }
 
@@ -424,7 +512,7 @@ public class GestionDeSesiones extends javax.swing.JInternalFrame {
                 horaInicioInt = Integer.parseInt(horaInicioStr);
                 horaFinInt = Integer.parseInt(horaFinStr);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this,"Error al ingresar la hora, ingrese un numero (ej: 10).");
+                JOptionPane.showMessageDialog(this, "Error al ingresar la hora, ingrese un numero (ej: 10).");
                 return;
             }
 
