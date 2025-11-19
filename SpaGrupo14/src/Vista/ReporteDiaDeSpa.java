@@ -145,7 +145,7 @@ public class ReporteDiaDeSpa extends javax.swing.JInternalFrame {
             }
         });
 
-        cbProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Aloe Vera", "Aceite De coco", "Mascarilla", "Crema hidratante", "" }));
+        cbProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Aloe Vera", "Aceite De coco", "Mascarilla", "Crema hidratante" }));
         cbProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbProductosActionPerformed(evt);
@@ -355,12 +355,12 @@ public void armarCabeceraTabla() {
 
             if (prod.equals("-")) {
                 if (productoAplicado) {
-                    monto -= EXTRA_PRODUCTO;  // quitar el extra
+                    monto -= EXTRA_PRODUCTO;  
                     productoAplicado = false;
                 }
             } else {
                 if (!productoAplicado) {
-                    monto += EXTRA_PRODUCTO;  // aplicar el extra
+                    monto += EXTRA_PRODUCTO;  
                     productoAplicado = true;
                 }
             }
