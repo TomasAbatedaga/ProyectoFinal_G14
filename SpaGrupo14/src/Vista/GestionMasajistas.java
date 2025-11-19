@@ -34,6 +34,14 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
         }
     }
 
+    private void limpiarCampos() {
+//  Vaciar los campos de texto
+        jTF_matriculaMasajista.setText("");
+        jTF_NombreMasajista.setText("");
+        jTF_telefonoMasajista.setText("");
+        CBEstado.setSelected(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -222,83 +230,266 @@ public class GestionMasajistas extends javax.swing.JInternalFrame {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        jTF_matriculaMasajista.setText("");
-        jTF_NombreMasajista.setText("");
-        jTF_telefonoMasajista.setText("");
-        CBEstado.setSelected(false);
+       limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+//try {
+//            MasajistaData masajistaData = new MasajistaData();
+//            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+//            Masajista masajista = masajistaData.buscarMasajista(matricula);
+//            if (masajista != null) {
+//                jTF_NombreMasajista.setText(masajista.getNombreCompleto());
+//                jTF_telefonoMasajista.setText(masajista.getTelefono());
+//                //jTF_espMasajista.setText(masajista.getEspecialidad().toString());
+//                CBEstado.setSelected(masajista.isEstado());
+//                
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
+//        }
+
+
 try {
-            MasajistaData masajistaData = new MasajistaData();
-            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+             MasajistaData masajistaData = new MasajistaData();
+             int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
             Masajista masajista = masajistaData.buscarMasajista(matricula);
             if (masajista != null) {
                 jTF_NombreMasajista.setText(masajista.getNombreCompleto());
                 jTF_telefonoMasajista.setText(masajista.getTelefono());
-                //jTF_espMasajista.setText(masajista.getEspecialidad().toString());
                 CBEstado.setSelected(masajista.isEstado());
-                
+                jCbEspecialidad.setSelectedItem(masajista.getEspecialidad().toString());
+//                int cod_masajista= Integer.parseInt(jTF_Codigo.getText());
+
+            if (!masajista.isEstado()) {
+            JOptionPane.showMessageDialog(this, "Este Masajista figura como Inactivo/Dado de baja.");
+        }    
             } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+                JOptionPane.showMessageDialog(this, "No se encuentra la Matricula ingresada: "+ matricula);
+                limpiarCampos();
+                //Mantener el Campo Escrito
+                jTF_matriculaMasajista.setText(String.valueOf(matricula));
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
-        }
-
+            JOptionPane.showMessageDialog(this, "Ingrese nums Validos para Buscar las Matriculas de los Masajistas");
+        jTF_matriculaMasajista.setText("");
+        }catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+}
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-     try{
-        MasajistaData masajistaData = new MasajistaData();
-        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
-        String nombreCompleto = jTF_NombreMasajista.getText();
-        String telefono =  jTF_telefonoMasajista.getText();
-        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
-        boolean estado = CBEstado.isSelected();
-        Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
-        masajistaData.agregarMasajista(masajista);
+//     try{
+//        MasajistaData masajistaData = new MasajistaData();
+//        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+//        String nombreCompleto = jTF_NombreMasajista.getText();
+//        String telefono =  jTF_telefonoMasajista.getText();
+//        EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
+//        boolean estado = CBEstado.isSelected();
+//        Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+//        masajistaData.agregarMasajista(masajista);
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+//        }
+
+try {
+            String nombreCompleto = jTF_NombreMasajista.getText().trim();
+            String telefono = jTF_telefonoMasajista.getText().trim();
+            String matriculaText = jTF_matriculaMasajista.getText().trim();
+
+            if (nombreCompleto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacio.");
+                return;
+            }
+             // Ponemos foco para corregir
+            if (nombreCompleto.length() < 5) {
+                JOptionPane.showMessageDialog(this, "El nombre es muy corto. Debe contener al menos 5 caracteres.");
+                jTF_NombreMasajista.requestFocus();
+                return;
+            }
+            if (telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Telefono no puede estar vacio.");
+                return;
+            }
+            if (matriculaText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Matricula no puede estar vacio.");
+                return;
+            }
+
+            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+            EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
+            boolean estado = CBEstado.isSelected();
+
+            MasajistaData masajistaData = new MasajistaData();
+            Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+            masajistaData.agregarMasajista(masajista);
+
+            //limpiaCampos
+            limpiarCampos();
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+            // Este error salta si tienen letras o simbolos
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que Matricula sean solo numeros.");
+        } catch (Exception e) {
+            // Captura errores inesperados
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-           try {
-            MasajistaData masajistaData = new MasajistaData();
-            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
-            if (masajistaData.buscarMasajista(matricula) != null) {
-                masajistaData.eliminarMasajista(matricula);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
+//           try {
+//            MasajistaData masajistaData = new MasajistaData();
+//            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+//            if (masajistaData.buscarMasajista(matricula) != null) {
+//                masajistaData.eliminarMasajista(matricula);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Matricula");
+//        }
+try{
+        if (jTF_matriculaMasajista.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un codigo de Matricula Valido para borrar.");
+            return;
         }
+
+        int matricula = Integer.parseInt(jTF_matriculaMasajista.getText().trim());
+        MasajistaData masajistaData = new MasajistaData();
+
+        Masajista masajistaEncontrado = masajistaData.buscarMasajista(matricula);
+
+        if (masajistaEncontrado != null) {
+
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro que desea eliminar el Masajista " + masajistaEncontrado.getNombreCompleto()+ "?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE); // Icono de advertencia
+
+            if (respuesta == JOptionPane.YES_OPTION) {
+                masajistaData.eliminarMasajista(matricula);
+
+                JOptionPane.showMessageDialog(this, "Masajista eliminado.");
+                limpiarCampos();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encuentra un Masajista con esa Matricula.");
+        }
+
+    }
+    catch (NumberFormatException e
+
+    
+        ) {
+            JOptionPane.showMessageDialog(this, "Ingrese un num valido en el campo Matricula de Masajista.");
+    }
+    catch (Exception e
+
+    
+        ) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-          try {
+//          try {
+//            MasajistaData masajistaData = new MasajistaData();
+//            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
+//            if (masajistaData.buscarMasajista(matricula) != null) {
+//                String nombreCompleto = jTF_NombreMasajista.getText();
+//                String telefono =  jTF_telefonoMasajista.getText();
+//                EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
+//                boolean estado = CBEstado.isSelected();
+//                 Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+//                 masajistaData.actualizarMasajista(masajista);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+//        }
+
+ try {
             MasajistaData masajistaData = new MasajistaData();
-            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText());
-            if (masajistaData.buscarMasajista(matricula) != null) {
-                String nombreCompleto = jTF_NombreMasajista.getText();
-                String telefono =  jTF_telefonoMasajista.getText();
-                EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
-                boolean estado = CBEstado.isSelected();
-                 Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
-                 masajistaData.actualizarMasajista(masajista);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra la matricula ingresada");
+
+            // Validar cod
+            if (jTF_NombreMasajista.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo de la Matricula del Masajista no puede estar vacio.");
+                return;
             }
+
+            int matricula = Integer.parseInt(jTF_matriculaMasajista.getText().trim());
+            Masajista masajistaOriginal = masajistaData.buscarMasajista(matricula);
+            if (masajistaOriginal == null) {
+                JOptionPane.showMessageDialog(this, "No existe ningun Masajista con esa Matricula ingresada");
+                return;
+            }
+
+            // Validar demas Campos
+            String nombreCompleto = jTF_NombreMasajista.getText().trim();
+            String telefono = jTF_telefonoMasajista.getText().trim();
+            String matriculaText = jTF_matriculaMasajista.getText().trim();
+            
+            
+           if (nombreCompleto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacio.");
+                return;
+            }
+             // Ponemos foco para corregir
+            if (nombreCompleto.length() < 5) {
+                JOptionPane.showMessageDialog(this, "El nombre es muy corto. Debe contener al menos 5 caracteres.");
+                jTF_NombreMasajista.requestFocus();
+                return;
+            }
+            if (telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Telefono no puede estar vacio.");
+                return;
+            }
+            if (matriculaText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Matricula no puede estar vacio.");
+                return;
+            }
+
+            
+            EspecialidadEnum especialidad = EspecialidadEnum.valueOf(jCbEspecialidad.getSelectedItem().toString().trim().toUpperCase());
+           
+
+            //Confirmaciones
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro de modificar los datos del Masajista: " + nombreCompleto + "?",
+                    "Confirmar Modificacion",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                //Actualiza
+                boolean estado = CBEstado.isSelected();
+                Masajista masajista = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+
+                Masajista masajistaModificado = new Masajista(matricula, nombreCompleto, telefono, especialidad, estado);
+
+                masajistaModificado.setCod_Masajista(masajistaOriginal.getCod_Masajista());
+
+                masajistaData.actualizarMasajista(masajistaModificado);
+                JOptionPane.showMessageDialog(this, "Masajista modificado.");
+                limpiarCampos();
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo matricula");
+            // atrapa Errores Int
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que la Matricula tenga solo numeros enteros.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado: " + e.getMessage());
         }
-          
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**

@@ -358,10 +358,10 @@ try {
 
         } catch (NumberFormatException e) {
             // Este error salta si tienen letras o simbolos
-            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que la duracion y el costo sean solo números.");
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que la duracion y el costo sean solo nums.");
         } catch (Exception e) {
             // Captura errores inesperados
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar: " + e.getMessage());
         }
 
 
