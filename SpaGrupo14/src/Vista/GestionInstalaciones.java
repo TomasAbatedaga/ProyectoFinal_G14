@@ -28,6 +28,14 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
         EstiloVisual.aplicarEstiloBoton(btn_eliminar);
         
     }
+      private void limpiarCampos() {
+//  Vaciar los campos de texto
+        txt_codigo.setText("");
+        txt_nombre.setText("");
+        textArea_detalle_uso.setText("");
+        txt_precio.setText("");
+        chk_estado.setSelected(false);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,81 +238,226 @@ public class GestionInstalaciones extends javax.swing.JInternalFrame {
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
         // TODO add your handling code here:
-            try{
-        InstalacionData instalacionData = new InstalacionData();
-        String nombre = txt_nombre.getText();
-        String detalleUso =  textArea_detalle_uso.getText();
-        double precio = Double.parseDouble(txt_precio.getText());
-        boolean estado = chk_estado.isSelected();
-        Instalacion instalacion = new Instalacion (nombre, detalleUso, precio, estado);
-        instalacionData.guardarIntalacion(instalacion);
+//            try{
+//        InstalacionData instalacionData = new InstalacionData();
+//        String nombre = txt_nombre.getText();
+//        String detalleUso =  textArea_detalle_uso.getText();
+//        double precio = Double.parseDouble(txt_precio.getText());
+//        boolean estado = chk_estado.isSelected();
+//        Instalacion instalacion = new Instalacion (nombre, detalleUso, precio, estado);
+//        instalacionData.guardarIntalacion(instalacion);
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese valores correctos en el campo precio");
+//        }
+
+try {
+           String nombre = txt_nombre.getText();
+           String detalleUso =  textArea_detalle_uso.getText();
+           
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacio.");
+                return;
+            }
+           
+           
+           double precio = Double.parseDouble(txt_precio.getText());
+           boolean estado = chk_estado.isSelected();
+
+            InstalacionData instalacionData = new InstalacionData();
+            Instalacion instalacion = new Instalacion (nombre, detalleUso, precio, estado);
+            instalacionData.guardarIntalacion(instalacion);
+
+            JOptionPane.showMessageDialog(this, "La Instalacion se agrego exitosamente.");
+            //limpiaCampos
+            limpiarCampos();
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores correctos en el campo precio");
+            // Este error salta si el DNI o la Edad tienen letras o simbolos
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que el Precio sea un numero.");
+        } catch (Exception e) {
+            // Captura errores inesperados
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar: " + e.getMessage());
         }
     }//GEN-LAST:event_btn_agregarActionPerformed
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         // TODO add your handling code here:
-          try {
+//          try {
+//            InstalacionData instalacionData = new InstalacionData();
+//             int cod_instalacion = Integer.parseInt(txt_codigo.getText());
+//            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
+//                 String nombre = txt_nombre.getText();
+//                 String detalle_uso =  textArea_detalle_uso.getText();
+//                 double precio = Double.parseDouble(txt_precio.getText());
+//                 boolean estado = chk_estado.isSelected();
+//                 Instalacion instalacion = new Instalacion( cod_instalacion,nombre, detalle_uso, precio, estado);
+//                 instalacionData.modificarInstalacion(instalacion);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo de Instalacion ingresado");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo de Instalacion");
+//        }
+        
+try {   
             InstalacionData instalacionData = new InstalacionData();
-             int cod_instalacion = Integer.parseInt(txt_codigo.getText());
-            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
+
+            // Validar
+            if (txt_codigo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Codigo de la Instalacion no puede estar vacio.");
+                return;
+            }
+
+           int cod_instalacion = Integer.parseInt(txt_codigo.getText());;
+            Instalacion instalacionOriginal = instalacionData.buscarInstalacion(cod_instalacion);
+            if (instalacionOriginal == null) {
+                JOptionPane.showMessageDialog(this, "No existe ninguna Instalacion con ese codigo ingresado");
+                return;
+            }
+
+            // Validar demas Campos
                  String nombre = txt_nombre.getText();
                  String detalle_uso =  textArea_detalle_uso.getText();
-                 double precio = Double.parseDouble(txt_precio.getText());
-                 boolean estado = chk_estado.isSelected();
-                 Instalacion instalacion = new Instalacion( cod_instalacion,nombre, detalle_uso, precio, estado);
-                 instalacionData.modificarInstalacion(instalacion);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo de Instalacion ingresado");
+                 String precioText = txt_precio.getText();
+                 
+            
+
+            // Validar Vacios
+            if (nombre.isEmpty() || precioText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El Nombre y el Precio son obligatorios.");
+                return;
             }
+            
+            double precio = Double.parseDouble(txt_precio.getText());
+
+            //Confirmaciones
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro de modificar los datos de la Instalacion " + nombre + "?",
+                    "Confirmar Modificacion",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                //Actualiza
+                boolean estado = chk_estado.isSelected();
+                Instalacion instalacion = new Instalacion( cod_instalacion,nombre, detalle_uso, precio, estado);
+
+                Instalacion instalacionModificado = new Instalacion(cod_instalacion,nombre, detalle_uso, precio, estado);
+
+                //Traer ID del cliente BD
+                instalacionModificado.setCodInstal(instalacionOriginal.getCodInstal());
+
+                instalacionData.modificarInstalacion(instalacionModificado);
+                JOptionPane.showMessageDialog(this, "Instalacion modificada.");
+                limpiarCampos();
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo de Instalacion");
+            // atrapa Errores Edad y DNI
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que el Precio y el Codigo contengan solo numeros enteros.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado: " + e.getMessage());
         }
-        
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
         // TODO add your handling code here:
-        txt_codigo.setText("");
-        txt_nombre.setText("");
-        textArea_detalle_uso.setText("");
-        txt_precio.setText("");
-        chk_estado.setSelected(false);
+     limpiarCampos();
     }//GEN-LAST:event_btn_limpiarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
-        try {
-            InstalacionData instalacionData = new InstalacionData();
-            int cod_instalacion = Integer.parseInt(txt_codigo.getText());
-            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
-                instalacionData.eliminarInstalacion(cod_instalacion);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Instalacion ingresado");
+//        // TODO add your handling code here:
+//        try {
+//            InstalacionData instalacionData = new InstalacionData();
+//            int cod_instalacion = Integer.parseInt(txt_codigo.getText());
+//            if (instalacionData.buscarInstalacion(cod_instalacion) != null) {
+//                instalacionData.eliminarInstalacion(cod_instalacion);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Instalacion ingresado");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo de Instalacion");
+//        }
+
+try {
+            if (txt_codigo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo de Instalacion para borrar.");
+                return;
             }
+
+             int cod_instalacion = Integer.parseInt(txt_codigo.getText());
+            InstalacionData instalacionData = new InstalacionData();
+
+            Instalacion instalacionEncontrado = instalacionData.buscarInstalacion(cod_instalacion);
+
+            if (instalacionEncontrado != null) {
+
+                int respuesta = JOptionPane.showConfirmDialog(this,
+                        "¿Esta seguro que desea eliminar La Instalacion " + instalacionEncontrado.getNombre() + "?",
+                        "Confirmar",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    instalacionData.eliminarInstalacion(cod_instalacion);
+
+                    JOptionPane.showMessageDialog(this, "Instalacion eliminada.");
+                    limpiarCampos();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra una Instalacion con ese codigo.");
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo de Instalacion");
+            JOptionPane.showMessageDialog(this, "Ingrese un num valido en el campo Codigo de Instalacion.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // TODO add your handling code here:
-        try {
+//        try {
+//            InstalacionData instalacionData = new InstalacionData();
+//            int cod_Instalacion = Integer.parseInt(txt_codigo.getText());
+//            Instalacion instalacion = instalacionData.buscarInstalacion(cod_Instalacion);
+//            if (instalacion != null) {
+//                 txt_nombre.setText(instalacion.getNombre());
+//                 textArea_detalle_uso.setText(instalacion.getDetalleUso());
+//                 txt_precio.setText(String.valueOf(instalacion.getPrecio()));
+//                 chk_estado.setSelected(instalacion.isEstado());
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No se encuentra el codigo de la Instalacion ingresado");
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo del Instalacion");
+//        }
+
+try {
             InstalacionData instalacionData = new InstalacionData();
             int cod_Instalacion = Integer.parseInt(txt_codigo.getText());
-            Instalacion instalacion = instalacionData.buscarInstalacion(cod_Instalacion);
+           Instalacion instalacion = instalacionData.buscarInstalacion(cod_Instalacion);
             if (instalacion != null) {
-                 txt_nombre.setText(instalacion.getNombre());
+                txt_nombre.setText(instalacion.getNombre());
                  textArea_detalle_uso.setText(instalacion.getDetalleUso());
                  txt_precio.setText(String.valueOf(instalacion.getPrecio()));
                  chk_estado.setSelected(instalacion.isEstado());
+
+            if (!instalacion.isEstado()) {
+            JOptionPane.showMessageDialog(this, "Esta Instalacion figura como Inactivo/Dado de baja.");
+        }    
             } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el codigo de la Instalacion ingresado");
+                JOptionPane.showMessageDialog(this, "No se encuentra la Instalacion ingresado: "+ cod_Instalacion);
+                limpiarCampos();
+                //Mantener el Campo DNI Escrito
+                txt_codigo.setText(String.valueOf(cod_Instalacion));
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Codigo del Instalacion");
-        }
+            JOptionPane.showMessageDialog(this, "Ingrese un num Valido para Buscar Instalaciones");
+        txt_codigo.setText("");
+        }catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+}
         
     }//GEN-LAST:event_btn_buscarActionPerformed
 

@@ -366,7 +366,7 @@ try {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
 try {
             if (jtfCodigoConsul.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo de consultorio borrar.");
+                JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo de consultorio para borrar.");
                 return;
             }
 
