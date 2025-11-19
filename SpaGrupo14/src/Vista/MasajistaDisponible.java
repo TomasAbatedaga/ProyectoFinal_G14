@@ -5,37 +5,44 @@
 package Vista;
 
 import Estilo.EstiloVisual;
+import Modelo.Instalacion;
+import Modelo.Masajista;
 import Persistencia.MasajistaData;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Time;
 
 /**
  *
  * @author abate
  */
 public class MasajistaDisponible extends javax.swing.JInternalFrame {
+
     private DefaultTableModel modelo;
-    private Persistencia.MasajistaData masajistaData;
-    private javax.swing.JComboBox jCbEspecialidades;
+    private ArrayList<Masajista> listaMasajista;
+    private MasajistaData abmMasajista;
 
     /**
      * Creates new form MasajistaDisponible
      */
     public MasajistaDisponible() {
-        super("Masajistas Disponibles", true, true, true, true);
         initComponents();
         EstiloVisual.aplicarEstiloJDPanel(jDesktopPane1);
-        EstiloVisual.aplicarEstiloTabla(jTable1);
-        EstiloVisual.aplicarEstiloBoton(jButton1);
-        
-        masajistaData = new MasajistaData();
+        EstiloVisual.aplicarEstiloTabla(jTabMasajistas);
+        EstiloVisual.aplicarEstiloBoton(jBtnBuscar);
+
+        abmMasajista = new MasajistaData();
+        listaMasajista = (ArrayList<Masajista>) abmMasajista.listarMasajista();
         armarCabeceraTabla();
         borrarFilasTabla();
-        cargarEspecialidades();
+        cargarComboMasajistas();
     }
 
     /**
@@ -48,16 +55,17 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jL_Titulo = new javax.swing.JLabel();
-        jCb_Especialidad = new javax.swing.JComboBox<>();
-        jL_subtitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jTabMasajistas = new javax.swing.JTable();
+        jBtnBuscar = new javax.swing.JButton();
+        jTfHoraFin = new javax.swing.JTextField();
+        jTfHoraInicio = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jCbMasajista = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jDcFecha = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -65,100 +73,105 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
 
-        jL_Titulo.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jL_Titulo.setText("Masajistas Disponibles");
-
-        jCb_Especialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jCb_Especialidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCb_EspecialidadActionPerformed(evt);
-            }
-        });
-
-        jL_subtitulo.setText("Especialidad:");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTabMasajistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Codigo", "Matricula", "Nombre Completo", "Especialidad", "Telefono", "Estado"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTabMasajistas);
 
-        jLabel1.setText("Fecha:");
-
-        jLabel2.setText("Hora:");
-
-        jButton1.setText("Buscar Disponibles");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnBuscarActionPerformed(evt);
             }
         });
 
-        jDesktopPane1.setLayer(jL_Titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jCb_Especialidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jL_subtitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Franja horaria:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Masajista:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Fecha:");
+
+        jLabel1.setFont(new java.awt.Font("SimSun", 1, 20)); // NOI18N
+        jLabel1.setText("Masajistas Disponibles");
+
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jBtnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTfHoraFin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jTfHoraInicio, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jCbMasajista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jDcFecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jL_Titulo))
-                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
-                            .addGap(23, 23, 23)
-                            .addComponent(jL_subtitulo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jCb_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton1)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTfHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTfHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(123, 123, 123)
+                                .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCbMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4))
+                                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                        .addGap(85, 85, 85)
+                                        .addComponent(jLabel1)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jDcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jL_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addGap(38, 38, 38)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCbMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel4))
+                    .addComponent(jDcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCb_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jL_subtitulo)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(jButton1)
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBtnBuscar)
+                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTfHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jTfHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,50 +188,93 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCb_EspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCb_EspecialidadActionPerformed
-
-    }//GEN-LAST:event_jCb_EspecialidadActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String fechaStr = jTextField1.getText().trim();
-        String horaStr = jTextField2.getText().trim();
-        String especialidad = (String) jCb_Especialidad.getSelectedItem();
-        LocalDateTime fechaHoraReserva;
-        if (fechaStr.isEmpty() || horaStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar una Fecha (AAAA-MM-DD) y una Hora (HH:MM).", "Datos Incompletos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        // TODO add your handling code here:
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            fechaHoraReserva = LocalDateTime.parse(fechaStr + " " + horaStr, formatter);
-        } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, 
-                "Formato incorrecto. Use AAAA-MM-DD para la fecha y HH:MM para la hora.", 
-                "Error de Formato", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        borrarFilasTabla(); 
-        List<Modelo.Masajista> disponibles = masajistaData.buscarDisponibles(fechaHoraReserva, especialidad); 
+            String especialidadSeleccionada = (String) jCbMasajista.getSelectedItem();
 
-        if (disponibles.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "No hay masajistas disponibles en el momento y especialidad seleccionados.", 
-                "Sin Resultados", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            for (Modelo.Masajista m : disponibles) {
-                String estadoTexto = m.isEstado() ? "Activo" : "Inactivo"; 
-                modelo.addRow(new Object[]{
-                    m.getCod_Masajista(),
-                    m.getMatricula(),
-                    m.getNombreCompleto(), 
-                    m.getTelefono(),
-                    m.getEspecialidad(),
-                    estadoTexto
-                });
+            if (especialidadSeleccionada == null || jCbMasajista.getSelectedIndex() == 0) {
             }
+
+            java.util.Date fechaUtil = jDcFecha.getDate();
+            if (fechaUtil == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha");
+                return;
+            }
+            LocalDate fechaLD = new java.sql.Date(fechaUtil.getTime()).toLocalDate();
+
+            String horaInicioStr = jTfHoraInicio.getText().trim();
+            String horaFinStr = jTfHoraFin.getText().trim();
+
+            if (horaInicioStr.isEmpty() || horaFinStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar una hora de inicio y fin");
+                return;
+            }
+            try {
+                Integer.parseInt(horaInicioStr);
+                Integer.parseInt(horaFinStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error al ingresar la hora, ingrese un numero dependiendo la hora que sea");
+                return;
+            }
+            if (horaInicioStr.length() <= 2) {
+                horaInicioStr += ":00:00";
+            } else if (horaInicioStr.length() == 5) {
+                horaInicioStr += ":00";
+            }
+
+            if (horaFinStr.length() <= 2) {
+                horaFinStr += ":00:00";
+            } else if (horaFinStr.length() == 5) {
+                horaFinStr += ":00";
+            }
+
+            Time horaInicio = Time.valueOf(horaInicioStr);
+            Time horaFin = Time.valueOf(horaFinStr);
+
+            if (!horaFin.after(horaInicio)) {
+                JOptionPane.showMessageDialog(this, "La hora final debe ser posterior a la de inicio");
+                return;
+            }
+
+            borrarFilasTabla();
+
+            MasajistaData md = new MasajistaData();
+            List<Masajista> disponibles = md.listarMasajistasDisponibles(fechaLD, horaInicio, horaFin);
+
+            if (disponibles.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay ningin masajista disponible en ese horario");
+                return;
+            }
+
+            boolean hayResultados = false;
+
+            for (Masajista m : disponibles) {
+                if ("Todas".equalsIgnoreCase(especialidadSeleccionada)
+                        || m.getEspecialidad().toString().equalsIgnoreCase(especialidadSeleccionada)) {
+
+                    modelo.addRow(new Object[]{
+                        m.getMatricula(),
+                        m.getMatricula(),
+                        m.getNombreCompleto(),
+                        m.getTelefono(),
+                        m.getEspecialidad(),
+                        "Disponible"
+                    });
+                    hayResultados = true;
+                }
+            }
+
+            if (!hayResultados) {
+                JOptionPane.showMessageDialog(this, "No hay masajistas de tipo " + especialidadSeleccionada + " disponibles en ese horario.");
+            }
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Error en formato de hora.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,43 +312,45 @@ public class MasajistaDisponible extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jCb_Especialidad;
+    private javax.swing.JButton jBtnBuscar;
+    private javax.swing.JComboBox<String> jCbMasajista;
+    private com.toedter.calendar.JDateChooser jDcFecha;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jL_Titulo;
-    private javax.swing.JLabel jL_subtitulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTabMasajistas;
+    private javax.swing.JTextField jTfHoraFin;
+    private javax.swing.JTextField jTfHoraInicio;
     // End of variables declaration//GEN-END:variables
 
-private void armarCabeceraTabla() {
+    private void armarCabeceraTabla() {
 
-    String[] titulos = {"Codigo", "Matricula", "Nombre Completo", "Telefono", "Especialidad", "Estado"}; 
-    
-    modelo = new DefaultTableModel(null, titulos) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    jTable1.setModel(modelo);
-}
+        String[] titulos = {"Codigo", "Matricula", "Nombre Completo", "Telefono", "Especialidad", "Estado"};
 
-private void borrarFilasTabla() {
-    int filas = modelo.getRowCount();
-    for (int i = filas - 1; i >= 0; i--) {
-        modelo.removeRow(i);
+        modelo = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jTabMasajistas.setModel(modelo);
     }
-}
 
-private void cargarEspecialidades() {
-    jCb_Especialidad.removeAllItems();
-    jCb_Especialidad.addItem("Todas");
-    jCb_Especialidad.addItem("Facial");
-    jCb_Especialidad.addItem("Estiramiento");
+    private void borrarFilasTabla() {
+        int filas = modelo.getRowCount();
+        for (int i = filas - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void cargarComboMasajistas() {
+        jCbMasajista.removeAllItems();
+        jCbMasajista.addItem("Todas");
+        for (Modelo.EspecialidadEnum esp : Modelo.EspecialidadEnum.values()) {
+            jCbMasajista.addItem(esp.toString());
+        }
     }
 }
