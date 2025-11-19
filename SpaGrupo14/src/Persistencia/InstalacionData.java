@@ -156,7 +156,7 @@ try {
                 JOIN sesion s ON i.cod_instalacion = s.cod_instalacion
                 WHERE i.nombre = ? AND s.estado = 1
                 GROUP BY i.cod_instalacion
-                ORDER BY cont DESC
+                ORDER BY cont DESC 
     """;
 
     try (PreparedStatement ps = con.prepareStatement(sql)) {

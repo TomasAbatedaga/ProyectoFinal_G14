@@ -31,32 +31,58 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
         listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
 
         modeloTabla = new DefaultTableModel();
-        cargarColumnasTablas();
+        configurarModeloTabla(false);
+//        cargarColumnasTablas();
         cargarTratamiento();
         cargarTablaMasVistos();
 
     }
 
+     private void configurarModeloTabla(boolean mostrarColumnaSesiones) {
+        modeloTabla = new DefaultTableModel();
+         modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Tipo");
+        modeloTabla.addColumn("Detalle");
+        modeloTabla.addColumn("Duración");
+        modeloTabla.addColumn("Costo");
+
+       //booleano true, carga sesiones
+        if (mostrarColumnaSesiones) {
+            modeloTabla.addColumn("Sesiones Usadas");
+        }
+
+        jTabTratamientos.setModel(modeloTabla);
+    }
+    
 //     Cargar los valores del enum en el combo
     public void cargarTratamiento() {
 
         jCbTratamientos.removeAllItems();
         jCbTratamientos.addItem("Seleccione un tipo...");
+        jCbTratamientos.addItem("Todas");
+//        java.util.HashSet<String> nombresAgregados = new java.util.HashSet<>();
+        
         for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
             jCbTratamientos.addItem(especialidad.toString());
-        }
+        
+//            if (!nombresAgregados.contains(especialidad.toString())) {
+//                jCbTratamientos.addItem(especialidad.toString());
+//                nombresAgregados.add(especialidad.toString());
+//            
+//        }
     }
-
+    }
+    
     // Definir columnas de la tabla
-    private void cargarColumnasTablas() {
-        modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Tipo");
-        modeloTabla.addColumn("Detalle");
-        modeloTabla.addColumn("Duración");
-        modeloTabla.addColumn("Costo");
-        modeloTabla.addColumn("Sesiones");
-        jTabTratamientos.setModel(modeloTabla);
-    }
+//    private void cargarColumnasTablas() {
+//        modeloTabla.addColumn("Nombre");
+//        modeloTabla.addColumn("Tipo");
+//        modeloTabla.addColumn("Detalle");
+//        modeloTabla.addColumn("Duración");
+//        modeloTabla.addColumn("Costo");
+//        modeloTabla.addColumn("Sesiones");
+//        jTabTratamientos.setModel(modeloTabla);
+//    }
     // Limpia la tabla para dar paso a los nuevos elementos
 
     private void borrarFilaTabla() {
@@ -68,18 +94,37 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
 
     // Carga y Filtra los tratamientos por el mas visto
     private void cargarTablaMasVistos() {
-        borrarFilaTabla();
+//        borrarFilaTabla();
 
-        String seleccionado = (String) jCbTratamientos.getSelectedItem();
-        if (seleccionado == null || seleccionado.equals("Seleccione un tipo...")) {
-            return;
-        }
-        EspecialidadEnum tipo = EspecialidadEnum.valueOf(seleccionado);
+        String seleccion = (String)  jCbTratamientos.getSelectedItem();
+    if (seleccion == null || seleccion.equals("Seleccione un tipo...")) {
+        return;
+    }
+   
+    
         try {
+            if (seleccion.equals("Todas")) { 
+            configurarModeloTabla(false);
+            listaT = (ArrayList<Tratamiento>) tratamientodata.listarTratamientos();
+            
+            if (listaT != null) {
+               for (Tratamiento tratamiento : listaT) {
+                modeloTabla.addRow(new Object[]{
+                    tratamiento.getNombre(),
+                    tratamiento.getEspecialidad(),
+                    tratamiento.getDetalle(),
+                    tratamiento.getDuracion(),
+                    tratamiento.getCosto()
+                        
+                    });
+                }
+            }
+        } else{
+            EspecialidadEnum tipo = EspecialidadEnum.valueOf(seleccion);
+            configurarModeloTabla(true);
             listaT = (ArrayList<Tratamiento>) tratamientodata.obtenerTratamientosMasUsadosPorTipo(tipo);
-            // Validación de lista vacía
+            // Validar lista vacia
             if (listaT == null || listaT.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron Tratamientos para mostrar.");
                 return;
             }
 
@@ -94,11 +139,14 @@ public class TratamientoMasSolicitado extends javax.swing.JInternalFrame {
                 });
 
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al obtener los Tratamientos: " + e.getMessage());
-            return;
-        }
+            }
+        } catch (IllegalArgumentException e) {
+        
+        JOptionPane.showMessageDialog(this, "Error: El tipo seleccionado no coincide con la base de datos.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al obtener los Tratamientos: " + e.getMessage());
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

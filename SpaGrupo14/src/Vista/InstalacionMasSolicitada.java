@@ -20,6 +20,7 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
 
     private ArrayList<Instalacion> listaT;
     private InstalacionData instalaciondata;
+    
     private DefaultTableModel modeloTabla;
 
     public InstalacionMasSolicitada() {
@@ -32,18 +33,43 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
 
         modeloTabla = new DefaultTableModel();
         cargarColumnasTablas();
+        configurarModeloTabla(false);
         cargarInstalacion();
         cargarTablaMasUsadas();
+       
     }
 
+    private void configurarModeloTabla(boolean mostrarColumnaSesiones) {
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Detalle Uso");
+        modeloTabla.addColumn("Precio");
+
+       //booleano true, carga sesiones
+        if (mostrarColumnaSesiones) {
+            modeloTabla.addColumn("Sesiones Usadas");
+        }
+
+        jTabInstalaciones.setModel(modeloTabla);
+    }
+        
 //     Cargar los valores del enum en el combo
     public void cargarInstalacion() {
 
         jCbInstalaciones.removeAllItems();
         jCbInstalaciones.addItem("Seleccione un tipo...");
+        jCbInstalaciones.addItem("Todas");
+
+        java.util.HashSet<String> nombresAgregados = new java.util.HashSet<>();
 
         for (Instalacion instalacion : instalaciondata.listarInstalaciones()) {
-            jCbInstalaciones.addItem(instalacion.toString());
+            String nombre = instalacion.getNombre();
+
+            
+            if (!nombresAgregados.contains(nombre)) {
+                jCbInstalaciones.addItem(nombre);
+                nombresAgregados.add(nombre);
+            }
         }
 
     }
@@ -67,17 +93,33 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
     //Carga la tabla con el metodo obtener instalaciones
     private void cargarTablaMasUsadas() {
         borrarFilaTabla();
+    String seleccion = (String) jCbInstalaciones.getSelectedItem();
+    if (seleccion == null || seleccion.equals("Seleccione un tipo...")) {
+        return;
+    }
 
-        String nombreSeleccionado = (String) jCbInstalaciones.getSelectedItem();
-        if (nombreSeleccionado == null || nombreSeleccionado.equals("Seleccione un tipo...")) {
-            return;
-        }
+
         try {
-            listaT = (ArrayList<Instalacion>) instalaciondata.obtenerInstalacionesMasUsadas(nombreSeleccionado);
+            if (seleccion.equals("Todas")) { 
+            configurarModeloTabla(false);
+            listaT = (ArrayList<Instalacion>) instalaciondata.listarInstalaciones();
+            
+            if (listaT != null) {
+                for (Instalacion instalacion : listaT) {
+                    modeloTabla.addRow(new Object[]{
+                        instalacion.getNombre(),
+                        instalacion.getDetalleUso(),
+                        instalacion.getPrecio()
+                        
+                    });
+                }
+            }
+        } else {
+            configurarModeloTabla(true);
+            listaT = (ArrayList<Instalacion>) instalaciondata.obtenerInstalacionesMasUsadas(seleccion);
         
         // Validación de lista vacía
         if (listaT == null || listaT.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encontraron instalaciones para mostrar.");
             return;
         }
             for (Instalacion instalacion : listaT) {
@@ -88,8 +130,8 @@ public class InstalacionMasSolicitada extends javax.swing.JInternalFrame {
                     instalacion.getCont()
                 });
             }
-
-        } catch (Exception e) {
+            }
+        }catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al obtener instalaciones: " + e.getMessage());
             return;
 
