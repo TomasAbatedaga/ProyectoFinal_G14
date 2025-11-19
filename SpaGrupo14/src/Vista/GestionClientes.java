@@ -28,6 +28,17 @@ public class GestionClientes extends javax.swing.JInternalFrame {
          EstiloVisual.aplicarEstiloBoton(btnEliminar);
         
     }
+    
+    private void limpiarCampos() {
+//  Vaciar los campos de texto
+    jtfDniCliente.setText("");
+    jtfNombreCliente.setText("");
+    jtfTelefono.setText("");
+    jTfEdad.setText("");
+    jtfAfecciones.setText("");
+    CBEstado.setSelected(false);
+    jtfCodigoCliente.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -269,30 +280,46 @@ public class GestionClientes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
         try {
-            ClienteData clienteData = new ClienteData();
-            int dni = Integer.parseInt(jtfDniCliente.getText());
-            if (clienteData.buscarCliente(dni) != null) {
-                clienteData.eliminarCliente(dni);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresada");
+            if (jtfDniCliente.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un DNI para borrar.");
+                return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
-        }
 
+            int dni = Integer.parseInt(jtfDniCliente.getText().trim());
+            ClienteData clienteData = new ClienteData();
+
+            Cliente clienteEncontrado = clienteData.buscarCliente(dni);
+
+            if (clienteEncontrado != null) {
+
+                int respuesta = JOptionPane.showConfirmDialog(this,
+                        "¿Esta seguro que desea eliminar al cliente " + clienteEncontrado.getNombreCompleto() + "?",
+                        "Confirmar",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE); // Icono de advertencia
+
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    clienteData.eliminarCliente(dni);
+
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado.");
+                    limpiarCampos();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra un cliente con ese DNI.");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un num valido en el campo DNI.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        jtfDniCliente.setText("");
-        jtfNombreCliente.setText("");
-        jtfTelefono.setText("");
-        jTfEdad.setText("");
-        jtfAfecciones.setText("");
-        CBEstado.setSelected(false);
-        jtfCodigoCliente.setText("");
+        limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -309,50 +336,135 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                 jtfAfecciones.setText(cliente.getAfecciones());
                 CBEstado.setSelected(cliente.isEstado());
 
+            if (!cliente.isEstado()) {
+            JOptionPane.showMessageDialog(this, "Este cliente figura como Inactivo/Dado de baja.");
+        }    
             } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresada");
+                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresado: "+ dni);
+                limpiarCampos();
+                //Mantener el Campo DNI Escrito
+                jtfDniCliente.setText(String.valueOf(dni));
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
-        }
+            JOptionPane.showMessageDialog(this, "Ingrese un num Valido para Buscar DNI");
+        jtfDniCliente.setText("");
+        }catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+}
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        try {
+try {   
             ClienteData clienteData = new ClienteData();
-            int dni = Integer.parseInt(jtfDniCliente.getText());
-            if (clienteData.buscarCliente(dni) != null) {
-                //             int codCli = Integer.parseInt(jtfCodigoCliente.getText());
-                String nombre_completo = jtfNombreCliente.getText();
-                String telefono =  jtfTelefono.getText();
-                int edad = Integer.parseInt(jTfEdad.getText());
-                String afecciones = jtfAfecciones.getText();
+
+            // Validar DNI
+            if (jtfDniCliente.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo DNI no puede estar vacio.");
+                return;
+            }
+
+            int dni = Integer.parseInt(jtfDniCliente.getText().trim());
+            Cliente clienteOriginal = clienteData.buscarCliente(dni);
+            if (clienteOriginal == null) {
+                JOptionPane.showMessageDialog(this, "No existe ningun cliente con el DNI ingresado");
+                return;
+            }
+
+            // Validar demas Campos
+            String nombre_completo = jtfNombreCliente.getText().trim();
+            String telefono = jtfTelefono.getText().trim();
+            String afecciones = jtfAfecciones.getText().trim();
+            String edadTexto = jTfEdad.getText().trim();
+
+            // Validar Vacios
+            if (nombre_completo.isEmpty() || telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El nombre y el telefono son obligatorios.");
+                return;
+            }
+
+            // Validar Edad
+            if (edadTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar la edad.");
+                return;
+            }
+
+            int edad = Integer.parseInt(edadTexto);
+
+            if (edad < 0 || edad > 120) { //valida edad
+                JOptionPane.showMessageDialog(this, "Ingrese una edad valida.");
+                return;
+            }
+
+            //Confirmaciones
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro de modificar los datos del cliente " + nombre_completo + "?",
+                    "Confirmar Modificacion",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                //Actualiza
                 boolean estado = CBEstado.isSelected();
                 Cliente cliente = new Cliente(dni, nombre_completo, telefono, edad, afecciones, estado);
-                clienteData.actualizarCliente(cliente);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el DNI ingresado");
+
+                Cliente clienteModificado = new Cliente(dni, nombre_completo, telefono, edad, afecciones, estado);
+
+                //Traer ID del cliente BD
+                clienteModificado.setCod_cliente(clienteOriginal.getCod_cliente());
+
+                clienteData.actualizarCliente(clienteModificado);
+                JOptionPane.showMessageDialog(this, "Cliente modificado.");
+                limpiarCampos();
             }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+            // atrapa Errores Edad y DNI
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que DNI y Edad contengan solo numeros enteros.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        try{
-            ClienteData clienteData = new ClienteData();
+        try {
+            String nombre_completo = jtfNombreCliente.getText().trim();
+            String telefono = jtfTelefono.getText().trim();
+            String afecciones = jtfAfecciones.getText().trim();
+
+            if (nombre_completo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacio.");
+                return;
+            }
+
+            if (telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Telefono no puede estar vacio.");
+                return;
+            }
+            if (jtfDniCliente.getText().trim().isEmpty() || jTfEdad.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar los campos DNI y Edad.");
+                return;
+            }
+
             int dni = Integer.parseInt(jtfDniCliente.getText());
-            String nombre_completo = jtfNombreCliente.getText();
-            String telefono =  jtfTelefono.getText();
             int edad = Integer.parseInt(jTfEdad.getText());
-            String afecciones = jtfAfecciones.getText();
             boolean estado = CBEstado.isSelected();
+
+            ClienteData clienteData = new ClienteData();
             Cliente cliente = new Cliente(dni, nombre_completo, telefono, edad, afecciones, estado);
             clienteData.agregarCliente(cliente);
+
+            JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente.");
+            //limpiaCampos
+            limpiarCampos();
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo DNI");
+            // Este error salta si el DNI o la Edad tienen letras o simbolos
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que DNI y Edad sean solo num.");
+        } catch (Exception e) {
+            // Captura errores inesperados
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
