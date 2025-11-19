@@ -28,6 +28,14 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         EstiloVisual.aplicarEstiloBoton(btnLimpiar);
     }
 
+     private void limpiarCampos() {
+//  Vaciar los campos de texto
+        JTFnumeroConsultorio.setText("");
+        jtfCodigoConsul.setText("");
+        JtfEquipamientos.setText("");
+        jtfUsos.setText("");
+        CBEstado.setSelected(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,8 +82,6 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
         jLabel5.setText("Usos");
 
         jLabel6.setText("Estado");
-
-        jtfCodigoConsul.setEditable(false);
 
         btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -228,85 +234,170 @@ public class GestionConsultorios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-     try {
+
+try {   
             ConsultorioData consultorioData = new ConsultorioData();
-             int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
-             
-            if (consultorioData.buscarConsultorio(codigoConsultorio)!= null) {
-                int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText()); 
-                 String equipamiento = JtfEquipamientos.getText();
-                 String usos =  jtfUsos.getText();
-                 boolean estado = CBEstado.isSelected();
-                 Consultorio consultorio = new Consultorio(codigoConsultorio, nro_consultorio, equipamiento, usos, estado);
-                 consultorioData.actualizarConsultorio(consultorio);
-                 
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el Nro de Consultorio ingresado");
+
+            // Validar DNI
+            if (jtfCodigoConsul.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Codigo del consultorio no puede estar vacio.");
+                return;
             }
+
+           int cod_consultorio = Integer.parseInt(jtfCodigoConsul.getText());
+            Consultorio consultorioOriginal = consultorioData.buscarConsultorio(cod_consultorio);
+            if (consultorioOriginal == null) {
+                JOptionPane.showMessageDialog(this, "No existe ningun consultorio con ese codigo ingresado");
+                return;
+            }
+
+            // Validar demas Campos
+            String equipamiento = JtfEquipamientos.getText();
+            String usos =  jtfUsos.getText();
+            String nro_consultorioText = JTFnumeroConsultorio.getText(); 
+            
+
+            // Validar Vacios
+            if (equipamiento.isEmpty() || nro_consultorioText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El Equipamiento y el Nro Consultorio son obligatorios.");
+                return;
+            }
+            
+            int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText());
+
+            //Confirmaciones
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro de modificar los datos del Consultorio " + nro_consultorio + "?",
+                    "Confirmar Modificacion",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                //Actualiza
+                boolean estado = CBEstado.isSelected();
+                Consultorio consultorio = new Consultorio(cod_consultorio, nro_consultorio, equipamiento, usos, estado);
+
+                Consultorio consultorioModificado = new Consultorio(cod_consultorio, nro_consultorio, equipamiento, usos, estado);
+
+                //Traer ID del cliente BD
+                consultorioModificado.setCodConsultorio(consultorioOriginal.getCodConsultorio());
+
+                consultorioData.actualizarConsultorio(consultorioModificado);
+                JOptionPane.showMessageDialog(this, "Consultorio modificado.");
+                limpiarCampos();
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+            // atrapa Errores Edad y DNI
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que el Num Consultorio y el Codigo contengan solo numeros enteros.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    try{
-        ConsultorioData consultorioData = new ConsultorioData();
-        int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText());
-        String equipamiento = JtfEquipamientos.getText();
-        String usos =  jtfUsos.getText();
-        boolean estado = CBEstado.isSelected();
-        Consultorio consultorio = new Consultorio(nro_consultorio, equipamiento, usos, estado);
-        consultorioData.agregarConsultorio(consultorio);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
-        }  
+try {
+            String equipamiento = JtfEquipamientos.getText();
+            String usos =  jtfUsos.getText();
+           
+            if (equipamiento.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo Equipamiento no puede estar vacio.");
+                return;
+            }
 
+            if (JTFnumeroConsultorio.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar el campo Num Consultorio.");
+                return;
+            }
+
+            int nro_consultorio = Integer.parseInt(JTFnumeroConsultorio.getText());
+            boolean estado = CBEstado.isSelected();
+
+            ConsultorioData consultorioData = new ConsultorioData();
+            Consultorio consultorio = new Consultorio(nro_consultorio, equipamiento, usos, estado);
+            consultorioData.agregarConsultorio(consultorio);
+
+            JOptionPane.showMessageDialog(this, "Consultorio agregado exitosamente.");
+            //limpiaCampos
+            limpiarCampos();
+
+        } catch (NumberFormatException e) {
+            // Este error salta si el DNI o la Edad tienen letras o simbolos
+            JOptionPane.showMessageDialog(this, "Error de formato: Verifique que el Nro de Consultorio sea un numero.");
+        } catch (Exception e) {
+            // Captura errores inesperados
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        try {
+ try {
             ConsultorioData consultorioData = new ConsultorioData();
             int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
             Consultorio consultorio = consultorioData.buscarConsultorio(codigoConsultorio);
             if (consultorio != null) {
-            //  jtfCodigoConsul.setText(String.valueOf(consultorio.getCodConsultorio()));
+                jtfCodigoConsul.setText(String.valueOf(consultorio.getCodConsultorio()));
                 JTFnumeroConsultorio.setText(String.valueOf(consultorio.getNroConsultorio()));
-                JtfEquipamientos.setText(consultorio.getEquipamiento());
-                jtfUsos.setText(consultorio.getUsos());
-                CBEstado.setSelected(consultorio.isEstado());
+               JtfEquipamientos.setText(consultorio.getEquipamiento());
+               jtfUsos.setText(consultorio.getUsos());
+               CBEstado.setSelected(consultorio.isEstado());
 
+            if (!consultorio.isEstado()) {
+            JOptionPane.showMessageDialog(this, "Este consultorio figura como Inactivo/Dado de baja.");
+        }    
             } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el Codigo del Consultorio ingresado");
+                JOptionPane.showMessageDialog(this, "No se encuentra el Consultorio ingresado: "+ codigoConsultorio);
+                limpiarCampos();
+                //Mantener el Campo DNI Escrito
+                jtfCodigoConsul.setText(String.valueOf(codigoConsultorio));
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
-        }
+            JOptionPane.showMessageDialog(this, "Ingrese un num Valido para Buscar Consultorios");
+        jtfCodigoConsul.setText("");
+        }catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+}
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        JTFnumeroConsultorio.setText("");
-        jtfCodigoConsul.setText("");
-        JtfEquipamientos.setText("");
-        jtfUsos.setText("");
-        CBEstado.setSelected(false); 
+       limpiarCampos(); 
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
-         try {
-            ConsultorioData consultorioData = new ConsultorioData();
-            int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
-            if (consultorioData.buscarConsultorio(codigoConsultorio) != null) {
-                consultorioData.eliminarConsultorio(codigoConsultorio);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentra el Consultorio ingresado");
+try {
+            if (jtfCodigoConsul.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo de consultorio borrar.");
+                return;
             }
+
+             int codigoConsultorio = Integer.parseInt(jtfCodigoConsul.getText());
+            ConsultorioData consultorioData = new ConsultorioData();
+
+            Consultorio consultorioEncontrado = consultorioData.buscarConsultorio(codigoConsultorio);
+
+            if (consultorioEncontrado != null) {
+
+                int respuesta = JOptionPane.showConfirmDialog(this,
+                        "¿Esta seguro que desea eliminar el Consultorio " + consultorioEncontrado.getNroConsultorio() + "?",
+                        "Confirmar",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    consultorioData.eliminarConsultorio(codigoConsultorio);
+
+                    JOptionPane.showMessageDialog(this, "Consultorio eliminado.");
+                    limpiarCampos();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encuentra un Consultorio con ese codigo.");
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un numero valido en el campo Nro Consultorio");
+            JOptionPane.showMessageDialog(this, "Ingrese un num valido en el campo consultorio.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 

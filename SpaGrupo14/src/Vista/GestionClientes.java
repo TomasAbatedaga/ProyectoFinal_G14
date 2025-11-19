@@ -297,7 +297,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                         "¿Esta seguro que desea eliminar al cliente " + clienteEncontrado.getNombreCompleto() + "?",
                         "Confirmar",
                         JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE); // Icono de advertencia
+                        JOptionPane.WARNING_MESSAGE);
 
                 if (respuesta == JOptionPane.YES_OPTION) {
                     clienteData.eliminarCliente(dni);
